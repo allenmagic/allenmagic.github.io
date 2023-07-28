@@ -1,0 +1,1187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>使用Python画股票的K线图</title>
+    <url>/2017-04-17-%E4%BD%BF%E7%94%A8Python%E7%94%BB%E8%82%A1%E7%A5%A8%E7%9A%84K%E7%BA%BF%E5%9B%BE/</url>
+    <content><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h2 id="导言"><a href="#导言" class="headerlink" title="导言"></a>导言</h2><blockquote>
+<p>本文简单介绍了如何从网易财经获取某支股票的价格数据，并根据价格数据画出相应的<br>日K线图。有助于新手了解并使用Python的相关功能。包括列表、自定义函数、for循<br>环、if函数以及如何使用matplotlib进行作图等内容。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="第一步：从网易财经获取股票的价格数据"><a href="#第一步：从网易财经获取股票的价格数据" class="headerlink" title="第一步：从网易财经获取股票的价格数据"></a>第一步：从网易财经获取股票的价格数据</h2><p>我一般是在网易财经查看某支股票的价格和成交数据，<a href="http://money.163.com/" target="_blank" rel="noopener">网易财经</a>可以查到任意沪深的股票，我们使用<a href="http://quotes.money.163.com/trade/lsjysj_600036.html#06f01" target="_blank" rel="noopener">招商银行</a>的数据作为参考。</p>
+<h3 id="1、构建爬虫获取股票价格数据"><a href="#1、构建爬虫获取股票价格数据" class="headerlink" title="1、构建爬虫获取股票价格数据"></a>1、构建爬虫获取股票价格数据</h3><p>这里不对Python做介绍了，如果需要了解什么是Python，可以自行百度或者访问<a href="https://www.python.org/" target="_blank" rel="noopener">Python官网</a>.</p>
+<p><strong>加载需要的模块</strong></p>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> re,urllib2,time,csv,datetime</span><br><span class="line"><span class="keyword">import</span> matplotlib <span class="keyword">as</span> mpl</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> matplotlib.finance <span class="keyword">as</span> mpf</span><br><span class="line"><span class="keyword">import</span> matplotlib.dates <span class="keyword">as</span> mpd</span><br></pre></td></tr></table></figure>
+<p>其中urllib2是用来解析HTML内容的包，主要是从url获取网页内容；re是正则表达式包，本文会使用正则表达式来从抓取的网页数据中获取到有用的数据；time和datetime是时间相关的包，主要用来设定要抓取的时间以及其它相关时间的处理；csv包是用来生成csv数据（该数据会被用于R来画K线图），其余的几个包会在使用时单独介绍，你也可以在需要的时候在程序头部补充import。</p>
+<p><strong>设定时间相关</strong></p>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">t = time.localtime()  <span class="comment"># 获取当前的本地时间</span></span><br><span class="line">year = range(t[<span class="number">0</span>],<span class="number">1989</span>,<span class="number">-1</span>)  <span class="comment"># 设定年度范围，从当前年度至沪市开市的年份倒序生成</span></span><br><span class="line">season = range(<span class="number">4</span>,<span class="number">0</span>,<span class="number">-1</span>)    <span class="comment"># 生成季度的数据列表，从4季度到1季度倒序生成</span></span><br></pre></td></tr></table></figure>
+<p>为什么要这么设定时间呢？仔细的查看网易股票数据的url，是按照年度和季度来构成的，我们发现搜索数据也是用年度和季度来搜索的。<br><img src="http://7viihf.com1.z0.glb.clouddn.com/600036.png" alt="招商银行2017年1季度数据"><br>其url构成如下：<em><a href="http://quotes.money.163.com/trade/lsjysj_600036.html?year=2017&amp;season=1" target="_blank" rel="noopener">http://quotes.money.163.com/trade/lsjysj_600036.html?year=2017&amp;season=1</a></em>可见可拆为6个子字符串，分别是<em><a href="http://quotes.money.163.com/trade/lsjysj" target="_blank" rel="noopener">http://quotes.money.163.com/trade/lsjysj</a>_</em>、<em>600036</em>、<em>.html?year=</em>、<em>2017</em>、<em>&amp;season=</em>、<em>1</em>。其中第2、4、6个子串可以参数化输入获取特定需求的数据。</p>
+<p><strong>定义获取数据的函数</strong></p>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getData</span><span class="params">(url)</span>:</span></span><br><span class="line">	request = urllib2.Request(url)</span><br><span class="line">	response = urllib2.urlopen(request)</span><br><span class="line">	content = response.read()</span><br><span class="line"></span><br><span class="line">	pattern = re.compile(<span class="string">'&lt;/thead[\s\S]*&lt;/tr&gt;    &lt;/table&gt;'</span>)</span><br><span class="line">	ta = re.findall(pattern, str(content))</span><br><span class="line">	pattern1 = re.compile(<span class="string">"&lt;td class='cGreen'&gt;"</span>)</span><br><span class="line">	pattern2 = re.compile(<span class="string">"&lt;td class='cRed'&gt;"</span>)</span><br><span class="line">	pattern3 = re.compile(<span class="string">","</span>)</span><br><span class="line">	tab1 = re.sub(pattern1,<span class="string">"&lt;td&gt;"</span>,str(ta))</span><br><span class="line">	tab2 = re.sub(pattern2,<span class="string">"&lt;td&gt;"</span>,str(tab1))</span><br><span class="line">	tab  = re.sub(pattern3, <span class="string">""</span>, str(tab2))</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> len(tab) == <span class="number">0</span>:</span><br><span class="line">		data = []</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		pattern3 = re.compile(<span class="string">'&lt;td&gt;(.*?)&lt;/td&gt;'</span>)</span><br><span class="line">		data = re.findall(pattern3, str(tab))</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> d <span class="keyword">in</span> data:</span><br><span class="line">		<span class="keyword">if</span> d == <span class="string">''</span>:</span><br><span class="line">			data.remove(<span class="string">''</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> data</span><br></pre></td></tr></table></figure>
+<p>本段代码定义个一个函数getDate(url)，函数名为getData，参数为url。相当于从该url获取股票的交易数据，显然这个函数是定制的。</p>
+<p>首先，我们用urllib2模块的相关函数解析并获取网页的数据。第二步，使用re模块的数据对抓取的网页内容进行初步的处理，分为了三个过程</p>
+<ol>
+<li>首先匹配”&lt;/thead[\s\S]*    “之间的内容并返回，因为在这之间的内容包含了所有需要的数据，这是一个简单的正则表达式，表示返回&lt;/thead和    两个字符串之间的所有内容</li>
+<li>匹配<td class="cGreen">、</td><td class="cRed">并使用</td><td>替换，因为这两个字符串会影响后续的匹配数据，现行替换掉可以更方便的匹配到需要的数据</td></li>
+<li>替换到千分位”,”号，因为Python和R并不会识别有千分位号的数据，所以我们要将数据转换为非千分位的数据。</li>
+<li>tab是按照要求最后获取的包含数据和文本的原始内容</li>
+<li>用if函数来获取除文本的数据，因为如果year和season超过了当前的界限，会返回空的tab，所以我们在这里进行判断，如果少了这个判断，会报出index error。这个if函数表示了如果tab为空，data也是个空的列表，如果tab不为空，那么根据pattern3返回需要的数据至data列表</li>
+<li>用一个for循环来遍历data列表，删除空白的内容（其实这一步不需要，因为在if中已经剔除了空的内容。</li>
+</ol>
+<p>所以定义了以上的函数后，就可以使用该函数返回特定url的数据。</p>
+<p><strong>获取某支股票的数据</strong></p>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_stock_price</span><span class="params">(code)</span>:</span></span><br><span class="line">	url1 = <span class="string">"http://quotes.money.163.com/trade/lsjysj_"</span></span><br><span class="line">	url2 = <span class="string">".html?year="</span></span><br><span class="line">	url3 = <span class="string">"&amp;season="</span></span><br><span class="line">	urllist = []</span><br><span class="line">	<span class="keyword">for</span> k <span class="keyword">in</span> year:</span><br><span class="line">		<span class="keyword">for</span> v <span class="keyword">in</span> season:</span><br><span class="line">			urllist.append(url1+str(code)+url2+str(k)+url3+str(v))</span><br><span class="line">	</span><br><span class="line">	price = []</span><br><span class="line">	<span class="keyword">for</span> url <span class="keyword">in</span> urllist:</span><br><span class="line">		price.extend(getData(url))</span><br><span class="line">	<span class="keyword">return</span> price</span><br></pre></td></tr></table></figure>
+<p>自定义get_stock_price(code)函数，code是指股票代码，使用该函数可以返回该股票所有的历史数据（OHLC以及其它）思路很简单：</p>
+<ol>
+<li>根据code构建其股票数据的页面的url列表</li>
+<li>使用getData(url）函数和for循环，返回所有的历史数据</li>
+</ol>
+<p>最终返回的是price的数据列表</p>
+<p>这样，我们就可以使用该函数获取某支股票的所有历史数据：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># get all histrocial data include all price and others</span></span><br><span class="line">price = get_stock_price(<span class="number">600036</span>)</span><br></pre></td></tr></table></figure>
+<p>获取招商银行（600036）的所有历史数据。</p>
+<h3 id="2、保存数据"><a href="#2、保存数据" class="headerlink" title="2、保存数据"></a>2、保存数据</h3><p><strong>保存为csv文件</strong></p>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">writer = csv.writer(file(<span class="string">"stock.csv"</span>,<span class="string">'wb'</span>))</span><br><span class="line">writer.writerow([<span class="string">'Date'</span>,<span class="string">'Open'</span>,<span class="string">'High'</span>,<span class="string">'Low'</span>,<span class="string">'Close'</span>,<span class="string">'Volume'</span>])</span><br><span class="line">pr = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,len(price),<span class="number">11</span>):</span><br><span class="line">	pr.extend([[price[i],price[i+<span class="number">1</span>],price[i+<span class="number">2</span>],price[i+<span class="number">3</span>],price[i+<span class="number">4</span>],price[i+<span class="number">8</span>]]])</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> prl <span class="keyword">in</span> pr:</span><br><span class="line">	writer.writerow(prl)</span><br></pre></td></tr></table></figure>
+<p>我们使用csv模块保存数据为csv文件，用于在R中读取并作图，我们查看在网易的数据展示可以发现，总共11个字段，所有我们在每11个切片中，返回时间、OHLC（开盘价、最高价、最低价、收盘价）和交易量的数据并保存为csv的文件格式。</p>
+<p><strong>处理保存数据到列表</strong></p>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># get the number for date by date2num</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Date_no</span><span class="params">(strdate)</span>:</span></span><br><span class="line">	t = time.strptime(strdate, <span class="string">"%Y-%m-%d"</span>)</span><br><span class="line">	y,m,d = t[<span class="number">0</span>:<span class="number">3</span>]</span><br><span class="line">	d = datetime.date(y, m, d)</span><br><span class="line">	n = mpd.date2num(d)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> n</span><br><span class="line"></span><br><span class="line"><span class="comment"># get the price data </span></span><br><span class="line">pr = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,len(price),<span class="number">11</span>):</span><br><span class="line">	pr.extend([[</span><br><span class="line">		Date_no(price[i])</span><br><span class="line">		,float(price[i+<span class="number">1</span>])</span><br><span class="line">		,float(price[i+<span class="number">2</span>])</span><br><span class="line">		,float(price[i+<span class="number">3</span>])</span><br><span class="line">		,float(price[i+<span class="number">4</span>])</span><br><span class="line">		,float(price[i+<span class="number">8</span>])]]</span><br><span class="line">		)</span><br></pre></td></tr></table></figure>
+<p>这个程序片段是用来处理和保存数据用于在pyhton中做出K线图。</p>
+<ol>
+<li>定义函数将字符串的时间处理为matplotlib中作图使用的数值（直接获取的数据中时间是字符串）</li>
+<li>返回返回时间、OHLC（开盘价、最高价、最低价、收盘价）和交易量的数据并存储在pr这个列表里</li>
+</ol>
+<h2 id="第二步：做出K线图"><a href="#第二步：做出K线图" class="headerlink" title="第二步：做出K线图"></a>第二步：做出K线图</h2><p><strong>在R中作图</strong></p>
+<p>代码如下：</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="keyword">library</span>(quantmod)</span><br><span class="line"></span><br><span class="line">rm(list = ls())</span><br><span class="line">setwd(<span class="string">"~/GitHub/index/"</span>)</span><br><span class="line">price &lt;- as.xts(read.zoo(<span class="string">"stock.csv"</span>,header=<span class="literal">TRUE</span>,sep=<span class="string">","</span>,colClasses = c(<span class="string">"Date"</span>, rep(<span class="string">"numeric"</span>,<span class="number">5</span>))))</span><br><span class="line"></span><br><span class="line">n &lt;- nrow(price)</span><br><span class="line">m &lt;- nrow(price)-<span class="number">100</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#pdf(file = "k.pdf")</span></span><br><span class="line">chartSeries(price[c(m:n)],theme = chartTheme(<span class="string">"white"</span>),up.col = <span class="string">"red"</span>,dn.col = <span class="string">"green"</span>,name = <span class="string">"600036"</span>,time.scale = <span class="number">0.5</span>,line.type = <span class="string">"l"</span>,bar.type = <span class="string">"ohlc"</span>,major.ticks=<span class="string">'auto'</span>, minor.ticks=<span class="literal">TRUE</span>)</span><br><span class="line"><span class="comment">#dev.off()</span></span><br></pre></td></tr></table></figure>
+<p>做出的图片效果如下：<br><img src="http://7viihf.com1.z0.glb.clouddn.com/Rplot01.png" alt><br>R中可以使用quantmod包中的chartSeries函数画出K线图，具体的使用方法可以参考<a href="http://www.quantmod.com/documentation/chartSeries.html" target="_blank" rel="noopener">chartSeries参考文档</a></p>
+<p><strong>在Python中使用matplotlib作图</strong></p>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">quotes = pr[<span class="number">0</span>:<span class="number">80</span>]</span><br><span class="line"></span><br><span class="line">print(quotes)</span><br><span class="line"></span><br><span class="line">fig,ax = plt.subplots(figsize=(<span class="number">30</span>,<span class="number">6</span>))</span><br><span class="line">fig.subplots_adjust(bottom=<span class="number">0.2</span>)</span><br><span class="line">mpf.candlestick_ohlc(ax,quotes,width=<span class="number">0.4</span>,colorup=<span class="string">'r'</span>,colordown=<span class="string">'g'</span>)</span><br><span class="line">plt.grid(<span class="literal">False</span>)</span><br><span class="line">ax.xaxis_date()</span><br><span class="line">ax.autoscale_view()</span><br><span class="line">plt.setp(plt.gca().get_xticklabels(), rotation=<span class="number">30</span>) </span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>K线效果图如下：<br><img src="http://7viihf.com1.z0.glb.clouddn.com/figure_1.png" alt><br>使用matplotlib的candlestick_ohlc的<a href="http://matplotlib.org/api/finance_api.html?highlight=candlestick#matplotlib.finance.candlestick2_ohlc" target="_blank" rel="noopener">参考文档</a>,但是目前有一些问题，比如会将非交易日期也置放在x轴，会到至K线出现断裂，等待下一步的解决方法吧。</p>
+<p>相关的代码已经同步到最大的同性交友网站<a href="https://github.com/allenmagic/index" target="_blank" rel="noopener">我的Github</a>上了，可以参考，其中<a href="https://github.com/allenmagic/index/blob/master/stock.py" target="_blank" rel="noopener">stock.py</a>是主要程序。</p>
+<blockquote>
+<p>写在最后：因为我有近5年没使用过python了，所有代码可能不太简练。我也旨在解决问题，当然解决问题的方法千万种，比如这个例子，最直接的办法就是使用网易的下载所有（或者特定时间段）的数据为csv格式，然后用Excel画K线也可以的。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>金融</category>
+      </categories>
+      <tags>
+        <tag>金融</tag>
+        <tag>Python</tag>
+        <tag>爬虫</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用hexo+github搭建静态blog</title>
+    <url>/2017-05-25-%E4%BD%BF%E7%94%A8hexo+github%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81blog/</url>
+    <content><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>过去几年，我曾经用多种方式写作。自从大学毕业，基本不再使用人人网（过去的时候叫校内网），后来新浪云发布，在网上找到了一个基于python的博客系统，随便改了改就发到新浪云上了，还给专门搞了一个一级域名(<a href="http://www.zyx1986.pw，现在已经不能用了）。" target="_blank" rel="noopener">www.zyx1986.pw，现在已经不能用了）。</a></p>
+<a id="more"></a>
+<p>再后来，微信公众号开始流行，我也赶了个时髦开了公众号。微信公众号对文本、图片支持的还可以，但对于代码、公式的支持几乎没有，所以在微信公众号的文章大部分是随笔或者鸡汤，没什么营养。</p>
+<p>最近开始整理之前的学习笔记，刚开始在简书上发文，刚写了两篇还可以，毕竟简书支持Markdown格式的文章，对代码高亮的支持也不错，但我想写的文章如果有数学公式就尴尬了，很繁琐而且效果不好，所以就想自己搭建一个blog。</p>
+<p>搜索了下，hexo+github成了我的选择。</p>
+<h3 id="Hexo是什么"><a href="#Hexo是什么" class="headerlink" title="Hexo是什么"></a>Hexo是什么</h3><p><a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">Hexo</a>是基于node.js的轻量化的博客框架，安装和使用都非常简单，很快就可以上手。并且Hexo支持自定义主题和Markdown格式的文件，极速渲染页面，非常适合经常写文档的朋友。</p>
+<p>Hexo有很多插件支持更多更丰富的功能，因此能够支持丰富的文档特性，比如代码高亮、公式等，因此也很适合撰写科技和技术文章。</p>
+<h3 id="为什么是Hexo"><a href="#为什么是Hexo" class="headerlink" title="为什么是Hexo"></a>为什么是Hexo</h3><p>Hexo最大的优点就是遵循了KISS<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>原则，其具有以下特点</p>
+<ol>
+<li>基于node.js安装简单</li>
+<li>支持Markdown格式为源文件</li>
+<li>支持MathJax渲染LaTeX的公式（大爱这一点）</li>
+<li>支持代码高亮</li>
+<li>配置简单可以定制主题</li>
+<li>生成的是静态页面可以利用    GitHub的Pages功能    </li>
+</ol>
+<p>以上就足够了。</p>
+<h3 id="声明及准备"><a href="#声明及准备" class="headerlink" title="声明及准备"></a>声明及准备</h3><blockquote>
+<p>本文的安装是基于MacOS</p>
+</blockquote>
+<p>安装准备：</p>
+<blockquote>
+<ol>
+<li>github账号</li>
+<li>homebrew</li>
+<li>node.js</li>
+<li>npm</li>
+<li>hexo</li>
+</ol>
+</blockquote>
+<p>由于node.js自带npm，所以只需要安装node.js即可。</p>
+<h3 id="搭建流程"><a href="#搭建流程" class="headerlink" title="搭建流程"></a>搭建流程</h3><h4 id="获取github"><a href="#获取github" class="headerlink" title="获取github"></a>获取github</h4><p>因为是基于GitHub搭建静态blog站点，所以需要先获取GitHub的账号和建立相应的repository。如果你没有GitHub的账号，点击<a href="https://github.com/join?source=header-home" target="_blank" rel="noopener">这里</a>注册。</p>
+<p>注册完获取到账号后，你可以创建一个repository：<br><img src="http://7viihf.com1.z0.glb.clouddn.com/github_new_repo.png" alt="创建新的repository"></p>
+<p>创建的repo的名称为：<code>yourid.github.io</code></p>
+<h4 id="安装node-js"><a href="#安装node-js" class="headerlink" title="安装node.js"></a>安装node.js</h4><p>因为Hexo是基于node.js，所以要先安装node.js。在这里提供两种方式安装：</p>
+<h5 id="通过Homebrew安装"><a href="#通过Homebrew安装" class="headerlink" title="通过Homebrew安装"></a>通过Homebrew安装</h5><p>强烈建议Mac用户安装<a href="https://brew.sh/index_zh-cn.html" target="_blank" rel="noopener">Homebrew</a>，通过Homebrew来管理Mac的软件，Homebrew在安装和删除软件上特别方便。</p>
+<ol>
+<li><p>首先安装Homebrew，在终端输入:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装完Homebrew，可以安装node.js：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">brew install node.js</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装完成后查看：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">node -v</span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>以上就完成了node.js和npm的安装。</p>
+<h5 id="离线方式安装"><a href="#离线方式安装" class="headerlink" title="离线方式安装"></a>离线方式安装</h5><p>除Homebrew安装外，可以离线下载安装包安装，点击<a href="https://nodejs.org/en/" target="_blank" rel="noopener">这里</a>在官网下载pkg安装包后，一路点击安装。</p>
+<h4 id="休息下听首歌"><a href="#休息下听首歌" class="headerlink" title="休息下听首歌"></a>休息下听首歌</h4><p>听听我录得歌，不自动播放了，各位请欣赏，哈哈！</p>
+<div id="aplayer0" class="aplayer" style="margin-bottom: 20px;"></div>
+		<script>
+			var ap = new APlayer({
+				element: document.getElementById("aplayer0"),
+				narrow: false,
+				autoplay: false,
+				showlrc: 0,
+				music: {
+					title: "一生爱你千百回",
+					author: "allenmagic",
+					url: "http://op0byyd4a.bkt.clouddn.com/%E4%B8%80%E7%94%9F%E7%88%B1%E4%BD%A0%E5%8D%83%E7%99%BE%E5%9B%9E.mp3",
+					pic: "http://7viihf.com1.z0.glb.clouddn.com/face.jpg",
+				}
+			});
+			window.aplayers || (window.aplayers = []);
+			window.aplayers.push(ap);
+		</script>
+<h4 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h4><p>安装hexo的命令很简单，在终端输入:<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure></p>
+<p>安装完成后可以输入命令查看：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure></p>
+<h4 id="建立本地站点"><a href="#建立本地站点" class="headerlink" title="建立本地站点"></a>建立本地站点</h4><p>安装完hexo后，需要在本地建立站点并初始化站点:<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mkdir blog</span><br><span class="line">cd blog</span><br><span class="line">hexo init</span><br></pre></td></tr></table></figure></p>
+<p>这样一个本地站点就完全建立了，你也可以用一个命令完成以上操作:<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo init blog</span><br></pre></td></tr></table></figure></p>
+<p>安装完成后的目录结构为：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">├── _config.yml</span><br><span class="line">├── node_modules</span><br><span class="line">├── package.json</span><br><span class="line">├── scaffolds</span><br><span class="line">├── source</span><br><span class="line">└── themes</span><br><span class="line"></span><br><span class="line">4 directories, 2 files</span><br></pre></td></tr></table></figure></p>
+<h4 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h4><p>在blog目录内依次运行以下命令:<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure></p>
+<p>如果正常则会显示：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">INFO  Start processing</span><br><span class="line">INFO  Hexo is running at http://localhost:4000/. Press Ctrl+C to stop.</span><br></pre></td></tr></table></figure></p>
+<p>按住CMD键同时点击<code>http://localhost:4000/</code>就可以在浏览器访问本地站点啦.</p>
+<p><em>完结</em></p>
+<div id="footnotes"><hr><div id="footnotelist"><ol style="list-style:none; padding-left: 0;"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px;">1.</span><span style="display: inline-block; vertical-align: top;">Keep it simple, stupid!</span><a href="#fnref:1" rev="footnote"> ↩</a></li></ol></div></div>]]></content>
+      <categories>
+        <category>生活</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
+        <tag>博客</tag>
+        <tag>写作</tag>
+        <tag>GitHub</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>一个关于风险评测计算的问题</title>
+    <url>/2017-05-23-%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E9%A3%8E%E9%99%A9%E8%AF%84%E6%B5%8B%E8%AE%A1%E7%AE%97%E7%9A%84%E9%97%AE%E9%A2%98%EE%95%BD/</url>
+    <content><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>近几天，在做一个工作相关的内容，就是对企业投资者进行风险评测。我设计了若干个问题，并根据投资者的选项用于评分，但需要提前计算多少种选项的可能性，并计算分数的分布。并根据分数确定相应的分数区间对应的风险等级。</p>
+<a id="more"></a>
+<p>这听上去是个简单的问题，但实际上计算起来颇为复杂，想了不少办法才实现。这里也记录下来，并写成分享的文章可以让大家看一下，说不定可以借鉴。</p>
+<p>本次计算主要是使用Python和R。</p>
+<p>由于代码比较简单，就不用同步到Github，所有代码在文章里都能获取到。</p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>其实这次的问题很简单:</p>
+<ol>
+<li>有6个风险评测的问题</li>
+<li>每个问题有A、B、C三个选项</li>
+<li>每个问题的分值比重不一样</li>
+<li>每个选项的分数不一样</li>
+<li>需要根据投资者的选择答案计算其最终得分</li>
+<li>根据其得分给出风险等级</li>
+</ol>
+<p>但我们要根据所有可能的选择结果确定分数范围，并根据分数范围确定其对应的风险等级。所以问题的计算逻辑就如下了：</p>
+<ol>
+<li>获取所有的选择答案的组合结果</li>
+<li>根据组合计算每一个结果的分数</li>
+<li>根据所有分数确定分数区间和风险等级的对应关系</li>
+<li>计算投资者的分数</li>
+<li>确定投资者的风险等级</li>
+</ol>
+<h3 id="获取所有组合"><a href="#获取所有组合" class="headerlink" title="获取所有组合"></a>获取所有组合</h3><p>我们假设有A、B、C三个选项，对应的分数分别为[25,50,75]:<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[A, B, C] = [25, 50, 75]</span><br></pre></td></tr></table></figure></p>
+<p>总共有6道题，每道题有三个选项，所以答案的组合总共有$3^6=729$个，那么分数的可能性就有729个（实际上应该小于729，因为有不同答案但相同分数）。</p>
+<p>我们不需要获取ABC的答案组合，只需要获得分数[25, 50, 75]的组合即可，所以我思考了不超过10s，就放弃了使用Excel，因为这么多年早忘了当初那丁点的VBA知识了，而这个要用Excel计算的话必须使用VBA，所以果断放弃。</p>
+<p>那么再思考下要怎么计算，我们知道有6个答案，每个答案的分数是[25, 50, 75]中的一个，然后组成一个组合。所以其答案可能是:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[A, A, B, B, C, A] = [25, 25, 50, 50, 75, 25]</span><br></pre></td></tr></table></figure>
+<p>这样的组合总共有729个，所以要获取所有可能的结果，那么可以使用Python的itertools包中的product就是笛卡尔积来计算所有的可能组合：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"></span><br><span class="line">s = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> itertools.product([<span class="number">25</span>,<span class="number">50</span>,<span class="number">75</span>], repeat =<span class="number">6</span> ):</span><br><span class="line">	s.extend([i])</span><br></pre></td></tr></table></figure>
+<p>s就是所有的答案分数的组合可能，我们查看下组合的数量：<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(len(s))</span><br><span class="line"><span class="number">729</span></span><br><span class="line">[Finished <span class="keyword">in</span> <span class="number">0.1</span>s]</span><br></pre></td></tr></table></figure></p>
+<h3 id="如何计算？"><a href="#如何计算？" class="headerlink" title="如何计算？"></a>如何计算？</h3><p>我们已经知道了，每个答案组合有对应的分数，以上面的组合为例：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[A, A, B, B, C, A] = [25, 25, 50, 50, 75, 25]</span><br></pre></td></tr></table></figure>
+<p>计算其分值为：250(随机的分数都能是这个值我服了)。</p>
+<p>但我们不能这样简单的计算分值，因为每个问题的分值权重是不一样的，每个问题的重要程度是不一样的，我们预先定义每个问题权重为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[1, 2, 3, 4, 5, 6] = [20%, 20%, 20%, 20%, 10%, 10%]</span><br></pre></td></tr></table></figure>
+<p>所以每个投资者的分数计算公式为：</p>
+<p>$$Score = \sum_{i}^{n=6}score_i \times W_i$$</p>
+<p>$score_{i}$即是答案的分值组合，$W_i$为每个答案分值的权重,重新计算的分数结果就是40分。</p>
+<p>如果答案组合只有一两个，那么这样计算也就罢了，但我们有729个组合，不可能每个计算出来，至少我们的组合的获取就是要通过工具得出来。怎么计算所有729个组合分数呢，而且当选项扩展至4个甚至5个，问题扩展至数十个，那么答案组合就更多了，怎么办呢？</p>
+<h3 id="复习下矩阵计算"><a href="#复习下矩阵计算" class="headerlink" title="复习下矩阵计算"></a>复习下矩阵计算</h3><p>在6个问题3个答案的情况有729个组合，每个组合是有6个分数组成，每个分数有对应的权重，我们想到这样一个公式，$A_{m \times n}$ $\times$ $B_{n \times k}$ = $C_{m \times k}$:</p>
+<p>$$<br>\begin{equation}<br>\begin{bmatrix}<br>   1 &amp; 2 \<br>   3 &amp; 4<br>\end{bmatrix}<br>\times<br>\begin{bmatrix}<br>   1 \<br>   2<br>\end{bmatrix}<br>=<br>\begin{bmatrix}<br>   5 \<br>   11<br>\end{bmatrix}<br>\end{equation}<br>$$</p>
+<p>这是线性代数中所学习的矩阵乘法，那么我们就可以认为，729个组合每个组合为6个分数，所以可以看成一个$729 \times 6$的矩阵$A_{729 \times 6}$，那么权重则是一个$6 \times 1$的矩阵$B_{6 \times 1}$，所有两个矩阵相乘则生成一个矩阵$C_{729 \times 1}$。</p>
+<p>那么计算的整个公式就是：</p>
+<p>$$<br>\begin{equation}<br>\begin{bmatrix}<br>   a_{11} &amp; a_{12} &amp; a_{13} &amp; \cdots &amp; a_{16} \<br>   a_{21} &amp; a_{22} &amp; a_{23} &amp; \cdots &amp; a_{26} \<br>   \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \<br>   a_{i1} &amp; a_{i2} &amp; a_{i3} &amp; \cdots &amp; a_{ij}<br>\end{bmatrix}<br>\times<br>\begin{bmatrix}<br>b_{11} \<br>b_{21} \<br>\vdots \<br>b_{61}<br>\end{bmatrix}<br>=<br>\begin{bmatrix}<br>c_{11} \<br>c_{21} \<br>\vdots \<br>c_{i1}<br>\end{bmatrix}<br>\end{equation}<br>$$<br>特别的，$(i, j) = (729, 6)$。</p>
+<h3 id="Python计算逻辑和代码"><a href="#Python计算逻辑和代码" class="headerlink" title="Python计算逻辑和代码"></a>Python计算逻辑和代码</h3><p>我们考虑整个计算的顺序和逻辑如下：</p>
+<ol>
+<li>获取所有分数组合</li>
+<li>将分数组合生成为矩阵</li>
+<li>构建权重的矩阵</li>
+<li>分别两个矩阵相乘</li>
+<li>得到所有分数</li>
+<li>用R做分数的图形分布</li>
+<li>根据分布确定不同风险等级的分位数</li>
+</ol>
+<p>我们考虑每一个步骤的代码：</p>
+<ol>
+<li>获取所有分数组合</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"></span><br><span class="line">s = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> itertools.product([<span class="number">25</span>,<span class="number">50</span>,<span class="number">75</span>], repeat =<span class="number">6</span> ):</span><br><span class="line">	s.extend([i])</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>将分数组合生成矩阵</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">sm = np.mat(s)</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>构建权重的矩阵</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">w = np.mat([<span class="number">0.2</span>,<span class="number">0.2</span>,<span class="number">0.2</span>,<span class="number">0.2</span>,<span class="number">0.1</span>,<span class="number">0.1</span>])</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>矩阵相乘</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">score = np.matrix.tolist(sm*w.T)  % w.T指将矩阵转置为列矩阵</span><br></pre></td></tr></table></figure>
+<p>这段代码使用了np.matrix.tolist将计算后得到的矩阵直接转换为list列表，后面的第6步和第7步考虑在Python中调用R来实现。</p>
+<h3 id="Python调用R分析数据"><a href="#Python调用R分析数据" class="headerlink" title="Python调用R分析数据"></a>Python调用R分析数据</h3><h4 id="数据的预处理"><a href="#数据的预处理" class="headerlink" title="数据的预处理"></a>数据的预处理</h4><p>首先，需要使用python生成csv文件以供R使用，当然也可以在R中使用rpy2包调用R来分析。</p>
+<ol>
+<li>使用python生成csv文件：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">writer = csv.writer(file(<span class="string">"score.csv"</span>,<span class="string">'wb'</span>))</span><br><span class="line">writer.writerow([<span class="string">'Value'</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> s <span class="keyword">in</span> score:</span><br><span class="line">	writer.writerow(s)</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>在R中导入数据：</li>
+</ol>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">rm(list = ls())</span><br><span class="line">setwd(<span class="string">"/Users/eggs/Library/Mobile Documents/com~apple~CloudDocs/文档/document"</span>)</span><br><span class="line">score &lt;- read.csv(<span class="string">"score.csv"</span>,header = <span class="literal">TRUE</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="怎样分析数据？"><a href="#怎样分析数据？" class="headerlink" title="怎样分析数据？"></a>怎样分析数据？</h4><p>其实分析的思路挺简单，总共有729个总体值，但实际上计算出来的Score值只有21个，所以我们要考虑每个Score值占总体组合的概率。一般我们考虑CDF（cumulative distribution function）就是累积分布函数：</p>
+<p>$$<br>F(X) = F(x \leq X) =<br>\begin{cases}<br>\sum_{i=1}^{x \leq X}P_{x=i}， &amp; \text{x是离散的}  \[3ex]<br>\int_{-\infty}^{X} f(x)\,dx， &amp; \text{x是连续的}<br>\end{cases}<br>$$</p>
+<p>所以我们可以在R中画出Score的累积分布函数图。</p>
+<h4 id="画累积分布函数图"><a href="#画累积分布函数图" class="headerlink" title="画累积分布函数图"></a>画累积分布函数图</h4><ol>
+<li>画出累积分布图</li>
+</ol>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">par(family=<span class="string">'MicrosoftYaHei'</span>)</span><br><span class="line">plot(ecdf(score$Value), do.points=<span class="literal">FALSE</span>, verticals=<span class="literal">TRUE</span>, main = <span class="string">'CDF of score'</span>, xlab = <span class="string">'score'</span>, ylab = <span class="string">'CDF'</span> )</span><br></pre></td></tr></table></figure>
+<p>画出来的图如下：<br><img src="http://7viihf.com1.z0.glb.clouddn.com/cdfofscore.png" alt="测试分数的累计分布图"></p>
+<ol start="2">
+<li>用分位数工具取数</li>
+</ol>
+<p>我们假设取[20%, 80%]分位数的值：</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">y &lt;- quantile(score$Value,c(<span class="number">0.2</span>,<span class="number">0.8</span>))</span><br><span class="line"></span><br><span class="line"> <span class="number">20</span>%  <span class="number">80</span>% </span><br><span class="line"><span class="number">42.5</span> <span class="number">57.5</span></span><br></pre></td></tr></table></figure>
+<p>那么，我们可以认为：</p>
+<blockquote>
+<p>分数在[0,25)之间的为谨慎型，当然这一类别是理论值，不会通过问卷计算出来<br>分数在[25,42.5]之间的为保守型，占20%比例<br>分数在(42.5,57.5]之间的为谨慎型，占60%比例<br>分数在(57.5,75]之间的为积极型，占20%比例</p>
+</blockquote>
+<h3 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h3><p>在这里简单的做了一个关于风险评测的计算介绍，由于最近比较忙，所以内容写的也不怎么严谨。简单说就是思路清奇，排版华丽（你知道我说的是反话）。而且最近也没写什么，所以只是恰好碰到问题就随便写了篇，姑且看着吧。</p>
+<p>python代码如下：<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">__author__ = <span class="string">"Eggs"</span></span><br><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"></span><br><span class="line">s = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> itertools.product([<span class="number">25</span>,<span class="number">50</span>,<span class="number">75</span>], repeat = <span class="number">6</span> ):</span><br><span class="line">  s.extend([i])</span><br><span class="line"></span><br><span class="line">sm = np.mat(s)</span><br><span class="line">w = np.mat([<span class="number">0.2</span>,<span class="number">0.2</span>,<span class="number">0.2</span>,<span class="number">0.2</span>,<span class="number">0.1</span>,<span class="number">0.1</span>])</span><br><span class="line"></span><br><span class="line">score = np.matrix.tolist(sm*w.T)</span><br><span class="line"></span><br><span class="line">writer = csv.writer(file(<span class="string">"score.csv"</span>,<span class="string">'wb'</span>))</span><br><span class="line">writer.writerow([<span class="string">'Value'</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> s <span class="keyword">in</span> score:</span><br><span class="line">  writer.writerow(s)</span><br></pre></td></tr></table></figure></p>
+<p>R的代码如下：<br><figure class="highlight r"><table><tr><td class="code"><pre><span class="line">rm(list = ls())</span><br><span class="line">setwd(<span class="string">"/Users/eggs/Library/Mobile Documents/com~apple~CloudDocs/文档/document"</span>)</span><br><span class="line">score &lt;- read.csv(<span class="string">"score.csv"</span>,header = <span class="literal">TRUE</span>)</span><br><span class="line">a &lt;- unique(score$Value)</span><br><span class="line"></span><br><span class="line">par(family=<span class="string">'MicrosoftYaHei'</span>)</span><br><span class="line">plot(ecdf(score$Value), do.points=<span class="literal">FALSE</span>, verticals=<span class="literal">TRUE</span>, main = <span class="string">'CDF of score'</span>, xlab = <span class="string">'score'</span>, ylab = <span class="string">'CDF'</span> )</span><br><span class="line">y &lt;- quantile(score$Value,c(<span class="number">0.2</span>,<span class="number">0.8</span>))</span><br><span class="line"></span><br><span class="line">length(score$Value)</span><br><span class="line">length(a)</span><br><span class="line">y</span><br></pre></td></tr></table></figure></p>
+<p>运行的结果如下：<br><figure class="highlight r"><table><tr><td class="code"><pre><span class="line">&gt; length(score$Value)</span><br><span class="line">[<span class="number">1</span>] <span class="number">729</span></span><br><span class="line">&gt; length(a)</span><br><span class="line">[<span class="number">1</span>] <span class="number">21</span></span><br><span class="line">&gt; y</span><br><span class="line"> <span class="number">20</span>%  <span class="number">80</span>% </span><br><span class="line"><span class="number">42.5</span> <span class="number">57.5</span></span><br></pre></td></tr></table></figure></p>
+<p>一个测试：如果我们把题目答案扩展到4个，题目增加为10个，计算的结果如下：<br><figure class="highlight r"><table><tr><td class="code"><pre><span class="line">&gt; length(score$Value)</span><br><span class="line">[<span class="number">1</span>] <span class="number">1048576</span></span><br><span class="line">&gt; length(a)</span><br><span class="line">[<span class="number">1</span>] <span class="number">119</span></span><br><span class="line">&gt; y</span><br><span class="line"> <span class="number">20</span>%  <span class="number">80</span>% </span><br><span class="line"><span class="number">43.5</span> <span class="number">56.5</span></span><br></pre></td></tr></table></figure></p>
+<p>可见总共的样本超过了100万，我们可以用图形观察如下：</p>
+<p>CDF图形：<br><img src="http://7viihf.com1.z0.glb.clouddn.com/uscore.png" alt="CDF"></p>
+<p>概率密度图形：<br><img src="http://7viihf.com1.z0.glb.clouddn.com/density.png" alt="Denstiy"></p>
+<p>可见样本越多，图形越平滑，而且其分布越接近正态分布（极限中心定理）</p>
+]]></content>
+      <categories>
+        <category>数据分析</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>技术</tag>
+        <tag>数据分析</tag>
+        <tag>R</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据分析系列-R-数据</title>
+    <url>/2017-05-27-%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97-R-%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>上次做了R的介绍和安装<a href="http://eggs.pw/2017/04/19/%E5%AD%A6%E4%B9%A0R%E7%B3%BB%E5%88%97-1-%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%AE%89%E8%A3%85/" target="_blank" rel="noopener">点击这里直达</a>，主要介绍了在各个不同的系统中怎么安装R软件，还基础的介绍了怎么使用R，今天探讨下R的数据相关的知识。</p>
+<a id="more"></a>
+<h3 id="R的对象"><a href="#R的对象" class="headerlink" title="R的对象"></a>R的对象</h3><p>R中的所有对象都建立在一组基本的内嵌对象之上的，<strong>对象的类</strong>决定了其在R中的存储方式，同时R的对象也都属于某个类，而R提供了一组面向对象编程的机制。<em>这段话我也没懂!</em></p>
+<h4 id="R的基本对象类型"><a href="#R的基本对象类型" class="headerlink" title="R的基本对象类型"></a>R的基本对象类型</h4><p>R有如下的基本对象类型：</p>
+<ul>
+<li>基本向量</li>
+<li>复合对象</li>
+<li>特殊对象</li>
+<li>R语言（即R代码）</li>
+<li>函数</li>
+<li>内置对象</li>
+<li>字节码对象</li>
+</ul>
+<p>以下简单介绍以下R的常用的对象。</p>
+<h4 id="向量"><a href="#向量" class="headerlink" title="向量"></a>向量</h4><p>向量是R中最基本的对象，也是最常用的存储数据的对象。特别的，向量中的元素都会被转成同样的数据类型，也就是说向量的元素都是同种类的数据。R有多种创建向量的方法，其中最常见的是c函数：<br><figure class="highlight r"><table><tr><td class="code"><pre><span class="line">&gt; v &lt;- c(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line">&gt; v</span><br><span class="line">[<span class="number">1</span>] <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span></span><br></pre></td></tr></table></figure></p>
+<p>另外，我们可以使用操作符<code>:</code>生成向量:<br><figure class="highlight r"><table><tr><td class="code"><pre><span class="line">&gt; <span class="number">1</span>:<span class="number">10</span></span><br><span class="line"> [<span class="number">1</span>]  <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span>  <span class="number">7</span>  <span class="number">8</span>  <span class="number">9</span> <span class="number">10</span></span><br></pre></td></tr></table></figure></p>
+<p>另外一个更加灵活的是seq函数方式：<br><figure class="highlight r"><table><tr><td class="code"><pre><span class="line">&gt; seq(from=<span class="number">1</span>, to=<span class="number">10</span>, by=<span class="number">2</span>)</span><br><span class="line">[<span class="number">1</span>] <span class="number">1</span> <span class="number">3</span> <span class="number">5</span> <span class="number">7</span> <span class="number">9</span></span><br></pre></td></tr></table></figure></p>
+<p>其中by参数理解为步长，表示生成从1到10步长为2的向量。<code>seq</code>还有其它很多种用法来生成序列，可以使用<code>help(&#39;seq&#39;)</code>来查看帮助文档。</p>
+<h5 id="逻辑向量"><a href="#逻辑向量" class="headerlink" title="逻辑向量"></a>逻辑向量</h5><p>这里特别说明下逻辑向量，R是允许操作逻辑向量的。其中逻辑向量的元素可以被赋予的值有<code>TRUE</code>,<code>FALSE</code>和<code>NA</code>,我们可以试试下面的语句:<br><figure class="highlight r"><table><tr><td class="code"><pre><span class="line">&gt; v</span><br><span class="line">[<span class="number">1</span>] <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span></span><br><span class="line">&gt; m &lt;- v &gt; <span class="number">2.5</span></span><br><span class="line">&gt; m</span><br><span class="line">[<span class="number">1</span>] <span class="literal">FALSE</span> <span class="literal">FALSE</span>  <span class="literal">TRUE</span>  <span class="literal">TRUE</span></span><br><span class="line">&gt; class(m)</span><br><span class="line">[<span class="number">1</span>] <span class="string">"logical"</span></span><br></pre></td></tr></table></figure></p>
+<p>其中v是第一个代码创建的向量。而m就是我们通过逻辑运算符$\lt、\leq、\gt、\geq$来判断生成的一个向量。</p>
+<h4 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h4><p>矩阵也是R中常用的对象类型，矩阵可以看成多个带有下标类型的的元素集合，和数学中的矩阵类似，一般我们可以把其中某个元素表示为$a_{ij}$，更通用的可视化的矩阵如下:<br>$$<br>\begin{equation}<br>A_{i \times j} =<br> \begin{bmatrix}<br>   a_{11} &amp; a_{12} &amp; a_{13} &amp; \cdots &amp; a_{16} \<br>   a_{21} &amp; a_{22} &amp; a_{23} &amp; \cdots &amp; a_{26} \<br>   \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \<br>   a_{i1} &amp; a_{i2} &amp; a_{i3} &amp; \cdots &amp; a_{ij}<br>\end{bmatrix}<br>\end{equation}<br>$$</p>
+<p>在R中生成矩阵的函数为<code>matrix</code>:<br><figure class="highlight r"><table><tr><td class="code"><pre><span class="line">&gt; m &lt;- matrix(c(<span class="number">1</span>:<span class="number">12</span>),c(<span class="number">3</span>,<span class="number">4</span>))</span><br><span class="line">&gt; m</span><br><span class="line">     [,<span class="number">1</span>] [,<span class="number">2</span>] [,<span class="number">3</span>] [,<span class="number">4</span>]</span><br><span class="line">[<span class="number">1</span>,]    <span class="number">1</span>    <span class="number">4</span>    <span class="number">7</span>   <span class="number">10</span></span><br><span class="line">[<span class="number">2</span>,]    <span class="number">2</span>    <span class="number">5</span>    <span class="number">8</span>   <span class="number">11</span></span><br><span class="line">[<span class="number">3</span>,]    <span class="number">3</span>    <span class="number">6</span>    <span class="number">9</span>   <span class="number">12</span></span><br></pre></td></tr></table></figure></p>
+<p>可以看到我们用<code>matrix</code>函数将向量<code>c(1:12)</code>构建成了一个$3 \times 4$的矩阵，并且矩阵的填充是按照列填充的，如果我们想按照行填充命令如下：<br><figure class="highlight r"><table><tr><td class="code"><pre><span class="line">&gt; m &lt;- matrix(c(<span class="number">1</span>:<span class="number">12</span>),c(<span class="number">3</span>,<span class="number">4</span>),byrow = <span class="literal">TRUE</span>)</span><br><span class="line">&gt; m</span><br><span class="line">     [,<span class="number">1</span>] [,<span class="number">2</span>] [,<span class="number">3</span>] [,<span class="number">4</span>]</span><br><span class="line">[<span class="number">1</span>,]    <span class="number">1</span>    <span class="number">2</span>    <span class="number">3</span>    <span class="number">4</span></span><br><span class="line">[<span class="number">2</span>,]    <span class="number">5</span>    <span class="number">6</span>    <span class="number">7</span>    <span class="number">8</span></span><br><span class="line">[<span class="number">3</span>,]    <span class="number">9</span>   <span class="number">10</span>   <span class="number">11</span>   <span class="number">12</span></span><br></pre></td></tr></table></figure></p>
+<p>我们这里会看到矩阵m的长度是等于$i \times j$的：<br><figure class="highlight r"><table><tr><td class="code"><pre><span class="line">&gt; t &lt;- matrix(c(<span class="number">1</span>:<span class="number">1500</span>),c(<span class="number">30</span>,<span class="number">50</span>))</span><br><span class="line">&gt; length(t)</span><br><span class="line">[<span class="number">1</span>] <span class="number">1500</span></span><br></pre></td></tr></table></figure></p>
+<p>所以创建矩阵时要注意矩阵的长度，否则会产生错误。</p>
+<h4 id="因子"><a href="#因子" class="headerlink" title="因子"></a>因子</h4><p>因子为处理分类数据提供了一种非常有效的方法，因子是一个对<code>等长的的其它向量</code>进行分组的向量对象。R同时提供了有序和无序因子。我们先看一个例子：<br><figure class="highlight r"><table><tr><td class="code"><pre><span class="line">&gt; t &lt;- c(<span class="number">1</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line">&gt; factor(t)</span><br><span class="line"> [<span class="number">1</span>] <span class="number">1</span> <span class="number">2</span> <span class="number">5</span> <span class="number">2</span> <span class="number">5</span> <span class="number">2</span> <span class="number">4</span> <span class="number">3</span> <span class="number">1</span> <span class="number">2</span></span><br><span class="line">Levels: <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> <span class="number">5</span></span><br></pre></td></tr></table></figure></p>
+<p>首先因子是一个向量，其次因子有个不同的参数就是<code>Levels</code>，这个实际上是向量t中所有的元素去重（unique）后的值，举一个因子的使用：<br><figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 假设有若干省的人的提供样本体重数据</span></span><br><span class="line"><span class="comment"># state表示包含数据的省份</span></span><br><span class="line">state &lt;- c(<span class="string">"上海"</span>, <span class="string">"山西"</span>, <span class="string">"浙江"</span>, <span class="string">"四川"</span>, <span class="string">"四川"</span>, </span><br><span class="line">           <span class="string">"广东"</span>, <span class="string">"湖南"</span>, <span class="string">"湖南"</span>, <span class="string">"浙江"</span>, <span class="string">"河南"</span>, </span><br><span class="line">           <span class="string">"四川"</span>, <span class="string">"河南"</span>, <span class="string">"浙江"</span>, <span class="string">"浙江"</span>, <span class="string">"山西"</span>, </span><br><span class="line">           <span class="string">"上海"</span>, <span class="string">"山西"</span>, <span class="string">"广东"</span>, <span class="string">"湖南"</span>, <span class="string">"河南"</span>,</span><br><span class="line">           <span class="string">"浙江"</span>, <span class="string">"四川"</span>, <span class="string">"四川"</span>, <span class="string">"湖南"</span>, <span class="string">"山西"</span>, </span><br><span class="line">           <span class="string">"江苏"</span>, <span class="string">"四川"</span>, <span class="string">"河南"</span>, <span class="string">"河南"</span>, <span class="string">"江苏"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># weight表示对应的省的样本体重数据不含小数</span></span><br><span class="line">weight &lt;- c(<span class="number">60</span>, <span class="number">49</span>, <span class="number">40</span>, <span class="number">61</span>, <span class="number">64</span>, </span><br><span class="line">             <span class="number">60</span>, <span class="number">59</span>, <span class="number">54</span>, <span class="number">62</span>, <span class="number">69</span>, </span><br><span class="line">             <span class="number">70</span>, <span class="number">42</span>, <span class="number">56</span>, <span class="number">61</span>, <span class="number">61</span>, </span><br><span class="line">             <span class="number">61</span>, <span class="number">58</span>, <span class="number">51</span>, <span class="number">48</span>, <span class="number">65</span>, </span><br><span class="line">             <span class="number">49</span>, <span class="number">49</span>, <span class="number">41</span>, <span class="number">48</span>, <span class="number">52</span>, </span><br><span class="line">             <span class="number">46</span>, <span class="number">59</span>, <span class="number">46</span>, <span class="number">58</span>, <span class="number">43</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取省份的样本的因子水平</span></span><br><span class="line">fs &lt;- factor(state)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算每个省份样本的平均体重</span></span><br><span class="line">average_weight &lt;- tapply(weight, fs, mean)</span><br></pre></td></tr></table></figure></p>
+<p>计算的结果如下：<br><figure class="highlight r"><table><tr><td class="code"><pre><span class="line">&gt; average_weight</span><br><span class="line">    广东     河南     湖南     江苏     山西     上海     四川     浙江 </span><br><span class="line"><span class="number">55.50000</span> <span class="number">56.00000</span> <span class="number">52.25000</span> <span class="number">44.50000</span> <span class="number">55.00000</span> <span class="number">60.50000</span> <span class="number">57.33333</span> <span class="number">53.60000</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h4><p>列表是一种泛化的向量（没错它又是向量的变种），但它和向量不同就是列表不要求元素都是同一类型，列表也是有序集合构成的对象，它包含的对象我们又可以成为分量:<br><figure class="highlight r"><table><tr><td class="code"><pre><span class="line">Lst &lt;- list(name=<span class="string">"阿三"</span>, wife=<span class="string">"查无此人"</span>, </span><br><span class="line">            no.children=<span class="number">3</span>, child.ages=c(<span class="number">4</span>,<span class="number">7</span>,<span class="number">9</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 没搞懂老婆都查无此人了怎么还有孩子？手动大笑</span></span><br></pre></td></tr></table></figure></p>
+<p>其中，列表的分量是可以包含不同的模式或者类型，如一个列表可以包括数值向量、逻辑向量、矩阵、复向量、函数、······，简直是来者不拒。而且分量会被编号，所以可以通过编号来访问分量：<br><figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 比如想访问阿三可以这样</span></span><br><span class="line">&gt; Lst[[<span class="number">1</span>]]</span><br><span class="line">[<span class="number">1</span>] <span class="string">"阿三"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可以这样</span></span><br><span class="line">&gt; Lst$name</span><br><span class="line">[<span class="number">1</span>] <span class="string">"阿三"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果想知道阿三第二个孩子的年龄我们可以这样</span></span><br><span class="line">&gt; Lst[[<span class="number">4</span>]][<span class="number">2</span>]</span><br><span class="line">[<span class="number">1</span>] <span class="number">7</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 还可以这样</span></span><br><span class="line">&gt; Lst$child.ages[<span class="number">2</span>]</span><br><span class="line">[<span class="number">1</span>] <span class="number">7</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 再来一个彩蛋:定义一个函数，输入阿三的第几个孩子返回一段话</span></span><br><span class="line">f &lt;- <span class="keyword">function</span>(i)  paste(<span class="string">"我有个朋友叫"</span>,Lst$name,<span class="string">",他的老婆"</span>,Lst$wife,<span class="string">",但是他居然有"</span>,Lst$no.children,<span class="string">"个孩子,而且第"</span>,i,<span class="string">"个孩子"</span>,<span class="keyword">if</span> (Lst$child.ages[i] &gt;= <span class="number">15</span>) <span class="string">"不仅可以读书还可以喝酒了"</span> <span class="keyword">else</span> <span class="keyword">if</span>(Lst$child.ages[i] &lt; <span class="number">15</span> &amp;&amp; Lst$child.ages[i] &gt;= <span class="number">6</span>) <span class="string">"正在苦逼的读书吧"</span> <span class="keyword">else</span> <span class="string">"或许能在幼儿园找个女朋友?"</span> </span><br><span class="line">                        ,sep=<span class="string">""</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行结果</span></span><br><span class="line">&gt; f(<span class="number">1</span>)</span><br><span class="line">[<span class="number">1</span>] <span class="string">"我有个朋友叫阿三,他的老婆查无此人,但是他居然有3个孩子,而且第1个孩子或许能在幼儿园找个女朋友?"</span></span><br><span class="line">&gt; f(<span class="number">2</span>)</span><br><span class="line">[<span class="number">1</span>] <span class="string">"我有个朋友叫阿三,他的老婆查无此人,但是他居然有3个孩子,而且第2个孩子正在苦逼的读书吧"</span></span><br><span class="line">&gt; f(<span class="number">3</span>)</span><br><span class="line">[<span class="number">1</span>] <span class="string">"我有个朋友叫阿三,他的老婆查无此人,但是他居然有3个孩子,而且第3个孩子不仅可以读书还可以喝酒了"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 我到底在玩什么啊！！！！！</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="数据框"><a href="#数据框" class="headerlink" title="数据框"></a>数据框</h4><p>数据框也是R常用的数据对象，数据框是和矩阵类似的一种结构，在数据框中，不同的列是可以为不同的对象。一般可以使用<code>data.frame</code>函数来创建数据框对象：<br><figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 我们沿用因子中的数据即省份的体重样本数据来构建数据框</span></span><br><span class="line">&gt; weight_by_state &lt;- data.frame(<span class="string">'省份'</span>=state,<span class="string">'体重'</span>=weight)</span><br></pre></td></tr></table></figure></p>
+<p>如果有符合数据框限制的列表可以直接使用<code>as.data.frame()</code>函数转换为数据框，从外部环境读取数据使用<code>read.table()</code>和<code>read.csv</code>均可以创建数据框。</p>
+<p>一般数据框有如下的限制条件：</p>
+<ul>
+<li>分量必须是向量（数值、字符、逻辑），因子，数值矩阵，列表或其它数据框</li>
+<li>矩阵，列表和数据框为新的数据框提供了尽可能多的变量，因为它们各自拥有列，元素或者变量</li>
+<li>数值向量，逻辑值，因子保持原有格式，而字符向量会被强制转换成因子</li>
+<li>在数据框中以变量形式出现的向量结构必须长度一致，矩阵结构必须有一样的行数</li>
+</ul>
+<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><p>最后一个介绍的是数组（其余的类型用的较少就不再介绍），数组是数组可以看作是带有多个下标类型相同的元素集合:<br><figure class="highlight r"><table><tr><td class="code"><pre><span class="line">&gt; z &lt;- <span class="number">1</span>:<span class="number">1500</span></span><br><span class="line">&gt; dim(z) &lt;- c(<span class="number">3</span>,<span class="number">5</span>,<span class="number">100</span>)</span><br></pre></td></tr></table></figure></p>
+<p>通过对dim属性的赋值（赋值的是维度向量），这样就将向量z成为了一个$3 \times 5 \times 100$的数组。所以z的1500个元素，元素的下标可以从1一直标记到对应元素的值。</p>
+<p>除了<code>dim()</code>函数创建数组，更通用的可以使用<code>array()</code>函数创建数组：<br><figure class="highlight r"><table><tr><td class="code"><pre><span class="line">&gt; s &lt;- array(<span class="number">1</span>:<span class="number">1500</span>,c(<span class="number">3</span>,<span class="number">5</span>,<span class="number">100</span>))</span><br><span class="line">&gt; class(s)</span><br><span class="line">[<span class="number">1</span>] <span class="string">"array"</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="对象的模式和属性"><a href="#对象的模式和属性" class="headerlink" title="对象的模式和属性"></a>对象的模式和属性</h3><p>对象的模式<code>mode</code>是指是该对象基本要素的类型，这是专门用来描述一个对 象<code>特征</code>的术语。另外还有一个所有对象都有的特征是长度<code>length</code>，如果你想知道一个对象更详细的特征可以使用<code>attributes</code>函数来获取：<br><figure class="highlight r"><table><tr><td class="code"><pre><span class="line">&gt; attributes(s)</span><br><span class="line">$dim</span><br><span class="line">[<span class="number">1</span>]   <span class="number">3</span>   <span class="number">5</span> <span class="number">100</span></span><br></pre></td></tr></table></figure></p>
+<p>我们把模式和长度称为对象的内在属性。而且对象的模式和长度属性是可以改变的。</p>
+<p>今天在坐火车，就写到这里吧，后面会有继续的内容。<strong>结束</strong></p>
+]]></content>
+      <categories>
+        <category>数据分析</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
+        <tag>数据分析</tag>
+        <tag>R</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>基于TuShare和ECharts的金融数据可视化</title>
+    <url>/2017-10-19-%E5%9F%BA%E4%BA%8ETuShare%E5%92%8CECharts%E7%9A%84%E9%87%91%E8%9E%8D%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/</url>
+    <content><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h2 id="导言"><a href="#导言" class="headerlink" title="导言"></a>导言</h2><blockquote>
+<p>之前写过一篇文章，介绍用python从网易财经抓取数据并使用matplotlib和R画出K线图。上述方法尤其适用的场景，有时候在交互式绘图方面显得力不从心，今天介绍以下基于ECharts进行交互绘图，并且我们将数据的获取方式进行更新，使用TuShare这个开源的财经数据接口获取需要的数据。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>首先介绍下TuShare和ECharts两个有用的工具。</p>
+<h3 id="TuShare"><a href="#TuShare" class="headerlink" title="TuShare"></a>TuShare</h3><p>TuShare<a href="http://www.waditu.cn/" target="_blank" rel="noopener">点击这里访问</a>是一个由个人开发和维护的开源财经数据接口包，其中的数据包括股票的历史行情、实时行情数据、分类数据、财务数据和基本面的数据等，数据均是从第三方取到获取并包装，使用python对数据进行清洗和处理，最终的数据格式为Pandas中支持的data.frame格式的数据。</p>
+<p>如TuShare本身介绍所述，该数据接口适用于量化投资分析师（Quant)、对金融市场进行大数据分析的企业和个人、金融公司以及学习利用python进行数据分析的人（包括学生）。所以如果你对金融分析感兴趣，而又不想付费使用商业的数据接口，Tushare是一个非常不错的选择，如果你觉得这个接口很好用，并且愿意适当支持作者，你也可以在Tushare的主页进行捐助.</p>
+<h3 id="ECharts"><a href="#ECharts" class="headerlink" title="ECharts"></a>ECharts</h3><p>ECharts是一个纯粹的JavaScript库，由百度开发和维护的一个<a href="http://echarts.baidu.com/index.html" target="_blank" rel="noopener">开源项目</a>。这个百度的产品确实很赞，你可以在官网查看实例，并且可以修改实例来体验产品，可以发现基本上主流的图形都可以支持，而且由于文档有中文版，适合对英语阅读有困难的朋友。</p>
+<p>另外，hexo其实是支持echarts模块的，其插件为<a href="https://github.com/quentin-chen/hexo-tag-echarts3" target="_blank" rel="noopener">hexo-tag-echarts3</a>，并且你可以参考<a href="http://kchen.cc/2016/11/05/echarts-in-hexo/" target="_blank" rel="noopener">使用方法</a>，对于此本文就不再展开说明了。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="安装TuShare"><a href="#安装TuShare" class="headerlink" title="安装TuShare"></a>安装TuShare</h3><p>TuShare的安装很简单，可以在网站查看其的系统依赖，一般Python是最新版的都支持（包括Python2和Python3）。另外，因为tushare的数据格式为data.frame，因此要求python安装了Pandas库。使用命令安装如下：</p>
+<p>以Mac OS为准，Linux和Windows参考网站的提示方法</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install tushare   # Python2安装</span><br><span class="line">pip3 install tushare  # Python3安装</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 如果安装报错，一般是没有安装Pandas，可以如下安装：</span><br><span class="line">pip install pandas     # Python2安装</span><br><span class="line">pip3 install pandas    # Python3安装</span><br></pre></td></tr></table></figure>
+<p>安装完就可以使用TuShare了。</p>
+<h3 id="安装ECharts"><a href="#安装ECharts" class="headerlink" title="安装ECharts"></a>安装ECharts</h3><p>实际上ECharts可以下载到本地，并可以和你的web或者app程序打包应用，我们这次使用的ECharts不是使用本地调用代码，而是使用Python的一个模块，其中动态导入js脚本实现绘图。因此本次不用安装ECharts。</p>
+<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>在Python的Ipython中，有个display的模块，可以实现HTML效果的展示，更出彩的是Ipython Notebook中自带JS模块可以动态导入js脚本并执行。可以先看看示例（本文的示例均是使用Ipython)：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> Ipython.display <span class="keyword">import</span> HTML</span><br><span class="line"></span><br><span class="line">HTML(<span class="string">'这是&lt;font color=\'read\'&gt;HTML代码&lt;/font&gt;测试代码'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="ECharts的基本用法"><a href="#ECharts的基本用法" class="headerlink" title="ECharts的基本用法"></a>ECharts的基本用法</h3><p>ECharts是个纯粹的JS图形库，所以其语言本质是Javascript语言。根据官网的示例，我们构建以下一个图形：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">option = &#123;</span><br><span class="line">    title : &#123;</span><br><span class="line">        text: <span class="string">'各金融资产比重'</span>,</span><br><span class="line">        subtext: <span class="string">'纯属虚构'</span>,</span><br><span class="line">        x:<span class="string">'center'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    tooltip : &#123;</span><br><span class="line">        trigger: <span class="string">'item'</span>,</span><br><span class="line">        formatter: <span class="string">"&#123;a&#125; &lt;br/&gt;&#123;b&#125; : &#123;c&#125; (&#123;d&#125;%)"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    legend: &#123;</span><br><span class="line">        orient: <span class="string">'vertical'</span>,</span><br><span class="line">        left: <span class="string">'left'</span>,</span><br><span class="line">        data: [<span class="string">'股票'</span>,<span class="string">'债券'</span>,<span class="string">'基金'</span>,<span class="string">'金融衍生品'</span>,<span class="string">'现金及等价物'</span>]</span><br><span class="line">    &#125;,</span><br><span class="line">    series : [</span><br><span class="line">        &#123;</span><br><span class="line">            name: <span class="string">'金融资产'</span>,</span><br><span class="line">            type: <span class="string">'pie'</span>,</span><br><span class="line">            radius : <span class="string">'55%'</span>,</span><br><span class="line">            center: [<span class="string">'50%'</span>, <span class="string">'60%'</span>],</span><br><span class="line">            data:[</span><br><span class="line">                &#123;<span class="attr">value</span>:<span class="number">335</span>, <span class="attr">name</span>:<span class="string">'债券'</span>&#125;,</span><br><span class="line">                &#123;<span class="attr">value</span>:<span class="number">310</span>, <span class="attr">name</span>:<span class="string">'基金'</span>&#125;,</span><br><span class="line">                &#123;<span class="attr">value</span>:<span class="number">234</span>, <span class="attr">name</span>:<span class="string">'现金及等价物'</span>&#125;,</span><br><span class="line">                &#123;<span class="attr">value</span>:<span class="number">135</span>, <span class="attr">name</span>:<span class="string">'金融衍生品'</span>&#125;,</span><br><span class="line">                &#123;<span class="attr">value</span>:<span class="number">1548</span>, <span class="attr">name</span>:<span class="string">'股票'</span>&#125;</span><br><span class="line">            ],</span><br><span class="line">            itemStyle: &#123;</span><br><span class="line">                emphasis: &#123;</span><br><span class="line">                    shadowBlur: <span class="number">10</span>,</span><br><span class="line">                    shadowOffsetX: <span class="number">0</span>,</span><br><span class="line">                    shadowColor: <span class="string">'rgba(0, 0, 0, 0.5)'</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>对应的图形就如下所示，并且图形可以交互显示:</p>
+<div id="echarts5760" style="width: 110%;height: 420px;margin: 0 auto"></div>
+<script src="https://cdn.bootcss.com/echarts/3.8.0/echarts.common.min.js"></script>
+<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('echarts5760'));
+        // 指定图表的配置项和数据
+        var option = option = {
+    title : {
+        text: '各金融资产比重',
+        subtext: '纯属虚构',
+        x:'center'
+    },
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+        orient: 'vertical',
+        left: 'left',
+        data: ['股票','债券','基金','金融衍生品','现金及等价物']
+    },
+    series : [
+        {
+            name: '金融资产',
+            type: 'pie',
+            radius : '55%',
+            center: ['50%', '60%'],
+            data: [
+                {value:335, name:'债券'},
+                {value:310, name:'基金'},
+                {value:234, name:'现金及等价物'},
+                {value:135, name:'金融衍生品'},
+                {value:1548, name:'股票'}
+            ],
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        }
+    ]
+};
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+</script>
+<p>所以我们看到，ECharts基于javascript绘制图形，定义好图形的参数和数据，用浏览器渲染就能得到所需要的图形，我们本文就使用了TuShare获取数据，并对数据进行清洗和处理。</p>
+<h3 id="TuShare的基本用法"><a href="#TuShare的基本用法" class="headerlink" title="TuShare的基本用法"></a>TuShare的基本用法</h3><p>安装TuShare后可以直接使用，tushare有各种接口返回不同的数据，非常容易操作，例如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> tushare <span class="keyword">as</span> ts</span><br><span class="line"></span><br><span class="line">price_by_day = ts.get_k_data(code=<span class="string">'600000'</span>, ktype=<span class="string">'D'</span>, autype=<span class="string">'None'</span>, start=<span class="string">'2017-01-01'</span>, end=<span class="string">'2017-10-19'</span>)</span><br><span class="line">price_by_day[<span class="number">0</span>:<span class="number">10</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行结果如下：</span></span><br><span class="line">Out[<span class="number">5</span>]:</span><br><span class="line">         date   open  close   high    low    volume    code</span><br><span class="line"><span class="number">0</span>  <span class="number">2017</span><span class="number">-01</span><span class="number">-03</span>  <span class="number">16.21</span>  <span class="number">16.30</span>  <span class="number">16.44</span>  <span class="number">16.17</span>  <span class="number">162371.0</span>  <span class="number">600000</span></span><br><span class="line"><span class="number">1</span>  <span class="number">2017</span><span class="number">-01</span><span class="number">-04</span>  <span class="number">16.29</span>  <span class="number">16.33</span>  <span class="number">16.35</span>  <span class="number">16.18</span>  <span class="number">296587.0</span>  <span class="number">600000</span></span><br><span class="line"><span class="number">2</span>  <span class="number">2017</span><span class="number">-01</span><span class="number">-05</span>  <span class="number">16.30</span>  <span class="number">16.30</span>  <span class="number">16.38</span>  <span class="number">16.24</span>  <span class="number">264376.0</span>  <span class="number">600000</span></span><br><span class="line"><span class="number">3</span>  <span class="number">2017</span><span class="number">-01</span><span class="number">-06</span>  <span class="number">16.30</span>  <span class="number">16.18</span>  <span class="number">16.30</span>  <span class="number">16.13</span>  <span class="number">171955.0</span>  <span class="number">600000</span></span><br><span class="line"><span class="number">4</span>  <span class="number">2017</span><span class="number">-01</span><span class="number">-09</span>  <span class="number">16.24</span>  <span class="number">16.20</span>  <span class="number">16.29</span>  <span class="number">16.13</span>  <span class="number">149087.0</span>  <span class="number">600000</span></span><br><span class="line"><span class="number">5</span>  <span class="number">2017</span><span class="number">-01</span><span class="number">-10</span>  <span class="number">16.18</span>  <span class="number">16.19</span>  <span class="number">16.24</span>  <span class="number">16.14</span>   <span class="number">79967.0</span>  <span class="number">600000</span></span><br><span class="line"><span class="number">6</span>  <span class="number">2017</span><span class="number">-01</span><span class="number">-11</span>  <span class="number">16.24</span>  <span class="number">16.16</span>  <span class="number">16.24</span>  <span class="number">16.15</span>   <span class="number">91933.0</span>  <span class="number">600000</span></span><br><span class="line"><span class="number">7</span>  <span class="number">2017</span><span class="number">-01</span><span class="number">-12</span>  <span class="number">16.18</span>  <span class="number">16.12</span>  <span class="number">16.20</span>  <span class="number">16.11</span>   <span class="number">82961.0</span>  <span class="number">600000</span></span><br><span class="line"><span class="number">8</span>  <span class="number">2017</span><span class="number">-01</span><span class="number">-13</span>  <span class="number">16.10</span>  <span class="number">16.27</span>  <span class="number">16.29</span>  <span class="number">16.10</span>  <span class="number">190341.0</span>  <span class="number">600000</span></span><br><span class="line"><span class="number">9</span>  <span class="number">2017</span><span class="number">-01</span><span class="number">-16</span>  <span class="number">16.23</span>  <span class="number">16.56</span>  <span class="number">16.60</span>  <span class="number">16.10</span>  <span class="number">533047.0</span>  <span class="number">600000</span></span><br></pre></td></tr></table></figure>
+<p>示例中，我们使用了ts中的get_k_data方法，获取了股票代码为600000（浦发银行）的历史日数据，同样我们还可以使用其它接口获取其它的数据，甚至包括分时数据。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="股票的日K线图"><a href="#股票的日K线图" class="headerlink" title="股票的日K线图"></a>股票的日K线图</h3><p>根据以上我们的想法，首先</p>
+<p><strong>未完成，待续</strong></p>
+]]></content>
+      <categories>
+        <category>数据分析</category>
+      </categories>
+      <tags>
+        <tag>金融</tag>
+        <tag>Python</tag>
+        <tag>数据可视化</tag>
+        <tag>ECharts</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>生命的精彩来自内心的丰富</title>
+    <url>/2017-10-25-%E7%94%9F%E5%91%BD%E7%9A%84%E7%B2%BE%E5%BD%A9%E6%9D%A5%E8%87%AA%E5%86%85%E5%BF%83%E7%9A%84%E4%B8%B0%E5%AF%8C/</url>
+    <content><![CDATA[<script src="/assets/js/APlayer.min.js"> </script><h2 id="导言"><a href="#导言" class="headerlink" title="导言"></a>导言</h2><blockquote>
+<p>最近的心情有点低沉，也不知道向谁诉说，总觉得憋在心里不太妥当。干脆还是写写文章，记录一下自己的心情，这样以后也可以回头看看，体会过去的自己。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="什么样的路"><a href="#什么样的路" class="headerlink" title="什么样的路"></a>什么样的路</h2><p>我一直认为自己是个幸运的人，虽然我没有亲见过比我糟糕许多的人，但我可以能想象到整个社会很多人的境遇是我平生可能不曾见过的。也就是说其实我还是处在很好的环境和情况下了。</p>
+<p>这几年，我的孤独感越来越浓烈，很多时候有很多事情，很多思考不知道告诉谁。给父母讲，他们不一定理解，甚至很多时候我说什么他们都不明白。对朋友其实也有保留，因为大部分时候我觉得自己和其他人有很多不一样的思想和人生观念，所以真的能聊得来的朋友就很少了。而且，我这人也挺奇怪，有个很好的朋友自从恋爱了，我就尽量少打扰她了，她结婚了就更不好意思像过去那样随意地找她聊天了。</p>
+<p>那天看到一篇文章，大概讲的是孤独是上天对一个人的赏赐，让一个人真正的了解自己的内心，学会和自己相处。过去很多年，我绝大部分时间都是和自己相处，学会了了解自己的优势和劣势。</p>
+<h2 id="最近一年"><a href="#最近一年" class="headerlink" title="最近一年"></a>最近一年</h2><p>今年家里最大的一件事就是父亲病了，当然父亲病了肯定有他自己的因素，但我的疏忽也是主要的原因。过去几年，他作为老烟民实际上有着患肺癌的高风险因素，过去我提醒他体检，但很多时候只是提醒，却没有强制性的要求，导致不能及时发现，等到发现的时候病情已经很严重了。</p>
+<p>亲人患病对家庭来说是很沉重的，并不是因为经济的问题，而是身体和心理的痛苦。刚刚得知父亲的病，我们商量了达成一致，先瞒着他不让他知道，免得他的心理负担过重。我其实也不知道这样对不对，但确实隐瞒对治疗造成了很多不便。因为很多检查和治疗都想着不让他知道，但难免有蛛丝马迹会不对。</p>
+<p>过了一段时间，治疗效果很不如人意，我们决定还是告诉他，并给他安排了更好的医院进行治疗。为此那段时间，我往返深圳成都数次，去联络医院和医生。然后把他转到成都的医院，同时尽量的用心理辅导来排解他的低落，我能明显感受到他的害怕和担忧。这个时候，作为家里的支柱，应该起到更大的作用，我每天打电话聊天尽量的让他感觉不到害怕。而且父亲也担心严重的病会花费巨额的医疗费，我也尽量的让他不要担心。</p>
+<p>有的时候，家庭有问题才能发现这个家庭是否团结，凝聚力如何。我们家在父亲病了，体现了强大的团结。每个人都尽自己最大的努力来解决问题，母亲在医院护理父亲半年，在一个很小的床上就睡了大半年，姐姐也回家做饭照顾。我也在假期或者平时往返深圳成都数次，家庭体现出了强大的凝聚力，用了各种方式和各种渠道去帮助父亲，所以无论从治疗还是生活，我们都在努力做到最好，父亲也慢慢的解开心结，治疗效果也很好，这就是对我们最大的回馈。</p>
+<h2 id="每个人都会面临问题"><a href="#每个人都会面临问题" class="headerlink" title="每个人都会面临问题"></a>每个人都会面临问题</h2><p>无论作为个体还是集体的一份子，我们都会面对自己的问题和亲人、朋友的问题，这些会给我们带来很大的困扰。坦白讲，今年大部分时候的情绪并不好，要花大部分时间照顾家人，为父亲的病奔走，找医院、检查、和医生商量治疗方案、学习相关的知识、以及各种打听化疗后的护理等等，所以大部分时间都是繁忙的。而且，工作也开始忙碌，并且遇到各种问题，最突出的就是和领导的工作理念不同。</p>
+<p>显然，遇到这些事情，大部分人都不会高兴得起来。这几年我倒是学会了如何处理自己的情绪，或许我觉得很辛苦，也很艰难，情绪难免低落，但这些都不能带给身边的人，更不能带个关心自己的人。</p>
+<p>这时候我能做的就是，该做什么事就做什么事，保持平稳的心态。</p>
+<h2 id="人生可以很精彩"><a href="#人生可以很精彩" class="headerlink" title="人生可以很精彩"></a>人生可以很精彩</h2><p>正如邓丽君所唱的歌：路纵崎岖亦不怕受磨炼，我们要活得精彩就得让自己的内心更丰富。</p>
+<p>五年前，我受抑郁症困扰和感情的失败，在心情最为沮丧的时候选择了辞职，以为休息一段时间可以让自己平复并走出阴影。然而，一段时间的松懈并没有让我真的恢复。那时候很颓废，内心干涸，无所事事，每天除了玩游戏上网看电视，其它的事情都不做了。要知道，过去近三十年我的兴趣爱好广泛，音乐、书法、读书、体育、厨艺和手工活都是我的爱好，那时候都没兴趣了。自己把自己的内心抛弃，不再继续任何有意义的尝试，所以活得很丧气。</p>
+<p>现在想来，自己还是不够沉稳，遇到了无法处理的事情就不愿意面对，或者没有尽最大的努力去改变自己，让自己回到正轨。</p>
+<p>这几年，过去的兴趣也没有找回来多少，但总有新的事情能够吸引我…，这样挺好。</p>
+<h2 id="孤独是上天给的最大赏赐"><a href="#孤独是上天给的最大赏赐" class="headerlink" title="孤独是上天给的最大赏赐"></a>孤独是上天给的最大赏赐</h2><p>每个人都会有孤独的时候，这个是上天给的最大的赏赐，我们如何处理孤独是人生中必须经过的。</p>
+<p>孤独只能相处，不能解决。这么多年我已经习惯了它，很多时候它的产生来自于和家人、朋友的观念上的差异，或者对待某件事情的看法。因为会在那么一刹那间，觉得这个世界了解我的人怎么这么少，而我恰好有个习惯就是不愿意解释，说起来还是我的一个观点：我们不应该改变任何人的观念和思想，因为他是一个独立的人，我应该尊重他的思想和观念。</p>
+<p>所以，更加孤独的时候就是，双方有了冲突，我不愿解释，而对方却努力想让你接受他的观点，这个时候我就很压抑。不过大部分时候我都无所谓，特别是如果这个试图改变我的人对我来说没那么重要，几乎是无影响的。但是如何对方是我认为很重要的人，我就会很忧郁，因为这种冲突很难解决，结果大部分时候我就妥协了。</p>
+<p>所以，环境的孤独是无关痛痒的，然而心理上的孤独是挺难忍受的，但我想到我喜欢的人，我关心的人开心，似乎这也没什么大不了的，因为他们开心了我就开心了…</p>
+<p><strong>所有的事情都是在你经历时才会觉得，它们真的很有意思</strong></p>
+]]></content>
+      <categories>
+        <category>生活</category>
+      </categories>
+      <tags>
+        <tag>情绪</tag>
+        <tag>人生</tag>
+        <tag>生活</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>The Road to Serfdom</title>
+    <url>/2017-10-27-The-Road-to-Serfdom/</url>
+    <content><![CDATA[<script src="/assets/js/APlayer.min.js"> </script>
+
+
+
+<div id="outline-container-orgf2c736a" class="outline-2">
+<h2 id="orgf2c736a">前言</h2>
+<div class="outline-text-2" id="text-orgf2c736a">
+<p>
+这篇笔记大概是写在2016年的7月份，那时候买了哈耶克的三本书，分别是《通往奴役之路》、《自由宪章》、《致命的自负》。刚开始因为看到《通往奴役之路》（就是《The Road to Serfdom》这本书）内容比较少，所以就先读了。
+</p>
+
+<a id="more"></a>
+
+<p>
+读的也挺快，大概一个月时间就读完了，也写了一些笔记（就是本文的雏形），当时想到得读完其它两本书还可以把这个笔记修改下，谁知道这一年过去了，连《致命的自负》这本书我都只是刚刚看完，而最厚的一本书《自由宪章》压根还没开始看，据我所知自由宪章和通往奴役之路关联还挺紧密，很多在《通往奴役之路》之中未能合理解释和回答的问题，在《自由宪章》里有了比较深刻和全面的说明，但不能就这样拖着，先整理下发在blog上，以后慢慢修改，此次的修改主要是删除了涉及政治的部分，毕竟现在的舆论还是少谈政治的好。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org000ab4c" class="outline-2">
+<h2 id="org000ab4c">关于这本书</h2>
+<div class="outline-text-2" id="text-org000ab4c">
+<p>
+大学在学习西方经济学的时候，接触到了凯恩斯，就这样我了解了当年凯恩斯和哈耶克的关于政府是否应该干预经济的争论，从而知道了解了哈耶克这个人。进而了解到哈耶克本人参与的两场大论战，其中一场是哈耶克和米塞斯为一方的，和兰格与勒纳为一方的，就社会主义经济计算可行性的论战。另一场就是和凯恩斯的论战了，而《The Road to Serfdom》正是第一场论战的结果。
+</p>
+
+<p>
+当时知道这回事，但没有读过这本书，去年才买了这本书准备拜读。不过在之前，就知道了这本书的核心内容，而且这本书很早就被翻译成中文，所以我特别不解的就是，在当时的政治环境下怎么会允许这本书翻译出版，甚至被讨论。而且，这本书后来被称为我国社会主义市场经济制度改革的指南，在二十世纪的最后二十年，被中国的经济学家和政治学家拿出来深入的研究和学习。
+</p>
+
+<p>
+后来了解才发现，这本书第一次翻译出版是在1962年，由当时的南开大学校长，著名经济学家腾维藻翻译，并作为“内部读物”在一定阶层的干部群体中发行，所以学生和一般的人是无法获取中文版本的（这本书与1944年出版）。而且是作为批判资本主义经济制度的反面教材的，据说当时的译者序是这么写的：把这本充满毒素的书翻译出来，目的也是想供学术届了解和批判现代资产阶级反动经济理论时作为参考。可是20年后，这本书却被视为改革开放和建设中国特色的社会主义市场经济的圣经。
+</p>
+
+<p>
+而且，这本书的原版在1944年出版后，就成了畅销书。但是被西方的专业经济学家、社会主义者以及左翼人士所批判。美国的民主派《新共和》（是的美国也有社会主义）写了一篇《Poor Hayek》文章斥责为“最重要的反动思想家”。连哈耶克自己都说写完这本书之后，大多数的同行经济学家都不再信任他，他的理论影响下降，许多大学的经济学系也不欢迎他，甚至经济学家认为他是经济学的行外人（结果哈耶克在1974年获得诺贝尔经济学奖）。
+</p>
+
+<p>
+一个测试的表格
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col class="org-left">
+
+<col class="org-left">
+
+<col class="org-right">
+
+<col class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">书名</th>
+<th scope="col" class="org-left">出版社</th>
+<th scope="col" class="org-right">价格</th>
+<th scope="col" class="org-left">作者</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Python金融大数据分析</td>
+<td class="org-left">人民邮电出版社</td>
+<td class="org-right">99.00</td>
+<td class="org-left">Yves Hilpisch</td>
+</tr>
+
+<tr>
+<td class="org-left">金融数据分析</td>
+<td class="org-left">上海财经大学出版社</td>
+<td class="org-right">72.00</td>
+<td class="org-left">Steven Shreve</td>
+</tr>
+
+<tr>
+<td class="org-left">移动设计指南</td>
+<td class="org-left">电子工业出版社</td>
+<td class="org-right">48.00</td>
+<td class="org-left">无线工坊</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic" target="_blank" rel="noopener">Edit Me at Github</a> - <a href="https://allenmagic.github.io/" target="_blank" rel="noopener">Org Source</a> - Last Updated 2023-07-25 Tue 15:04.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org" target="_blank" rel="noopener">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/" target="_blank" rel="noopener">Emacs</a> 27.1 (<a href="https://orgmode.org" target="_blank" rel="noopener">Org</a> mode 9.3)</div>
+]]></content>
+      <categories>
+        <category>经济学</category>
+      </categories>
+      <tags>
+        <tag>哈耶克</tag>
+        <tag>自由主义</tag>
+        <tag>经济学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2017年终大总结</title>
+    <url>/2017-12-17-2017%E5%B9%B4%E7%BB%88%E5%A4%A7%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<script src="/assets/js/APlayer.min.js"> </script>
+
+
+<div id="outline-container-orgb0315c9" class="outline-2">
+<h2 id="orgb0315c9">又是一年了</h2>
+<div class="outline-text-2" id="text-orgb0315c9">
+<p>
+一转眼，2017年又快过去了。按照往年的习惯，一般都会在元旦假期写一篇年终总结，过去有时会发在微信公众号，有时会发在博客，有时写在笔记软件里只给自己看。
+</p>
+
+<a id="more"></a>
+
+<p>
+今年打算提前一点时间写完，也是不希望最后半个月有什么不好的事情吧。回忆一下过去一年的种种，也给自己定一些目标，虽然这些目标一般都不能全部完成。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org177fe17" class="outline-2">
+<h2 id="org177fe17">健康</h2>
+<div class="outline-text-2" id="text-org177fe17">
+<p>
+今年家里最重要的事情就是父亲的病，也算是不小的一个变故，大半年的主要精力都在这件事情上了。
+</p>
+
+<p>
+父亲是个老烟民，所以也算肺癌的高风险人群。过去几年，作为儿女也会提醒他去体检，可能也是我们长期不在父母身边只是提醒而没有足够的重视，所以在过去几年他就只体检过一次，那时候还没什么问题，可是多年后我们疏于预防，终究还是碰到了。
+</p>
+
+<p>
+父亲最初只是发烧，而且抗生素无明显效果，那时候他却去了山东跟随堂叔打工，后来我们安排人把他从山东送回来了家里，那段时间我甚至准备去山东带他回家了。回到家后检查，医生说可疑肺癌。我们又赶紧安排他去上级医院检查，得知确切结果当晚就定了第二天的机票回家了。
+</p>
+
+<p>
+其实，为了他治疗的事情也一度曲折。因为考虑他的性格，在初期我决定了隐瞒他真实情况，所以在刚开始他是在不知情的情况下进行的化疗。但后来考虑更好的治疗环境和方式，我还是决定告诉他然后去了成都治疗。
+</p>
+
+<p>
+值得高兴的事是，他的治疗还是有效果，医生反馈的结果都是偏好的。尽管我已经无法知道他的后续生存会如何，对于我们做儿女的尽一切能力保证他的生命延续和生活的更高质量。
+</p>
+
+<p>
+这件事对我的影响很大，在我得知父亲的病情后特别内疚，因为我们对父母的关心没有做到最好，这也给我一个警醒对亲近的人的关注最重要的就是身体健康，这也将会成为我的一个准则。
+</p>
+
+<p>
+这里我感谢我妈妈的工作，她立即停止了她的工作去照顾父亲。而且生病的父亲脾气并不好（尽管没生病父亲的脾气也很古怪），所以很多时候她都是很淡定的和父亲相处并支持他。我并不能长时间在家照顾父亲，在刚开始的几个月安排住院治疗时频繁回家，但后来稳定了我就没怎么回家了。有时候母亲也很焦躁，毕竟父亲是个难相处的人，大部分时候我只能作为润滑剂从中调节。
+</p>
+
+<p>
+我很庆幸我们家能在困难面前团结一致，为了共同的目标而努力，每个人或许有累或者焦虑的时候，但我们的心和精神在一起，这对我们解决问题给了很大的帮助。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org83b9479" class="outline-2">
+<h2 id="org83b9479">工作</h2>
+<div class="outline-text-2" id="text-org83b9479">
+<p>
+工作其实没什么，简而言之就是不怎么开心。
+</p>
+
+<p>
+过去一年的团队变化给我带来的影响其实挺大，只是我一直以沉默应对，所以是用自己的能力做好自己的工作。后来加入到上海的项目中，发现整个工作的情况发生了一些我自己都觉得很无奈的事情。
+</p>
+
+<p>
+虽然我不敢说自己的产品经理经验足够丰富，但过去多年的实际工作早已经形成了自己的产品观和方法论。这次却被冲击的支离破碎，我不能理解一个人的工作方法和逻辑如此混乱却试图用这种方法影响整个团队。
+</p>
+
+<p>
+后来又有一些事情颠覆了我的观念，突然觉得原来这个团队早就变得很无法描述，过去的佛系工作方法居然能够让我舒适地工作了不短的时间，逃离了这种无奈的尴尬。
+</p>
+
+<p>
+至于以后的打算，目前正在规划中也就不便多说。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6cf7bcd" class="outline-2">
+<h2 id="org6cf7bcd">情绪</h2>
+<div class="outline-text-2" id="text-org6cf7bcd">
+<p>
+今年的压力很大，家庭和工作是两大需要解决的问题。很难得是在这个情况下，我坚持了把抑郁症用药基本停下来了。
+</p>
+
+<p>
+年初我咨询了医生，医生并没有建议立即停药，但从去年下半年开始我已经开始逐渐减少日常的用药了。所以从今年初，我开始着手准备大幅度减少用药甚至阶段性停药。从一开始的用药量调成三分之一，到后来一周一次甚至一个月两次，并没有带来什么影响。
+</p>
+
+<p>
+并不是我情绪会始终保持一个平稳的状态，在11月份的一段时间我的焦虑不安和低沉给我的身体和情绪带了不好的情况，我一度甚至开始恢复了药物的支持。所幸我更多的采用了不一样的方法来调节自己的情绪，很快就能恢复过来了。
+</p>
+
+<p>
+从2012年开始被抑郁症困扰，不算严重的情绪问题逐渐发展成了无法控制的心理问题，最终靠药物治疗来解决问题。而带来的身体问题更加难以解决，2013年从康宁医院出院时体重达到了190斤，而作为对比我2012年末的时候体重才140多斤。
+</p>
+
+<p>
+所以，其实我一度很缺乏自信，因为无法面对这样的自己。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga85c30f" class="outline-2">
+<h2 id="orga85c30f">体重</h2>
+<div class="outline-text-2" id="text-orga85c30f">
+<p>
+这是一个值得说的问题，今年我的一个重要任务就是减肥。因为体重的增加带来的身体问题就是脂肪肝，幸好血脂并不高也没有典型的高血压问题。但肥胖一定会带来健康的问题，而且肥胖实在是对个人形象的影响太大。
+</p>
+
+<p>
+去年做完阑尾手术，也发现困扰自己的肠胃问题得到一定的解决，而且体重有了一定的下降，所以这给了我一些信心，于是把减肥作为2018年的重点目标之一。
+</p>
+
+<p>
+其实减肥的方式对我来说很简单，一是将过去的日均饮水量增加了一倍，几乎平均每天2000cc；二是仍然坚持素食，并逐渐增多了青菜的摄入量，减少米饭摄入量；三是适当的运动，保证能量的消耗超过能量的摄入量。
+</p>
+
+<p>
+值得高兴的是体重终于从接近190斤减到了167斤，大肚腩已经明显没了，整个人的体型也恢复到了一定程度。
+</p>
+
+<p>
+这也算完成了一个大的目标了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb7c1801" class="outline-2">
+<h2 id="orgb7c1801">学习</h2>
+<div class="outline-text-2" id="text-orgb7c1801">
+<p>
+今年在知识上的进步比较小，主要是时间的问题。因为频繁出差和加班，所以剩余的空闲时间比较少，有时候抽空读点书也是和技能没什么关系。今年读的哲学和历史书籍倒是多了一点。
+</p>
+
+<p>
+这一年学习得到的越发零散，无法构成一个系统的知识结构，或许只能等以后慢慢的补充了。
+</p>
+
+<p>
+其实，达克效应在我身上体现的愈发明显了，随着知道的越多越发现自己知道的越少，因为这个世界的未知真的太多，以前无知所以觉得世界很单薄，现在来看真是值得怜悯自己。
+</p>
+
+<p>
+我也深信自己其实没有更多的权利甚至知识去判断事情的真伪性，所以尽管或许我能证伪但我没有动力去做了，保持他人自我判断的权利吧。
+</p>
+
+<p>
+哦，有个值得高兴的事情就是自从我加入R邮件组已经四年了，今年终于开始可以在邮件讨论里回答其他人的问题了，也开始将过去几年学习的Python应用到工作实践中。
+</p>
+
+<p>
+更值得我高兴的事情是，我总结了过去几年的产品经理工作经验，明确了我的产品观和产品方法论，终于有了工作使用的思想武器了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd68bfd7" class="outline-2">
+<h2 id="orgd68bfd7">新年目标</h2>
+<div class="outline-text-2" id="text-orgd68bfd7">
+<p>
+2018年的目标很简单：
+</p>
+
+<ol class="org-ol">
+<li>持续的对父亲的病情关注并努力的保证他的生存质量</li>
+<li>在工作上有大的突破，进入产品管理的方向</li>
+<li>继续减轻体重，争取完全消除脂肪肝</li>
+<li>继续不断地学习，努力构建完整知识体系</li>
+<li>其余的重要的事情</li>
+</ol>
+
+<p>
+嗯，努力加油！
+</p>
+</div>
+</div>
+
+<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic" target="_blank" rel="noopener">Edit Me at Github</a> - <a href="https://allenmagic.github.io/" target="_blank" rel="noopener">Org Source</a> - Last Updated 2023-07-25 Tue 15:10.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org" target="_blank" rel="noopener">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/" target="_blank" rel="noopener">Emacs</a> 27.1 (<a href="https://orgmode.org" target="_blank" rel="noopener">Org</a> mode 9.3)</div>
+]]></content>
+      <categories>
+        <category>生活</category>
+      </categories>
+      <tags>
+        <tag>人生</tag>
+        <tag>生活</tag>
+        <tag>生命</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>冲突和妥协</title>
+    <url>/2017-12-02-%E5%86%B2%E7%AA%81%E5%92%8C%E5%A6%A5%E5%8D%8F/</url>
+    <content><![CDATA[<script src="/assets/js/APlayer.min.js"> </script>
+
+
+<div id="outline-container-org6c39541" class="outline-2">
+<h2 id="org6c39541">漫无目的的思想</h2>
+<div class="outline-text-2" id="text-org6c39541">
+<p>
+这是一个我都不知道主旨思想是什么的文章，题目是后加上的，估计与文无关。
+</p>
+
+<a id="more"></a>
+</div>
+</div>
+
+<div id="outline-container-org84b70ec" class="outline-2">
+<h2 id="org84b70ec">起子</h2>
+<div class="outline-text-2" id="text-org84b70ec">
+<p>
+上一篇文章差不多是一个月前写的了，最近一个月工作和生活都比较繁忙，有时候夹杂着一点疲倦感。不过，持续写blog也是我要养成的习惯，所以趁今天的时间稍微比较充裕，随便写点东西。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5ac895f" class="outline-2">
+<h2 id="org5ac895f">写啥哩</h2>
+<div class="outline-text-2" id="text-org5ac895f">
+<p>
+我过去有写日记的习惯，从高中开始一直到工作后三年，大概是2002年到2012年，断断续续的坚持了十年时间。前七年还算比较认真，不一定是每天会写，但每周至少能写到三篇。后来毕业工作了，基本上一周一篇，所以逐渐成了周记。
+</p>
+
+<p>
+2013年抑郁症后，我把所有的日记都撕毁扔掉了，大概有六个日记本那么多，我还记得是五本日记和一本随笔札记。
+</p>
+
+<p>
+现在，偶尔想起来还有那么一丢丢遗憾，要知道我的记性不怎么好，很多事情我都记在了日记里，所以很多事情随着日记本已经从我的记忆中抹去了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge6876a0" class="outline-2">
+<h2 id="orge6876a0">最近</h2>
+<div class="outline-text-2" id="text-orge6876a0">
+<p>
+最近的工作确实忙，其实忙应该是一种比较好的状态。
+</p>
+
+<p>
+然而可怕的是，我觉得最近确实很乱，所以是毫无头绪的忙。
+</p>
+
+<p>
+连续去上海出差，几乎每天都加班到12点，两个晚上甚至工作到快凌晨两点。然而，如果过去这样有很好的成果我会很欣慰。现在确实在无谓的无关痛痒的事情上纠结。
+</p>
+
+<p>
+也就是说这样的产出很低，无论是量还是质，所以感觉特别的疲倦。
+</p>
+
+<p>
+可怕的是，这种状态已经持续很长一段时间了。
+</p>
+
+<p>
+有段时间，我特别怀疑自己，仿佛过去我所积累的无论是经验、技能还是思维都成了废物。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7273955" class="outline-2">
+<h2 id="org7273955">情绪</h2>
+<div class="outline-text-2" id="text-org7273955">
+<p>
+最近的情绪也不是很高，有时候甚至比较烦躁。好在现在自我调节能力变强了，过些许时间就调整好了。
+</p>
+
+<p>
+每个人都有自己的生活方式，我对我的亲人、朋友没什么要求，唯一的要求就是希望他们能够尊重我。尊重我的生活态度，生活方式和思想。而我也是，与人相交往放在第一位的就是尊重对方&#x2026;
+</p>
+
+
+<p>
+算了，不写了，就这样吧。
+</p>
+</div>
+</div>
+
+<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic" target="_blank" rel="noopener">Edit Me at Github</a> - <a href="https://allenmagic.github.io/" target="_blank" rel="noopener">Org Source</a> - Last Updated 2023-07-25 Tue 15:05.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org" target="_blank" rel="noopener">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/" target="_blank" rel="noopener">Emacs</a> 27.1 (<a href="https://orgmode.org" target="_blank" rel="noopener">Org</a> mode 9.3)</div>
+]]></content>
+      <categories>
+        <category>我的人生</category>
+      </categories>
+      <tags>
+        <tag>思想</tag>
+        <tag>观念</tag>
+        <tag>观自己</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如果不能忘记</title>
+    <url>/2018-03-23-%E5%A6%82%E6%9E%9C%E4%B8%8D%E8%83%BD%E5%BF%98%E8%AE%B0/</url>
+    <content><![CDATA[<script src="/assets/js/APlayer.min.js"> </script>
+
+
+<div id="outline-container-org1556750" class="outline-2">
+<h2 id="org1556750">生命无常</h2>
+<div class="outline-text-2" id="text-org1556750">
+<p>
+父亲去世快百天了，从我上次回去照顾他最后一段时间到这次清明回去给他扫墓，时间过得真快。过去的三个多月，我有时候用着我不曾使用的方法和手段让我尽量淡化悲伤，但仍然不免怀念他。
+</p>
+
+<a id="more"></a>
+
+<p>
+从安葬他到我这次回去扫墓前，一直算是匆忙。都不曾在他的面前说说话，沟通下感情。这次回去正好有时间，一个人能够好好的在他的墓前说说话，也是忏悔也是勉励自己。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc3441ef" class="outline-2">
+<h2 id="orgc3441ef">过去已经回不去了</h2>
+<div class="outline-text-2" id="text-orgc3441ef">
+<p>
+我的记忆力在抑郁症之后退化了很多，大部分时候并不记得很多东西。平时工作和生活也会靠一些工具来增强我的记忆力。所以，我很伤心已经记不得小时候大部分和父亲的互动，哪怕是一些糗事能够知道也是其他人诉说的。
+</p>
+
+<p>
+小时候我挺笨的，父亲教我学拼音，我半天学不会。他的耐心并不好，所以看我学不会就体罚我，但似乎我不记恨他。大概是我从小就没这种记仇的思维方式。他曾经做过我的班主任，但也不是很耐心，在班里不过个把月我就转到别的班级了。
+</p>
+
+<p>
+其它的记忆其实挺少，我小时候还和他发生过冲突，在饭桌上怒目相向，现在想起来还是有趣。他绝大部分时间都不管我，放任我自由的成长，却没想到我一直把他作为反面的例子去成长自己。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org14acbed" class="outline-2">
+<h2 id="org14acbed">回忆他的过去</h2>
+<div class="outline-text-2" id="text-org14acbed">
+<p>
+我们家是农民出身，父亲就是农民教师。好在爷爷奶奶在过去艰苦的时候供养他们读书，所以他最终能够在文化大革命的那些年完成至高中学业，在当地也算是知识分子，正因为如此也能从事了教育工作。
+</p>
+
+<p>
+但父亲本身的缺陷也很明显，就是性格。后来我反思也正因为是这种性格，才导致了后来他的结局。他一生固执且偏执，而且不够开阔，很多时候都希望能够自己左右大局。最后在成都陪他的那段时间，因为他不配合治疗我发了脾气。只是没想到，他没能挺过去，我当时抱着最大的乐观，希望能够有最好的结果，但终究无力。
+</p>
+
+<p>
+为此，我还是有点后悔，当时那么对他，或许我能够更耐心点，会觉得好受点。
+</p>
+
+<p>
+其实，过去也没有什么好回忆，因为在我看来他这一生肯定是有争议的一生。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3a00207" class="outline-2">
+<h2 id="org3a00207">反面和正面</h2>
+<div class="outline-text-2" id="text-org3a00207">
+<p>
+正因为他的性格和习惯，我很小的时候就发现了。所以，我这一辈子用他做反面了。不吸烟，不随意发脾气，学会聆听等等。
+</p>
+
+<p>
+但正如我写的悼词，他的基本素质真的很光辉。他善良、有爱心、孝顺、正直，而这所有的东西也被我看到了。他用他的言行为我树立了绝佳的榜样。
+</p>
+
+<p>
+有好有坏，有血有肉有灵魂，这就是他，也值得我怀念一生了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge323b10" class="outline-2">
+<h2 id="orge323b10">改变是好的现象</h2>
+<div class="outline-text-2" id="text-orge323b10">
+<p>
+清明的时候，我在他的墓前想了很多，说了很多。
+</p>
+
+<p>
+过去，他很少干涉我，大部分时候关心的是我的身体，或者家里有大事需要做决策，征求我的意见。对于我的工作、生活、感情等问题他几乎不问。
+</p>
+
+<p>
+不问并不代表他不关心啊。
+</p>
+
+<p>
+他的追悼会，他的好朋友，也是在他重病期间帮助他找医生医院的发小吧。告诉我，父亲和他聊天一直担心我的家庭问题，其实内心期望我能尽快成家，他对我的工作觉得挺不错，而且他知道我的品性，也很放心。但父亲说，他看到他同龄的同学朋友都当爷爷了，自己却看不到儿女成家，子孙满堂还是内心失望的。
+</p>
+
+<p>
+特别是他也大概知道自己时日无多，更是内心伤感了。尽管如此，他却不当面和我说，估计我也是让他失望了。
+</p>
+
+<p>
+过去的我，其实挺自我。自己的事情自己知，其实也较少考虑他们的感受，现在也是有点不安。
+</p>
+
+<p>
+在父亲墓前，我无法承诺什么。因为，我一直觉得这些事情是个人的事情，无论如何也是我自己的宿命，我一直不希望被人左右，也不希望被人干涉，对于我来说我知道自己的目的。我能承诺的是，就是一定会过得很好，有自己满意的结果。
+</p>
+
+<p>
+无论什么样，倘若有一天我成家有儿女了，当他们能明白的时候，带着他们到父亲的墓前拜祭，把我写的碑文解释给他们听，告诉他们爷爷的人品和一生。
+</p>
+
+<p>
+当初立碑，亲朋好友说碑文是文言文看不懂，他们懂不懂没关系，我们的子孙后代懂就行了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgddcca2c" class="outline-2">
+<h2 id="orgddcca2c">父亲的财产</h2>
+<div class="outline-text-2" id="text-orgddcca2c">
+<p>
+他的意志和精神算是留给我最大的财富，因为那是我的父亲，世间的独一无二。
+</p>
+
+<p>
+过去我和他的沟通不算多，但现在想起来，他也时刻影响着我。
+</p>
+
+<p>
+在最初的时候，他怕他的病拖累我们家的经济，告诉我看病花15万就行了，不能再多。
+</p>
+
+<p>
+但父亲你可曾知道，你的健康和生命无价，怎么可以用钱来衡量！
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0abd899" class="outline-2">
+<h2 id="org0abd899">永在</h2>
+<div class="outline-text-2" id="text-org0abd899">
+<p>
+不能忘记，也不要忘记，也不该忘记。
+</p>
+
+<p>
+所以，我想念你。
+</p>
+</div>
+</div>
+
+<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic" target="_blank" rel="noopener">Edit Me at Github</a> - <a href="https://allenmagic.github.io/" target="_blank" rel="noopener">Org Source</a> - Last Updated 2023-07-25 Tue 15:05.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org" target="_blank" rel="noopener">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/" target="_blank" rel="noopener">Emacs</a> 27.1 (<a href="https://orgmode.org" target="_blank" rel="noopener">Org</a> mode 9.3)</div>
+]]></content>
+      <categories>
+        <category>生活</category>
+      </categories>
+      <tags>
+        <tag>人生</tag>
+        <tag>生活</tag>
+        <tag>生命</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>读书和买书的变迁</title>
+    <url>/2017-10-30-%E8%AF%BB%E4%B9%A6%E5%92%8C%E4%B9%B0%E4%B9%A6%E7%9A%84%E5%8F%98%E8%BF%81/</url>
+    <content><![CDATA[<script src="/assets/js/APlayer.min.js"> </script>
+
+
+<div id="outline-container-orge862c34" class="outline-2">
+<h2 id="orge862c34">目的</h2>
+<div class="outline-text-2" id="text-orge862c34">
+<p>
+我已经不记得我的第一本书是什么时候买的了，但我还记得是什么书，在哪买的。从我开始读书起，已经快三十年了，社会的进步和我的成长，无论是买书还是读书，均有了很大的变化，以此文纪念这些年读书的经历。
+</p>
+
+<a id="more"></a>
+</div>
+</div>
+
+<div id="outline-container-org184346a" class="outline-2">
+<h2 id="org184346a">读书算是爱好吗？</h2>
+<div class="outline-text-2" id="text-org184346a">
+<p>
+我一直怀疑读书是否算是一个爱好，在当今如果不多读点书，似乎是很难的。无论是工作、交际还是生活，书籍是人们快速和系统获取知识的最有效的方式。
+</p>
+
+<p>
+现在自媒体的泛滥，让人们获取资讯的方式变得更简单，但我一直不承认这些传递的东西是一种知识，很多东西需要系统的知识体系来不断的渗透。
+</p>
+
+<p>
+我一直喜欢读书，并且坚持了数十年，而且随着年龄的增长，读书的范围也日渐拓宽，很多做人做事的态、方法和理念都是从书本中学习到，并不断总结形成了自己的的观点。
+</p>
+
+<p>
+其实，很多人在离开学校后，就不再读书，或者单纯的只是为了工作才会去学习，这还是被逼迫的。
+</p>
+
+<p>
+书籍不断的塑造我们的知识结构，不断的让我们的精神净化，如果我们不更新我们的知识和思想，我们就会被遗弃。
+</p>
+
+<p>
+我认为，读书在现在情况下，还真成了爱好，而不是大家的共识。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org47d304d" class="outline-2">
+<h2 id="org47d304d">读书的变迁</h2>
+<div class="outline-text-2" id="text-org47d304d">
+<p>
+我周岁的时候，在老家的习俗下，有个抓周的习俗活动。据我妈说，我先抓了吃的（难道证明我是个吃货？可是我并不是啊），然后抓了书本。
+</p>
+
+<p>
+我妈说：这孩子以后就是个读书的料，实际上他们并不认为这种抓周靠谱，所以早早在老家修房子，以为我会在农村扎根，成为一个农民，娶妻生子&#x2026;，好了，扯远了。
+</p>
+
+<p>
+我觉得真的能预测一个人的行为，自从我学会认字读书，基本上空余的时间差不多都是捧着书本读书。
+</p>
+
+<p>
+幸好我父亲是个老师，家里的藏书在农村家庭里算是顶尖的存在了，而且后来他继续大学的专修，很多厚部头的历史书籍，我小学到初中，基本上读了很多历史的书。
+</p>
+
+<p>
+除了历史，很多哲学的书也会读，不过年少的时候思想并不成熟，所以当时很多都读不懂，现在回过头来再读，倒是所获良多。
+</p>
+
+<p>
+四大名著、金庸也是那时候读的，很搞笑的是，读初中的时候每次考试，我早早做完试卷，就在桌肚子底下垫本金庸小说，读的不亦乐乎。
+</p>
+
+<p>
+后来高中学习倒是很紧张，也没时间看些闲书，大概只有在寒暑假的时候读些稀奇古怪的书。
+</p>
+
+<p>
+我高中有个室友，读钢铁是怎样炼成的，读了一个学年。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org949b652" class="outline-2">
+<h2 id="org949b652">买书的变迁</h2>
+<div class="outline-text-2" id="text-org949b652">
+<p>
+最早的时候是在新华书店买书。
+</p>
+
+<p>
+我第一本自己的书，实在镇上的新华书店买的一本怎么学习写作文的书。
+</p>
+
+<p>
+然后在初中毕业之前，就没有再买过书了，一般都是换着书读，或者借书读。
+</p>
+
+<p>
+高中的时候，有段时间流行贝塔斯曼的邮寄活页，上面介绍了很多书籍，然后我们很多人就会选自己喜欢的，然后凑钱去邮局用汇款单寄款，然后贝塔斯曼书友会把书寄过来，这个我们用的倒是很多。
+</p>
+
+<p>
+再后来，卓越网（现在的亚马逊的前身）也开始学习贝塔斯曼寄活页，采用了同样的方式，搞个书友会。
+</p>
+
+<p>
+嗯，新华书店也是非常重要的买书渠道，但是那时候穷学生没什么钱，新华书店又不打折，我大部分时候就是过去读书，买书是件奢侈的事。
+</p>
+
+<p>
+那时候，县城差不多半年会搞一次展销会，很多盗版书在展销会上出售，那个时候我们会去淘书，很多各种奇怪的书都有。当然书籍的质量很差，不过大家乐此不疲。还是我有个室友，为了买书，连续吃了大半个月的泡面，让我十分钦佩。
+</p>
+
+<p>
+大学的时候买书的行为基本上就没有了，因为存放是个不容易的事，不过图书馆真的很不错。我后来都不知道自己借过多少次的书了，就凭借这些书，我学会了很多专业之外的东西。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org30c0cd1" class="outline-2">
+<h2 id="org30c0cd1">工作以后</h2>
+<div class="outline-text-2" id="text-org30c0cd1">
+<p>
+刚工作，那时候在Morningstar工作，公司允许每年报销1000元的书籍费用，特别高兴。所以那时候买书很积极，但也因为如此，买书就不仔细，买了很多垃圾的书。
+</p>
+
+<p>
+现在那些书还在我的书架里吃灰。
+</p>
+
+<p>
+尽管后来离开了MS，我也每年基本上保持买一定量的书来阅读，慢慢的书越来越多，很难简单的收藏。就开始买书架，越来越多，也开始把对自己没有什么作用的书开始送出去，分享给需要的人。
+</p>
+
+<p>
+就在今天，买了一千多的书，打完折差不多就四百，算起来比较划算了。
+</p>
+
+<p>
+可惜的是，花了好多时间挑选书，而且好几本收藏了很久的书，居然在这个打折的季节缺货，哎，太可惜&#x2026;
+</p>
+</div>
+</div>
+
+<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic" target="_blank" rel="noopener">Edit Me at Github</a> - <a href="https://allenmagic.github.io/" target="_blank" rel="noopener">Org Source</a> - Last Updated 2023-07-25 Tue 15:05.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org" target="_blank" rel="noopener">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/" target="_blank" rel="noopener">Emacs</a> 27.1 (<a href="https://orgmode.org" target="_blank" rel="noopener">Org</a> mode 9.3)</div>
+]]></content>
+      <categories>
+        <category>生活</category>
+      </categories>
+      <tags>
+        <tag>生活</tag>
+        <tag>兴趣</tag>
+        <tag>琐碎</tag>
+      </tags>
+  </entry>
+</search>
