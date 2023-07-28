@@ -368,11 +368,11 @@
 <h3 id="ECharts的基本用法"><a href="#ECharts的基本用法" class="headerlink" title="ECharts的基本用法"></a>ECharts的基本用法</h3><p>ECharts是个纯粹的JS图形库，所以其语言本质是Javascript语言。根据官网的示例，我们构建以下一个图形：</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">option = &#123;</span><br><span class="line">    title : &#123;</span><br><span class="line">        text: <span class="string">'各金融资产比重'</span>,</span><br><span class="line">        subtext: <span class="string">'纯属虚构'</span>,</span><br><span class="line">        x:<span class="string">'center'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    tooltip : &#123;</span><br><span class="line">        trigger: <span class="string">'item'</span>,</span><br><span class="line">        formatter: <span class="string">"&#123;a&#125; &lt;br/&gt;&#123;b&#125; : &#123;c&#125; (&#123;d&#125;%)"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    legend: &#123;</span><br><span class="line">        orient: <span class="string">'vertical'</span>,</span><br><span class="line">        left: <span class="string">'left'</span>,</span><br><span class="line">        data: [<span class="string">'股票'</span>,<span class="string">'债券'</span>,<span class="string">'基金'</span>,<span class="string">'金融衍生品'</span>,<span class="string">'现金及等价物'</span>]</span><br><span class="line">    &#125;,</span><br><span class="line">    series : [</span><br><span class="line">        &#123;</span><br><span class="line">            name: <span class="string">'金融资产'</span>,</span><br><span class="line">            type: <span class="string">'pie'</span>,</span><br><span class="line">            radius : <span class="string">'55%'</span>,</span><br><span class="line">            center: [<span class="string">'50%'</span>, <span class="string">'60%'</span>],</span><br><span class="line">            data:[</span><br><span class="line">                &#123;<span class="attr">value</span>:<span class="number">335</span>, <span class="attr">name</span>:<span class="string">'债券'</span>&#125;,</span><br><span class="line">                &#123;<span class="attr">value</span>:<span class="number">310</span>, <span class="attr">name</span>:<span class="string">'基金'</span>&#125;,</span><br><span class="line">                &#123;<span class="attr">value</span>:<span class="number">234</span>, <span class="attr">name</span>:<span class="string">'现金及等价物'</span>&#125;,</span><br><span class="line">                &#123;<span class="attr">value</span>:<span class="number">135</span>, <span class="attr">name</span>:<span class="string">'金融衍生品'</span>&#125;,</span><br><span class="line">                &#123;<span class="attr">value</span>:<span class="number">1548</span>, <span class="attr">name</span>:<span class="string">'股票'</span>&#125;</span><br><span class="line">            ],</span><br><span class="line">            itemStyle: &#123;</span><br><span class="line">                emphasis: &#123;</span><br><span class="line">                    shadowBlur: <span class="number">10</span>,</span><br><span class="line">                    shadowOffsetX: <span class="number">0</span>,</span><br><span class="line">                    shadowColor: <span class="string">'rgba(0, 0, 0, 0.5)'</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>对应的图形就如下所示，并且图形可以交互显示:</p>
-<div id="echarts5760" style="width: 110%;height: 420px;margin: 0 auto"></div>
+<div id="echarts5768" style="width: 110%;height: 420px;margin: 0 auto"></div>
 <script src="https://cdn.bootcss.com/echarts/3.8.0/echarts.common.min.js"></script>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts5760'));
+        var myChart = echarts.init(document.getElementById('echarts5768'));
         // 指定图表的配置项和数据
         var option = option = {
     title : {
@@ -467,108 +467,6 @@
         <tag>情绪</tag>
         <tag>人生</tag>
         <tag>生活</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>The Road to Serfdom</title>
-    <url>/2017-10-27-The-Road-to-Serfdom/</url>
-    <content><![CDATA[<script src="/assets/js/APlayer.min.js"> </script>
-
-
-
-<div id="outline-container-orgf2c736a" class="outline-2">
-<h2 id="orgf2c736a">前言</h2>
-<div class="outline-text-2" id="text-orgf2c736a">
-<p>
-这篇笔记大概是写在2016年的7月份，那时候买了哈耶克的三本书，分别是《通往奴役之路》、《自由宪章》、《致命的自负》。刚开始因为看到《通往奴役之路》（就是《The Road to Serfdom》这本书）内容比较少，所以就先读了。
-</p>
-
-<a id="more"></a>
-
-<p>
-读的也挺快，大概一个月时间就读完了，也写了一些笔记（就是本文的雏形），当时想到得读完其它两本书还可以把这个笔记修改下，谁知道这一年过去了，连《致命的自负》这本书我都只是刚刚看完，而最厚的一本书《自由宪章》压根还没开始看，据我所知自由宪章和通往奴役之路关联还挺紧密，很多在《通往奴役之路》之中未能合理解释和回答的问题，在《自由宪章》里有了比较深刻和全面的说明，但不能就这样拖着，先整理下发在blog上，以后慢慢修改，此次的修改主要是删除了涉及政治的部分，毕竟现在的舆论还是少谈政治的好。
-</p>
-</div>
-</div>
-
-<div id="outline-container-org000ab4c" class="outline-2">
-<h2 id="org000ab4c">关于这本书</h2>
-<div class="outline-text-2" id="text-org000ab4c">
-<p>
-大学在学习西方经济学的时候，接触到了凯恩斯，就这样我了解了当年凯恩斯和哈耶克的关于政府是否应该干预经济的争论，从而知道了解了哈耶克这个人。进而了解到哈耶克本人参与的两场大论战，其中一场是哈耶克和米塞斯为一方的，和兰格与勒纳为一方的，就社会主义经济计算可行性的论战。另一场就是和凯恩斯的论战了，而《The Road to Serfdom》正是第一场论战的结果。
-</p>
-
-<p>
-当时知道这回事，但没有读过这本书，去年才买了这本书准备拜读。不过在之前，就知道了这本书的核心内容，而且这本书很早就被翻译成中文，所以我特别不解的就是，在当时的政治环境下怎么会允许这本书翻译出版，甚至被讨论。而且，这本书后来被称为我国社会主义市场经济制度改革的指南，在二十世纪的最后二十年，被中国的经济学家和政治学家拿出来深入的研究和学习。
-</p>
-
-<p>
-后来了解才发现，这本书第一次翻译出版是在1962年，由当时的南开大学校长，著名经济学家腾维藻翻译，并作为“内部读物”在一定阶层的干部群体中发行，所以学生和一般的人是无法获取中文版本的（这本书与1944年出版）。而且是作为批判资本主义经济制度的反面教材的，据说当时的译者序是这么写的：把这本充满毒素的书翻译出来，目的也是想供学术届了解和批判现代资产阶级反动经济理论时作为参考。可是20年后，这本书却被视为改革开放和建设中国特色的社会主义市场经济的圣经。
-</p>
-
-<p>
-而且，这本书的原版在1944年出版后，就成了畅销书。但是被西方的专业经济学家、社会主义者以及左翼人士所批判。美国的民主派《新共和》（是的美国也有社会主义）写了一篇《Poor Hayek》文章斥责为“最重要的反动思想家”。连哈耶克自己都说写完这本书之后，大多数的同行经济学家都不再信任他，他的理论影响下降，许多大学的经济学系也不欢迎他，甚至经济学家认为他是经济学的行外人（结果哈耶克在1974年获得诺贝尔经济学奖）。
-</p>
-
-<p>
-一个测试的表格
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col class="org-left">
-
-<col class="org-left">
-
-<col class="org-right">
-
-<col class="org-left">
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">书名</th>
-<th scope="col" class="org-left">出版社</th>
-<th scope="col" class="org-right">价格</th>
-<th scope="col" class="org-left">作者</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left">Python金融大数据分析</td>
-<td class="org-left">人民邮电出版社</td>
-<td class="org-right">99.00</td>
-<td class="org-left">Yves Hilpisch</td>
-</tr>
-
-<tr>
-<td class="org-left">金融数据分析</td>
-<td class="org-left">上海财经大学出版社</td>
-<td class="org-right">72.00</td>
-<td class="org-left">Steven Shreve</td>
-</tr>
-
-<tr>
-<td class="org-left">移动设计指南</td>
-<td class="org-left">电子工业出版社</td>
-<td class="org-right">48.00</td>
-<td class="org-left">无线工坊</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-
-<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic" target="_blank" rel="noopener">Edit Me at Github</a> - <a href="https://allenmagic.github.io/" target="_blank" rel="noopener">Org Source</a> - Last Updated 2023-07-25 Tue 15:04.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org" target="_blank" rel="noopener">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/" target="_blank" rel="noopener">Emacs</a> 27.1 (<a href="https://orgmode.org" target="_blank" rel="noopener">Org</a> mode 9.3)</div>
-]]></content>
-      <categories>
-        <category>经济学</category>
-      </categories>
-      <tags>
-        <tag>哈耶克</tag>
-        <tag>自由主义</tag>
-        <tag>经济学</tag>
       </tags>
   </entry>
   <entry>
@@ -766,107 +664,6 @@
       </tags>
   </entry>
   <entry>
-    <title>冲突和妥协</title>
-    <url>/2017-12-02-%E5%86%B2%E7%AA%81%E5%92%8C%E5%A6%A5%E5%8D%8F/</url>
-    <content><![CDATA[<script src="/assets/js/APlayer.min.js"> </script>
-
-
-<div id="outline-container-org6c39541" class="outline-2">
-<h2 id="org6c39541">漫无目的的思想</h2>
-<div class="outline-text-2" id="text-org6c39541">
-<p>
-这是一个我都不知道主旨思想是什么的文章，题目是后加上的，估计与文无关。
-</p>
-
-<a id="more"></a>
-</div>
-</div>
-
-<div id="outline-container-org84b70ec" class="outline-2">
-<h2 id="org84b70ec">起子</h2>
-<div class="outline-text-2" id="text-org84b70ec">
-<p>
-上一篇文章差不多是一个月前写的了，最近一个月工作和生活都比较繁忙，有时候夹杂着一点疲倦感。不过，持续写blog也是我要养成的习惯，所以趁今天的时间稍微比较充裕，随便写点东西。
-</p>
-</div>
-</div>
-
-<div id="outline-container-org5ac895f" class="outline-2">
-<h2 id="org5ac895f">写啥哩</h2>
-<div class="outline-text-2" id="text-org5ac895f">
-<p>
-我过去有写日记的习惯，从高中开始一直到工作后三年，大概是2002年到2012年，断断续续的坚持了十年时间。前七年还算比较认真，不一定是每天会写，但每周至少能写到三篇。后来毕业工作了，基本上一周一篇，所以逐渐成了周记。
-</p>
-
-<p>
-2013年抑郁症后，我把所有的日记都撕毁扔掉了，大概有六个日记本那么多，我还记得是五本日记和一本随笔札记。
-</p>
-
-<p>
-现在，偶尔想起来还有那么一丢丢遗憾，要知道我的记性不怎么好，很多事情我都记在了日记里，所以很多事情随着日记本已经从我的记忆中抹去了。
-</p>
-</div>
-</div>
-
-<div id="outline-container-orge6876a0" class="outline-2">
-<h2 id="orge6876a0">最近</h2>
-<div class="outline-text-2" id="text-orge6876a0">
-<p>
-最近的工作确实忙，其实忙应该是一种比较好的状态。
-</p>
-
-<p>
-然而可怕的是，我觉得最近确实很乱，所以是毫无头绪的忙。
-</p>
-
-<p>
-连续去上海出差，几乎每天都加班到12点，两个晚上甚至工作到快凌晨两点。然而，如果过去这样有很好的成果我会很欣慰。现在确实在无谓的无关痛痒的事情上纠结。
-</p>
-
-<p>
-也就是说这样的产出很低，无论是量还是质，所以感觉特别的疲倦。
-</p>
-
-<p>
-可怕的是，这种状态已经持续很长一段时间了。
-</p>
-
-<p>
-有段时间，我特别怀疑自己，仿佛过去我所积累的无论是经验、技能还是思维都成了废物。
-</p>
-</div>
-</div>
-
-<div id="outline-container-org7273955" class="outline-2">
-<h2 id="org7273955">情绪</h2>
-<div class="outline-text-2" id="text-org7273955">
-<p>
-最近的情绪也不是很高，有时候甚至比较烦躁。好在现在自我调节能力变强了，过些许时间就调整好了。
-</p>
-
-<p>
-每个人都有自己的生活方式，我对我的亲人、朋友没什么要求，唯一的要求就是希望他们能够尊重我。尊重我的生活态度，生活方式和思想。而我也是，与人相交往放在第一位的就是尊重对方&#x2026;
-</p>
-
-
-<p>
-算了，不写了，就这样吧。
-</p>
-</div>
-</div>
-
-<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic" target="_blank" rel="noopener">Edit Me at Github</a> - <a href="https://allenmagic.github.io/" target="_blank" rel="noopener">Org Source</a> - Last Updated 2023-07-25 Tue 15:05.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org" target="_blank" rel="noopener">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/" target="_blank" rel="noopener">Emacs</a> 27.1 (<a href="https://orgmode.org" target="_blank" rel="noopener">Org</a> mode 9.3)</div>
-]]></content>
-      <categories>
-        <category>我的人生</category>
-      </categories>
-      <tags>
-        <tag>思想</tag>
-        <tag>观念</tag>
-        <tag>观自己</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>如果不能忘记</title>
     <url>/2018-03-23-%E5%A6%82%E6%9E%9C%E4%B8%8D%E8%83%BD%E5%BF%98%E8%AE%B0/</url>
     <content><![CDATA[<script src="/assets/js/APlayer.min.js"> </script>
@@ -1029,6 +826,107 @@
       </tags>
   </entry>
   <entry>
+    <title>冲突和妥协</title>
+    <url>/2017-12-02-%E5%86%B2%E7%AA%81%E5%92%8C%E5%A6%A5%E5%8D%8F/</url>
+    <content><![CDATA[<script src="/assets/js/APlayer.min.js"> </script>
+
+
+<div id="outline-container-org6c39541" class="outline-2">
+<h2 id="org6c39541">漫无目的的思想</h2>
+<div class="outline-text-2" id="text-org6c39541">
+<p>
+这是一个我都不知道主旨思想是什么的文章，题目是后加上的，估计与文无关。
+</p>
+
+<a id="more"></a>
+</div>
+</div>
+
+<div id="outline-container-org84b70ec" class="outline-2">
+<h2 id="org84b70ec">起子</h2>
+<div class="outline-text-2" id="text-org84b70ec">
+<p>
+上一篇文章差不多是一个月前写的了，最近一个月工作和生活都比较繁忙，有时候夹杂着一点疲倦感。不过，持续写blog也是我要养成的习惯，所以趁今天的时间稍微比较充裕，随便写点东西。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5ac895f" class="outline-2">
+<h2 id="org5ac895f">写啥哩</h2>
+<div class="outline-text-2" id="text-org5ac895f">
+<p>
+我过去有写日记的习惯，从高中开始一直到工作后三年，大概是2002年到2012年，断断续续的坚持了十年时间。前七年还算比较认真，不一定是每天会写，但每周至少能写到三篇。后来毕业工作了，基本上一周一篇，所以逐渐成了周记。
+</p>
+
+<p>
+2013年抑郁症后，我把所有的日记都撕毁扔掉了，大概有六个日记本那么多，我还记得是五本日记和一本随笔札记。
+</p>
+
+<p>
+现在，偶尔想起来还有那么一丢丢遗憾，要知道我的记性不怎么好，很多事情我都记在了日记里，所以很多事情随着日记本已经从我的记忆中抹去了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge6876a0" class="outline-2">
+<h2 id="orge6876a0">最近</h2>
+<div class="outline-text-2" id="text-orge6876a0">
+<p>
+最近的工作确实忙，其实忙应该是一种比较好的状态。
+</p>
+
+<p>
+然而可怕的是，我觉得最近确实很乱，所以是毫无头绪的忙。
+</p>
+
+<p>
+连续去上海出差，几乎每天都加班到12点，两个晚上甚至工作到快凌晨两点。然而，如果过去这样有很好的成果我会很欣慰。现在确实在无谓的无关痛痒的事情上纠结。
+</p>
+
+<p>
+也就是说这样的产出很低，无论是量还是质，所以感觉特别的疲倦。
+</p>
+
+<p>
+可怕的是，这种状态已经持续很长一段时间了。
+</p>
+
+<p>
+有段时间，我特别怀疑自己，仿佛过去我所积累的无论是经验、技能还是思维都成了废物。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7273955" class="outline-2">
+<h2 id="org7273955">情绪</h2>
+<div class="outline-text-2" id="text-org7273955">
+<p>
+最近的情绪也不是很高，有时候甚至比较烦躁。好在现在自我调节能力变强了，过些许时间就调整好了。
+</p>
+
+<p>
+每个人都有自己的生活方式，我对我的亲人、朋友没什么要求，唯一的要求就是希望他们能够尊重我。尊重我的生活态度，生活方式和思想。而我也是，与人相交往放在第一位的就是尊重对方&#x2026;
+</p>
+
+
+<p>
+算了，不写了，就这样吧。
+</p>
+</div>
+</div>
+
+<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic" target="_blank" rel="noopener">Edit Me at Github</a> - <a href="https://allenmagic.github.io/" target="_blank" rel="noopener">Org Source</a> - Last Updated 2023-07-25 Tue 15:05.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org" target="_blank" rel="noopener">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/" target="_blank" rel="noopener">Emacs</a> 27.1 (<a href="https://orgmode.org" target="_blank" rel="noopener">Org</a> mode 9.3)</div>
+]]></content>
+      <categories>
+        <category>我的人生</category>
+      </categories>
+      <tags>
+        <tag>思想</tag>
+        <tag>观念</tag>
+        <tag>观自己</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>读书和买书的变迁</title>
     <url>/2017-10-30-%E8%AF%BB%E4%B9%A6%E5%92%8C%E4%B9%B0%E4%B9%A6%E7%9A%84%E5%8F%98%E8%BF%81/</url>
     <content><![CDATA[<script src="/assets/js/APlayer.min.js"> </script>
@@ -1182,6 +1080,108 @@
         <tag>生活</tag>
         <tag>兴趣</tag>
         <tag>琐碎</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>The Road to Serfdom</title>
+    <url>/2017-10-27-The-Road-to-Serfdom/</url>
+    <content><![CDATA[<script src="/assets/js/APlayer.min.js"> </script>
+
+
+
+<div id="outline-container-orgf2c736a" class="outline-2">
+<h2 id="orgf2c736a">前言</h2>
+<div class="outline-text-2" id="text-orgf2c736a">
+<p>
+这篇笔记大概是写在2016年的7月份，那时候买了哈耶克的三本书，分别是《通往奴役之路》、《自由宪章》、《致命的自负》。刚开始因为看到《通往奴役之路》（就是《The Road to Serfdom》这本书）内容比较少，所以就先读了。
+</p>
+
+<a id="more"></a>
+
+<p>
+读的也挺快，大概一个月时间就读完了，也写了一些笔记（就是本文的雏形），当时想到得读完其它两本书还可以把这个笔记修改下，谁知道这一年过去了，连《致命的自负》这本书我都只是刚刚看完，而最厚的一本书《自由宪章》压根还没开始看，据我所知自由宪章和通往奴役之路关联还挺紧密，很多在《通往奴役之路》之中未能合理解释和回答的问题，在《自由宪章》里有了比较深刻和全面的说明，但不能就这样拖着，先整理下发在blog上，以后慢慢修改，此次的修改主要是删除了涉及政治的部分，毕竟现在的舆论还是少谈政治的好。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org000ab4c" class="outline-2">
+<h2 id="org000ab4c">关于这本书</h2>
+<div class="outline-text-2" id="text-org000ab4c">
+<p>
+大学在学习西方经济学的时候，接触到了凯恩斯，就这样我了解了当年凯恩斯和哈耶克的关于政府是否应该干预经济的争论，从而知道了解了哈耶克这个人。进而了解到哈耶克本人参与的两场大论战，其中一场是哈耶克和米塞斯为一方的，和兰格与勒纳为一方的，就社会主义经济计算可行性的论战。另一场就是和凯恩斯的论战了，而《The Road to Serfdom》正是第一场论战的结果。
+</p>
+
+<p>
+当时知道这回事，但没有读过这本书，去年才买了这本书准备拜读。不过在之前，就知道了这本书的核心内容，而且这本书很早就被翻译成中文，所以我特别不解的就是，在当时的政治环境下怎么会允许这本书翻译出版，甚至被讨论。而且，这本书后来被称为我国社会主义市场经济制度改革的指南，在二十世纪的最后二十年，被中国的经济学家和政治学家拿出来深入的研究和学习。
+</p>
+
+<p>
+后来了解才发现，这本书第一次翻译出版是在1962年，由当时的南开大学校长，著名经济学家腾维藻翻译，并作为“内部读物”在一定阶层的干部群体中发行，所以学生和一般的人是无法获取中文版本的（这本书与1944年出版）。而且是作为批判资本主义经济制度的反面教材的，据说当时的译者序是这么写的：把这本充满毒素的书翻译出来，目的也是想供学术届了解和批判现代资产阶级反动经济理论时作为参考。可是20年后，这本书却被视为改革开放和建设中国特色的社会主义市场经济的圣经。
+</p>
+
+<p>
+而且，这本书的原版在1944年出版后，就成了畅销书。但是被西方的专业经济学家、社会主义者以及左翼人士所批判。美国的民主派《新共和》（是的美国也有社会主义）写了一篇《Poor Hayek》文章斥责为“最重要的反动思想家”。连哈耶克自己都说写完这本书之后，大多数的同行经济学家都不再信任他，他的理论影响下降，许多大学的经济学系也不欢迎他，甚至经济学家认为他是经济学的行外人（结果哈耶克在1974年获得诺贝尔经济学奖）。
+</p>
+
+<p>
+一个测试的表格
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col class="org-left">
+
+<col class="org-left">
+
+<col class="org-right">
+
+<col class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">书名</th>
+<th scope="col" class="org-left">出版社</th>
+<th scope="col" class="org-right">价格</th>
+<th scope="col" class="org-left">作者</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Python金融大数据分析</td>
+<td class="org-left">人民邮电出版社</td>
+<td class="org-right">99.00</td>
+<td class="org-left">Yves Hilpisch</td>
+</tr>
+
+<tr>
+<td class="org-left">金融数据分析</td>
+<td class="org-left">上海财经大学出版社</td>
+<td class="org-right">72.00</td>
+<td class="org-left">Steven Shreve</td>
+</tr>
+
+<tr>
+<td class="org-left">移动设计指南</td>
+<td class="org-left">电子工业出版社</td>
+<td class="org-right">48.00</td>
+<td class="org-left">无线工坊</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic" target="_blank" rel="noopener">Edit Me at Github</a> - <a href="https://allenmagic.github.io/" target="_blank" rel="noopener">Org Source</a> - Last Updated 2023-07-25 Tue 15:04.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org" target="_blank" rel="noopener">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/" target="_blank" rel="noopener">Emacs</a> 27.1 (<a href="https://orgmode.org" target="_blank" rel="noopener">Org</a> mode 9.3)</div>
+]]></content>
+      <categories>
+        <category>经济学</category>
+      </categories>
+      <tags>
+        <tag>哈耶克</tag>
+        <tag>自由主义</tag>
+        <tag>经济学</tag>
       </tags>
   </entry>
 </search>
