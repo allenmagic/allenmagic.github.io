@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  
+  <title>使用hexo+github搭建静态blog | Egg&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="写在前面过去几年，我曾经用多种方式写作。自从大学毕业，基本不再使用人人网（过去的时候叫校内网），后来新浪云发布，在网上找到了一个基于python的博客系统，随便改了改就发到新浪云上了，还给专门搞了一个一级域名(www.zyx1986.pw，现在已经不能用了）。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用hexo+github搭建静态blog">
+<meta property="og:url" content="http://yoursite.com/2017-05-25-%E4%BD%BF%E7%94%A8hexo+github%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81blog/index.html">
+<meta property="og:site_name" content="Egg&#39;s Blog">
+<meta property="og:description" content="写在前面过去几年，我曾经用多种方式写作。自从大学毕业，基本不再使用人人网（过去的时候叫校内网），后来新浪云发布，在网上找到了一个基于python的博客系统，随便改了改就发到新浪云上了，还给专门搞了一个一级域名(www.zyx1986.pw，现在已经不能用了）。">
+<meta property="og:locale">
+<meta property="og:image" content="http://7viihf.com1.z0.glb.clouddn.com/github_new_repo.png">
+<meta property="article:published_time" content="2017-05-25T11:40:05.000Z">
+<meta property="article:modified_time" content="2024-06-06T12:51:20.484Z">
+<meta property="article:author" content="allenmagic">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="博客">
+<meta property="article:tag" content="写作">
+<meta property="article:tag" content="GitHub">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://7viihf.com1.z0.glb.clouddn.com/github_new_repo.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Egg's Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --><link rel="stylesheet" href="/assets/css/APlayer.min.css" class="aplayer-style-marker">
+<script src="/assets/js/APlayer.min.js" class="aplayer-script-marker"></script>
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Egg&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">一个傻子</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Suche"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-使用hexo+github搭建静态blog" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2017-05-25-%E4%BD%BF%E7%94%A8hexo+github%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81blog/" class="article-date">
+  <time class="dt-published" datetime="2017-05-25T11:40:05.000Z" itemprop="datePublished">2017-05-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      使用hexo+github搭建静态blog
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>过去几年，我曾经用多种方式写作。自从大学毕业，基本不再使用人人网（过去的时候叫校内网），后来新浪云发布，在网上找到了一个基于python的博客系统，随便改了改就发到新浪云上了，还给专门搞了一个一级域名(<a href="http://www.zyx1986.pw,现在已经不能用了)./">www.zyx1986.pw，现在已经不能用了）。</a></p>
+<span id="more"></span>
+
+<p>再后来，微信公众号开始流行，我也赶了个时髦开了公众号。微信公众号对文本、图片支持的还可以，但对于代码、公式的支持几乎没有，所以在微信公众号的文章大部分是随笔或者鸡汤，没什么营养。</p>
+<p>最近开始整理之前的学习笔记，刚开始在简书上发文，刚写了两篇还可以，毕竟简书支持Markdown格式的文章，对代码高亮的支持也不错，但我想写的文章如果有数学公式就尴尬了，很繁琐而且效果不好，所以就想自己搭建一个blog。</p>
+<p>搜索了下，hexo+github成了我的选择。</p>
+<h3 id="Hexo是什么"><a href="#Hexo是什么" class="headerlink" title="Hexo是什么"></a>Hexo是什么</h3><p><a href="https://hexo.io/zh-cn/">Hexo</a>是基于node.js的轻量化的博客框架，安装和使用都非常简单，很快就可以上手。并且Hexo支持自定义主题和Markdown格式的文件，极速渲染页面，非常适合经常写文档的朋友。</p>
+<p>Hexo有很多插件支持更多更丰富的功能，因此能够支持丰富的文档特性，比如代码高亮、公式等，因此也很适合撰写科技和技术文章。</p>
+<h3 id="为什么是Hexo"><a href="#为什么是Hexo" class="headerlink" title="为什么是Hexo"></a>为什么是Hexo</h3><p>Hexo最大的优点就是遵循了KISS[^1]原则，其具有以下特点</p>
+<ol>
+<li>基于node.js安装简单</li>
+<li>支持Markdown格式为源文件</li>
+<li>支持MathJax渲染LaTeX的公式（大爱这一点）</li>
+<li>支持代码高亮</li>
+<li>配置简单可以定制主题</li>
+<li>生成的是静态页面可以利用	GitHub的Pages功能</li>
+</ol>
+<p>	</p>
+<p>以上就足够了。</p>
+<h3 id="声明及准备"><a href="#声明及准备" class="headerlink" title="声明及准备"></a>声明及准备</h3><blockquote>
+<p>本文的安装是基于MacOS</p>
+</blockquote>
+<p>安装准备：</p>
+<blockquote>
+<ol>
+<li>github账号</li>
+<li>homebrew</li>
+<li>node.js</li>
+<li>npm</li>
+<li>hexo</li>
+</ol>
+</blockquote>
+<p>由于node.js自带npm，所以只需要安装node.js即可。</p>
+<h3 id="搭建流程"><a href="#搭建流程" class="headerlink" title="搭建流程"></a>搭建流程</h3><h4 id="获取github"><a href="#获取github" class="headerlink" title="获取github"></a>获取github</h4><p>因为是基于GitHub搭建静态blog站点，所以需要先获取GitHub的账号和建立相应的repository。如果你没有GitHub的账号，点击<a href="https://github.com/join?source=header-home">这里</a>注册。</p>
+<p>注册完获取到账号后，你可以创建一个repository：<br><img src="http://7viihf.com1.z0.glb.clouddn.com/github_new_repo.png" alt="创建新的repository"></p>
+<p>创建的repo的名称为：<code>yourid.github.io</code></p>
+<h4 id="安装node-js"><a href="#安装node-js" class="headerlink" title="安装node.js"></a>安装node.js</h4><p>因为Hexo是基于node.js，所以要先安装node.js。在这里提供两种方式安装：</p>
+<h5 id="通过Homebrew安装"><a href="#通过Homebrew安装" class="headerlink" title="通过Homebrew安装"></a>通过Homebrew安装</h5><p>强烈建议Mac用户安装<a href="https://brew.sh/index_zh-cn.html">Homebrew</a>，通过Homebrew来管理Mac的软件，Homebrew在安装和删除软件上特别方便。</p>
+<ol>
+<li>首先安装Homebrew，在终端输入:<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</span><br></pre></td></tr></table></figure></li>
+<li>安装完Homebrew，可以安装node.js：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew install node.js</span><br></pre></td></tr></table></figure></li>
+<li>安装完成后查看：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">node -v</span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>以上就完成了node.js和npm的安装。</p>
+<h5 id="离线方式安装"><a href="#离线方式安装" class="headerlink" title="离线方式安装"></a>离线方式安装</h5><p>除Homebrew安装外，可以离线下载安装包安装，点击<a href="https://nodejs.org/en/">这里</a>在官网下载pkg安装包后，一路点击安装。</p>
+<h4 id="休息下听首歌"><a href="#休息下听首歌" class="headerlink" title="休息下听首歌"></a>休息下听首歌</h4><p>听听我录得歌，不自动播放了，各位请欣赏，哈哈！</p>
+
+        <div id="aplayer-EzznxDTq" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+            <pre class="aplayer-lrc-content"></pre>
+        </div>
+        <script>
+          var ap = new APlayer({
+            element: document.getElementById("aplayer-EzznxDTq"),
+            narrow: false,
+            autoplay: false,
+            showlrc: false,
+            music: {
+              title: "一生爱你千百回",
+              author: "allenmagic",
+              url: "http://op0byyd4a.bkt.clouddn.com/%E4%B8%80%E7%94%9F%E7%88%B1%E4%BD%A0%E5%8D%83%E7%99%BE%E5%9B%9E.mp3",
+              pic: "http://7viihf.com1.z0.glb.clouddn.com/face.jpg",
+              lrc: ""
+            }
+          });
+          window.aplayers || (window.aplayers = []);
+          window.aplayers.push(ap);
+        </script>
+
+
+<h4 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h4><p>安装hexo的命令很简单，在终端输入:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<p>安装完成后可以输入命令查看：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
+
+<h4 id="建立本地站点"><a href="#建立本地站点" class="headerlink" title="建立本地站点"></a>建立本地站点</h4><p>安装完hexo后，需要在本地建立站点并初始化站点:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir blog</span><br><span class="line">cd blog</span><br><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+<p>这样一个本地站点就完全建立了，你也可以用一个命令完成以上操作:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo init blog</span><br></pre></td></tr></table></figure>
+<p>安装完成后的目录结构为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">├── _config.yml</span><br><span class="line">├── node_modules</span><br><span class="line">├── package.json</span><br><span class="line">├── scaffolds</span><br><span class="line">├── source</span><br><span class="line">└── themes</span><br><span class="line"></span><br><span class="line">4 directories, 2 files</span><br></pre></td></tr></table></figure>
+
+<h4 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h4><p>在blog目录内依次运行以下命令:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<p>如果正常则会显示：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INFO  Start processing</span><br><span class="line">INFO  Hexo is running at http://localhost:4000/. Press Ctrl+C to stop.</span><br></pre></td></tr></table></figure>
+<p>按住CMD键同时点击<code>http://localhost:4000/</code>就可以在浏览器访问本地站点啦.</p>
+<p><em>完结</em></p>
+<p>[^1]: Keep it simple, stupid!</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017-05-25-%E4%BD%BF%E7%94%A8hexo+github%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81blog/" data-id="clx39bo2u0003o2pxh2yn2wiq" data-title="使用hexo+github搭建静态blog" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitHub/" rel="tag">GitHub</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%86%99%E4%BD%9C/" rel="tag">写作</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag">博客</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag">技术</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017-05-27-%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97-R-%E6%95%B0%E6%8D%AE/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          数据分析系列-R-数据
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017-05-23-%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E9%A3%8E%E9%99%A9%E8%AF%84%E6%B5%8B%E8%AE%A1%E7%AE%97%E7%9A%84%E9%97%AE%E9%A2%98%EE%95%BD/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">一个关于风险评测计算的问题</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BC%98%E9%9B%85%E5%90%90%E6%A7%BD/">优雅吐槽</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%88%91%E7%9A%84%E4%BA%BA%E7%94%9F/">我的人生</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6/">经济学</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%87%91%E8%9E%8D/">金融</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ECharts/" rel="tag">ECharts</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GitHub/" rel="tag">GitHub</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/R/" rel="tag">R</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%BA%E7%94%9F/" rel="tag">人生</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%85%B4%E8%B6%A3/" rel="tag">兴趣</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%99%E4%BD%9C/" rel="tag">写作</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%9A%E5%AE%A2/" rel="tag">博客</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%93%88%E8%80%B6%E5%85%8B/" rel="tag">哈耶克</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%93%BC%E5%93%BC%E5%94%A7%E5%94%A7/" rel="tag">哼哼唧唧</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%80%9D%E6%83%B3/" rel="tag">思想</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%83%85%E7%BB%AA/" rel="tag">情绪</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag">技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag">数据分析</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" rel="tag">数据可视化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%90%90%E7%A2%8E/" rel="tag">琐碎</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E5%91%BD/" rel="tag">生命</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB/" rel="tag">生活</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6/" rel="tag">经济学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%87%AA%E7%94%B1%E4%B8%BB%E4%B9%89/" rel="tag">自由主义</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A7%82%E5%BF%B5/" rel="tag">观念</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A7%82%E8%87%AA%E5%B7%B1/" rel="tag">观自己</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%87%91%E8%9E%8D/" rel="tag">金融</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/ECharts/" style="font-size: 10px;">ECharts</a> <a href="/tags/GitHub/" style="font-size: 10px;">GitHub</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/R/" style="font-size: 13.33px;">R</a> <a href="/tags/%E4%BA%BA%E7%94%9F/" style="font-size: 16.67px;">人生</a> <a href="/tags/%E5%85%B4%E8%B6%A3/" style="font-size: 10px;">兴趣</a> <a href="/tags/%E5%86%99%E4%BD%9C/" style="font-size: 10px;">写作</a> <a href="/tags/%E5%8D%9A%E5%AE%A2/" style="font-size: 10px;">博客</a> <a href="/tags/%E5%93%88%E8%80%B6%E5%85%8B/" style="font-size: 10px;">哈耶克</a> <a href="/tags/%E5%93%BC%E5%93%BC%E5%94%A7%E5%94%A7/" style="font-size: 10px;">哼哼唧唧</a> <a href="/tags/%E6%80%9D%E6%83%B3/" style="font-size: 10px;">思想</a> <a href="/tags/%E6%83%85%E7%BB%AA/" style="font-size: 10px;">情绪</a> <a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 16.67px;">技术</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" style="font-size: 13.33px;">数据分析</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" style="font-size: 10px;">数据可视化</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E7%90%90%E7%A2%8E/" style="font-size: 13.33px;">琐碎</a> <a href="/tags/%E7%94%9F%E5%91%BD/" style="font-size: 13.33px;">生命</a> <a href="/tags/%E7%94%9F%E6%B4%BB/" style="font-size: 20px;">生活</a> <a href="/tags/%E7%BB%8F%E6%B5%8E%E5%AD%A6/" style="font-size: 10px;">经济学</a> <a href="/tags/%E8%87%AA%E7%94%B1%E4%B8%BB%E4%B9%89/" style="font-size: 10px;">自由主义</a> <a href="/tags/%E8%A7%82%E5%BF%B5/" style="font-size: 10px;">观念</a> <a href="/tags/%E8%A7%82%E8%87%AA%E5%B7%B1/" style="font-size: 10px;">观自己</a> <a href="/tags/%E9%87%91%E8%9E%8D/" style="font-size: 13.33px;">金融</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018-03-23-%E5%A6%82%E6%9E%9C%E4%B8%8D%E8%83%BD%E5%BF%98%E8%AE%B0/">如果不能忘记</a>
+          </li>
+        
+          <li>
+            <a href="/2017-12-17-2017%E5%B9%B4%E7%BB%88%E5%A4%A7%E6%80%BB%E7%BB%93/">2017年终大总结</a>
+          </li>
+        
+          <li>
+            <a href="/2017-12-02-%E5%86%B2%E7%AA%81%E5%92%8C%E5%A6%A5%E5%8D%8F/">冲突和妥协</a>
+          </li>
+        
+          <li>
+            <a href="/2017-10-30-%E8%AF%BB%E4%B9%A6%E5%92%8C%E4%B9%B0%E4%B9%A6%E7%9A%84%E5%8F%98%E8%BF%81/">读书和买书的变迁</a>
+          </li>
+        
+          <li>
+            <a href="/2017-10-27-The-Road-to-Serfdom/">The Road to Serfdom</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 allenmagic<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
