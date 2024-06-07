@@ -128,12 +128,12 @@
 <h5 id="离线方式安装"><a href="#离线方式安装" class="headerlink" title="离线方式安装"></a>离线方式安装</h5><p>除Homebrew安装外，可以离线下载安装包安装，点击<a href="https://nodejs.org/en/">这里</a>在官网下载pkg安装包后，一路点击安装。</p>
 <h4 id="休息下听首歌"><a href="#休息下听首歌" class="headerlink" title="休息下听首歌"></a>休息下听首歌</h4><p>听听我录得歌，不自动播放了，各位请欣赏，哈哈！</p>
 
-        <div id="aplayer-pMBnJwLd" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+        <div id="aplayer-VxuhbMjc" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-pMBnJwLd"),
+            element: document.getElementById("aplayer-VxuhbMjc"),
             narrow: false,
             autoplay: false,
             showlrc: false,
@@ -532,7 +532,7 @@ categories: [优雅吐槽]
 哦，关于我评论他朋友圈？我没那闲工夫&#x2026;
 </p>
 
-<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-06-07 Fri 03:38.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.3)</div>
+<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-06-07 Fri 03:45.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.3)</div>
 ]]></content>
       <categories>
         <category>优雅吐槽</category>
@@ -568,11 +568,11 @@ categories: [优雅吐槽]
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">option = &#123;</span><br><span class="line">    title : &#123;</span><br><span class="line">        <span class="attr">text</span>: <span class="string">&#x27;各金融资产比重&#x27;</span>,</span><br><span class="line">        <span class="attr">subtext</span>: <span class="string">&#x27;纯属虚构&#x27;</span>,</span><br><span class="line">        <span class="attr">x</span>:<span class="string">&#x27;center&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    tooltip : &#123;</span><br><span class="line">        <span class="attr">trigger</span>: <span class="string">&#x27;item&#x27;</span>,</span><br><span class="line">        <span class="attr">formatter</span>: <span class="string">&quot;&#123;a&#125; &lt;br/&gt;&#123;b&#125; : &#123;c&#125; (&#123;d&#125;%)&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">legend</span>: &#123;</span><br><span class="line">        <span class="attr">orient</span>: <span class="string">&#x27;vertical&#x27;</span>,</span><br><span class="line">        <span class="attr">left</span>: <span class="string">&#x27;left&#x27;</span>,</span><br><span class="line">        <span class="attr">data</span>: [<span class="string">&#x27;股票&#x27;</span>,<span class="string">&#x27;债券&#x27;</span>,<span class="string">&#x27;基金&#x27;</span>,<span class="string">&#x27;金融衍生品&#x27;</span>,<span class="string">&#x27;现金及等价物&#x27;</span>]</span><br><span class="line">    &#125;,</span><br><span class="line">    series : [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">name</span>: <span class="string">&#x27;金融资产&#x27;</span>,</span><br><span class="line">            <span class="attr">type</span>: <span class="string">&#x27;pie&#x27;</span>,</span><br><span class="line">            radius : <span class="string">&#x27;55%&#x27;</span>,</span><br><span class="line">            <span class="attr">center</span>: [<span class="string">&#x27;50%&#x27;</span>, <span class="string">&#x27;60%&#x27;</span>],</span><br><span class="line">            <span class="attr">data</span>:[</span><br><span class="line">                &#123;<span class="attr">value</span>:<span class="number">335</span>, <span class="attr">name</span>:<span class="string">&#x27;债券&#x27;</span>&#125;,</span><br><span class="line">                &#123;<span class="attr">value</span>:<span class="number">310</span>, <span class="attr">name</span>:<span class="string">&#x27;基金&#x27;</span>&#125;,</span><br><span class="line">                &#123;<span class="attr">value</span>:<span class="number">234</span>, <span class="attr">name</span>:<span class="string">&#x27;现金及等价物&#x27;</span>&#125;,</span><br><span class="line">                &#123;<span class="attr">value</span>:<span class="number">135</span>, <span class="attr">name</span>:<span class="string">&#x27;金融衍生品&#x27;</span>&#125;,</span><br><span class="line">                &#123;<span class="attr">value</span>:<span class="number">1548</span>, <span class="attr">name</span>:<span class="string">&#x27;股票&#x27;</span>&#125;</span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">itemStyle</span>: &#123;</span><br><span class="line">                <span class="attr">emphasis</span>: &#123;</span><br><span class="line">                    <span class="attr">shadowBlur</span>: <span class="number">10</span>,</span><br><span class="line">                    <span class="attr">shadowOffsetX</span>: <span class="number">0</span>,</span><br><span class="line">                    <span class="attr">shadowColor</span>: <span class="string">&#x27;rgba(0, 0, 0, 0.5)&#x27;</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>对应的图形就如下所示，并且图形可以交互显示:</p>
-<div id="echarts8873" style="width: 110%;height: 420px;margin: 0 auto"></div>
+<div id="echarts9258" style="width: 110%;height: 420px;margin: 0 auto"></div>
 <script src="https://cdn.bootcss.com/echarts/3.8.0/echarts.common.min.js"></script>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts8873'));
+        var myChart = echarts.init(document.getElementById('echarts9258'));
         // 指定图表的配置项和数据
         var option = option = {
     title : {
@@ -678,9 +678,9 @@ categories: [优雅吐槽]
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>
 
 
-<div id="outline-container-org81c4eeb" class="outline-2">
-<h2 id="org81c4eeb">又是一年了</h2>
-<div class="outline-text-2" id="text-org81c4eeb">
+<div id="outline-container-orgd566f3d" class="outline-2">
+<h2 id="orgd566f3d">又是一年了</h2>
+<div class="outline-text-2" id="text-orgd566f3d">
 <p>
 一转眼，2017年又快过去了。按照往年的习惯，一般都会在元旦假期写一篇年终总结，过去有时会发在微信公众号，有时会发在博客，有时写在笔记软件里只给自己看。
 </p>
@@ -693,9 +693,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-orgccc0c5f" class="outline-2">
-<h2 id="orgccc0c5f">健康</h2>
-<div class="outline-text-2" id="text-orgccc0c5f">
+<div id="outline-container-orgb13b242" class="outline-2">
+<h2 id="orgb13b242">健康</h2>
+<div class="outline-text-2" id="text-orgb13b242">
 <p>
 今年家里最重要的事情就是父亲的病，也算是不小的一个变故，大半年的主要精力都在这件事情上了。
 </p>
@@ -730,9 +730,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-orgff391b9" class="outline-2">
-<h2 id="orgff391b9">工作</h2>
-<div class="outline-text-2" id="text-orgff391b9">
+<div id="outline-container-org5a770c8" class="outline-2">
+<h2 id="org5a770c8">工作</h2>
+<div class="outline-text-2" id="text-org5a770c8">
 <p>
 工作其实没什么，简而言之就是不怎么开心。
 </p>
@@ -755,9 +755,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-org74d9f9c" class="outline-2">
-<h2 id="org74d9f9c">情绪</h2>
-<div class="outline-text-2" id="text-org74d9f9c">
+<div id="outline-container-orge6e0071" class="outline-2">
+<h2 id="orge6e0071">情绪</h2>
+<div class="outline-text-2" id="text-orge6e0071">
 <p>
 今年的压力很大，家庭和工作是两大需要解决的问题。很难得是在这个情况下，我坚持了把抑郁症用药基本停下来了。
 </p>
@@ -780,9 +780,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-org979cfe6" class="outline-2">
-<h2 id="org979cfe6">体重</h2>
-<div class="outline-text-2" id="text-org979cfe6">
+<div id="outline-container-orgecb59f3" class="outline-2">
+<h2 id="orgecb59f3">体重</h2>
+<div class="outline-text-2" id="text-orgecb59f3">
 <p>
 这是一个值得说的问题，今年我的一个重要任务就是减肥。因为体重的增加带来的身体问题就是脂肪肝，幸好血脂并不高也没有典型的高血压问题。但肥胖一定会带来健康的问题，而且肥胖实在是对个人形象的影响太大。
 </p>
@@ -805,9 +805,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-orgd050cf2" class="outline-2">
-<h2 id="orgd050cf2">学习</h2>
-<div class="outline-text-2" id="text-orgd050cf2">
+<div id="outline-container-org856af08" class="outline-2">
+<h2 id="org856af08">学习</h2>
+<div class="outline-text-2" id="text-org856af08">
 <p>
 今年在知识上的进步比较小，主要是时间的问题。因为频繁出差和加班，所以剩余的空闲时间比较少，有时候抽空读点书也是和技能没什么关系。今年读的哲学和历史书籍倒是多了一点。
 </p>
@@ -834,9 +834,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-org17a9f63" class="outline-2">
-<h2 id="org17a9f63">新年目标</h2>
-<div class="outline-text-2" id="text-org17a9f63">
+<div id="outline-container-org8062d05" class="outline-2">
+<h2 id="org8062d05">新年目标</h2>
+<div class="outline-text-2" id="text-org8062d05">
 <p>
 2018年的目标很简单：
 </p>
@@ -855,7 +855,7 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-06-07 Fri 03:38.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.3)</div>
+<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-06-07 Fri 03:45.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.3)</div>
 ]]></content>
       <categories>
         <category>生活</category>
@@ -873,9 +873,9 @@ categories: [优雅吐槽]
 
 
 
-<div id="outline-container-org9a0e319" class="outline-2">
-<h2 id="org9a0e319">前言</h2>
-<div class="outline-text-2" id="text-org9a0e319">
+<div id="outline-container-org2d4104e" class="outline-2">
+<h2 id="org2d4104e">前言</h2>
+<div class="outline-text-2" id="text-org2d4104e">
 <p>
 这篇笔记大概是写在2016年的7月份，那时候买了哈耶克的三本书，分别是《通往奴役之路》、《自由宪章》、《致命的自负》。刚开始因为看到《通往奴役之路》（就是《The Road to Serfdom》这本书）内容比较少，所以就先读了。
 </p>
@@ -888,9 +888,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-org060d571" class="outline-2">
-<h2 id="org060d571">关于这本书</h2>
-<div class="outline-text-2" id="text-org060d571">
+<div id="outline-container-org91faea0" class="outline-2">
+<h2 id="org91faea0">关于这本书</h2>
+<div class="outline-text-2" id="text-org91faea0">
 <p>
 大学在学习西方经济学的时候，接触到了凯恩斯，就这样我了解了当年凯恩斯和哈耶克的关于政府是否应该干预经济的争论，从而知道了解了哈耶克这个人。进而了解到哈耶克本人参与的两场大论战，其中一场是哈耶克和米塞斯为一方的，和兰格与勒纳为一方的，就社会主义经济计算可行性的论战。另一场就是和凯恩斯的论战了，而《The Road to Serfdom》正是第一场论战的结果。
 </p>
@@ -957,7 +957,7 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-06-07 Fri 03:38.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.3)</div>
+<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-06-07 Fri 03:45.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.3)</div>
 ]]></content>
       <categories>
         <category>经济学</category>
@@ -974,9 +974,9 @@ categories: [优雅吐槽]
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>
 
 
-<div id="outline-container-orgc6f8fea" class="outline-2">
-<h2 id="orgc6f8fea">漫无目的的思想</h2>
-<div class="outline-text-2" id="text-orgc6f8fea">
+<div id="outline-container-orgd895614" class="outline-2">
+<h2 id="orgd895614">漫无目的的思想</h2>
+<div class="outline-text-2" id="text-orgd895614">
 <p>
 这是一个我都不知道主旨思想是什么的文章，题目是后加上的，估计与文无关。
 </p>
@@ -985,18 +985,18 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-org36e2072" class="outline-2">
-<h2 id="org36e2072">起子</h2>
-<div class="outline-text-2" id="text-org36e2072">
+<div id="outline-container-orgfcb94ae" class="outline-2">
+<h2 id="orgfcb94ae">起子</h2>
+<div class="outline-text-2" id="text-orgfcb94ae">
 <p>
 上一篇文章差不多是一个月前写的了，最近一个月工作和生活都比较繁忙，有时候夹杂着一点疲倦感。不过，持续写blog也是我要养成的习惯，所以趁今天的时间稍微比较充裕，随便写点东西。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org2b961ca" class="outline-2">
-<h2 id="org2b961ca">写啥哩</h2>
-<div class="outline-text-2" id="text-org2b961ca">
+<div id="outline-container-org888307e" class="outline-2">
+<h2 id="org888307e">写啥哩</h2>
+<div class="outline-text-2" id="text-org888307e">
 <p>
 我过去有写日记的习惯，从高中开始一直到工作后三年，大概是2002年到2012年，断断续续的坚持了十年时间。前七年还算比较认真，不一定是每天会写，但每周至少能写到三篇。后来毕业工作了，基本上一周一篇，所以逐渐成了周记。
 </p>
@@ -1011,9 +1011,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-org6852c44" class="outline-2">
-<h2 id="org6852c44">最近</h2>
-<div class="outline-text-2" id="text-org6852c44">
+<div id="outline-container-orgd6eb4a7" class="outline-2">
+<h2 id="orgd6eb4a7">最近</h2>
+<div class="outline-text-2" id="text-orgd6eb4a7">
 <p>
 最近的工作确实忙，其实忙应该是一种比较好的状态。
 </p>
@@ -1040,9 +1040,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-orgc7912c6" class="outline-2">
-<h2 id="orgc7912c6">情绪</h2>
-<div class="outline-text-2" id="text-orgc7912c6">
+<div id="outline-container-org388024a" class="outline-2">
+<h2 id="org388024a">情绪</h2>
+<div class="outline-text-2" id="text-org388024a">
 <p>
 最近的情绪也不是很高，有时候甚至比较烦躁。好在现在自我调节能力变强了，过些许时间就调整好了。
 </p>
@@ -1058,7 +1058,7 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-06-07 Fri 03:38.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.3)</div>
+<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-06-07 Fri 03:45.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.3)</div>
 ]]></content>
       <categories>
         <category>我的人生</category>
@@ -1075,9 +1075,9 @@ categories: [优雅吐槽]
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>
 
 
-<div id="outline-container-org8c8f47d" class="outline-2">
-<h2 id="org8c8f47d">生命无常</h2>
-<div class="outline-text-2" id="text-org8c8f47d">
+<div id="outline-container-org9a6b75d" class="outline-2">
+<h2 id="org9a6b75d">生命无常</h2>
+<div class="outline-text-2" id="text-org9a6b75d">
 <p>
 父亲去世快百天了，从我上次回去照顾他最后一段时间到这次清明回去给他扫墓，时间过得真快。过去的三个多月，我有时候用着我不曾使用的方法和手段让我尽量淡化悲伤，但仍然不免怀念他。
 </p>
@@ -1090,9 +1090,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-org9bc46b6" class="outline-2">
-<h2 id="org9bc46b6">过去已经回不去了</h2>
-<div class="outline-text-2" id="text-org9bc46b6">
+<div id="outline-container-orga0a1e7a" class="outline-2">
+<h2 id="orga0a1e7a">过去已经回不去了</h2>
+<div class="outline-text-2" id="text-orga0a1e7a">
 <p>
 我的记忆力在抑郁症之后退化了很多，大部分时候并不记得很多东西。平时工作和生活也会靠一些工具来增强我的记忆力。所以，我很伤心已经记不得小时候大部分和父亲的互动，哪怕是一些糗事能够知道也是其他人诉说的。
 </p>
@@ -1107,9 +1107,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-org699ac7d" class="outline-2">
-<h2 id="org699ac7d">回忆他的过去</h2>
-<div class="outline-text-2" id="text-org699ac7d">
+<div id="outline-container-org4a529e7" class="outline-2">
+<h2 id="org4a529e7">回忆他的过去</h2>
+<div class="outline-text-2" id="text-org4a529e7">
 <p>
 我们家是农民出身，父亲就是农民教师。好在爷爷奶奶在过去艰苦的时候供养他们读书，所以他最终能够在文化大革命的那些年完成至高中学业，在当地也算是知识分子，正因为如此也能从事了教育工作。
 </p>
@@ -1128,9 +1128,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-org7f29850" class="outline-2">
-<h2 id="org7f29850">反面和正面</h2>
-<div class="outline-text-2" id="text-org7f29850">
+<div id="outline-container-orgefbadf1" class="outline-2">
+<h2 id="orgefbadf1">反面和正面</h2>
+<div class="outline-text-2" id="text-orgefbadf1">
 <p>
 正因为他的性格和习惯，我很小的时候就发现了。所以，我这一辈子用他做反面了。不吸烟，不随意发脾气，学会聆听等等。
 </p>
@@ -1145,9 +1145,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-orgfc12119" class="outline-2">
-<h2 id="orgfc12119">改变是好的现象</h2>
-<div class="outline-text-2" id="text-orgfc12119">
+<div id="outline-container-org83a58a5" class="outline-2">
+<h2 id="org83a58a5">改变是好的现象</h2>
+<div class="outline-text-2" id="text-org83a58a5">
 <p>
 清明的时候，我在他的墓前想了很多，说了很多。
 </p>
@@ -1186,9 +1186,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-org3444adf" class="outline-2">
-<h2 id="org3444adf">父亲的财产</h2>
-<div class="outline-text-2" id="text-org3444adf">
+<div id="outline-container-org1c191f9" class="outline-2">
+<h2 id="org1c191f9">父亲的财产</h2>
+<div class="outline-text-2" id="text-org1c191f9">
 <p>
 他的意志和精神算是留给我最大的财富，因为那是我的父亲，世间的独一无二。
 </p>
@@ -1207,9 +1207,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-org98b5b07" class="outline-2">
-<h2 id="org98b5b07">永在</h2>
-<div class="outline-text-2" id="text-org98b5b07">
+<div id="outline-container-orgd106e61" class="outline-2">
+<h2 id="orgd106e61">永在</h2>
+<div class="outline-text-2" id="text-orgd106e61">
 <p>
 不能忘记，也不要忘记，也不该忘记。
 </p>
@@ -1220,7 +1220,7 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-06-07 Fri 03:38.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.3)</div>
+<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-06-07 Fri 03:45.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.3)</div>
 ]]></content>
       <categories>
         <category>生活</category>
@@ -1237,9 +1237,9 @@ categories: [优雅吐槽]
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>
 
 
-<div id="outline-container-orgec4b981" class="outline-2">
-<h2 id="orgec4b981">目的</h2>
-<div class="outline-text-2" id="text-orgec4b981">
+<div id="outline-container-org8676046" class="outline-2">
+<h2 id="org8676046">目的</h2>
+<div class="outline-text-2" id="text-org8676046">
 <p>
 我已经不记得我的第一本书是什么时候买的了，但我还记得是什么书，在哪买的。从我开始读书起，已经快三十年了，社会的进步和我的成长，无论是买书还是读书，均有了很大的变化，以此文纪念这些年读书的经历。
 </p>
@@ -1248,9 +1248,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-orge8f5707" class="outline-2">
-<h2 id="orge8f5707">读书算是爱好吗？</h2>
-<div class="outline-text-2" id="text-orge8f5707">
+<div id="outline-container-orgeebc8b9" class="outline-2">
+<h2 id="orgeebc8b9">读书算是爱好吗？</h2>
+<div class="outline-text-2" id="text-orgeebc8b9">
 <p>
 我一直怀疑读书是否算是一个爱好，在当今如果不多读点书，似乎是很难的。无论是工作、交际还是生活，书籍是人们快速和系统获取知识的最有效的方式。
 </p>
@@ -1277,9 +1277,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-org48bef33" class="outline-2">
-<h2 id="org48bef33">读书的变迁</h2>
-<div class="outline-text-2" id="text-org48bef33">
+<div id="outline-container-org45b7c1a" class="outline-2">
+<h2 id="org45b7c1a">读书的变迁</h2>
+<div class="outline-text-2" id="text-org45b7c1a">
 <p>
 我周岁的时候，在老家的习俗下，有个抓周的习俗活动。据我妈说，我先抓了吃的（难道证明我是个吃货？可是我并不是啊），然后抓了书本。
 </p>
@@ -1314,9 +1314,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-org38468f8" class="outline-2">
-<h2 id="org38468f8">买书的变迁</h2>
-<div class="outline-text-2" id="text-org38468f8">
+<div id="outline-container-orgb34806b" class="outline-2">
+<h2 id="orgb34806b">买书的变迁</h2>
+<div class="outline-text-2" id="text-orgb34806b">
 <p>
 最早的时候是在新华书店买书。
 </p>
@@ -1351,9 +1351,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-org3cc4dc9" class="outline-2">
-<h2 id="org3cc4dc9">工作以后</h2>
-<div class="outline-text-2" id="text-org3cc4dc9">
+<div id="outline-container-org76babba" class="outline-2">
+<h2 id="org76babba">工作以后</h2>
+<div class="outline-text-2" id="text-org76babba">
 <p>
 刚工作，那时候在Morningstar工作，公司允许每年报销1000元的书籍费用，特别高兴。所以那时候买书很积极，但也因为如此，买书就不仔细，买了很多垃圾的书。
 </p>
@@ -1376,7 +1376,7 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-06-07 Fri 03:38.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.3)</div>
+<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-06-07 Fri 03:45.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.1 (<a href="https://orgmode.org">Org</a> mode 9.3)</div>
 ]]></content>
       <categories>
         <category>生活</category>
