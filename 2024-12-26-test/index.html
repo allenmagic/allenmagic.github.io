@@ -4,15 +4,17 @@
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
   
-  <title>Kategorie: 经济学 | Egg&#39;s Blog</title>
+  <title>test | Egg&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="久在樊笼里，复得返自然。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Egg&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/categories/%E7%BB%8F%E6%B5%8E%E5%AD%A6/index.html">
+  <meta name="description" content="前序很久没更新公众号，今日简单地撰写一篇如何快速部署yesplaymusic和navidrome的指南。 介绍yesplaymusic是一款非常好用且颜值超高的第三方网易云音乐播放软件，除了支持本地安装外还支持通过docker部署成web服务。但因为目前docker hub不可抗力导致访问受限制，我们今天介绍一个方法利用腾讯云的容器镜像服务，来构建自己的私有docker镜像，并完成部署。 腾讯云容">
+<meta property="og:type" content="article">
+<meta property="og:title" content="test">
+<meta property="og:url" content="http://yoursite.com/2024-12-26-test/index.html">
 <meta property="og:site_name" content="Egg&#39;s Blog">
-<meta property="og:description" content="久在樊笼里，复得返自然。">
+<meta property="og:description" content="前序很久没更新公众号，今日简单地撰写一篇如何快速部署yesplaymusic和navidrome的指南。 介绍yesplaymusic是一款非常好用且颜值超高的第三方网易云音乐播放软件，除了支持本地安装外还支持通过docker部署成web服务。但因为目前docker hub不可抗力导致访问受限制，我们今天介绍一个方法利用腾讯云的容器镜像服务，来构建自己的私有docker镜像，并完成部署。 腾讯云容">
 <meta property="og:locale">
+<meta property="article:published_time" content="2024-12-26T03:22:36.000Z">
+<meta property="article:modified_time" content="2024-12-26T03:24:17.754Z">
 <meta property="article:author" content="allenmagic">
 <meta name="twitter:card" content="summary">
   
@@ -81,39 +83,58 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017-10-27-The-Road-to-Serfdom/" class="archive-article-date">
-  <time class="dt-published" datetime="2017-10-27T16:55:00.000Z" itemprop="datePublished">Oct 28</time>
+        <section id="main"><article id="post-test" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024-12-26-test/" class="article-date">
+  <time class="dt-published" datetime="2024-12-26T03:22:36.000Z" itemprop="datePublished">2024-12-26</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017-10-27-The-Road-to-Serfdom/">The Road to Serfdom</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      test
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="前序"><a href="#前序" class="headerlink" title="前序"></a>前序</h1><p>很久没更新公众号，今日简单地撰写一篇如何快速部署yesplaymusic和navidrome的指南。</p>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>yesplaymusic是一款非常好用且颜值超高的第三方网易云音乐播放软件，除了支持本地安装外还支持通过docker部署成web服务。但因为目前docker hub不可抗力导致访问受限制，我们今天介绍一个方法利用腾讯云的容器镜像服务，来构建自己的私有docker镜像，并完成部署。</p>
+<h2 id="腾讯云容器镜像服务"><a href="#腾讯云容器镜像服务" class="headerlink" title="腾讯云容器镜像服务"></a>腾讯云容器镜像服务</h2><p>首先登录腾讯云管理后台，若无账号可以注册账号。找到【容器镜像服务】菜单后点击进入（可以通过搜索方式快速找到菜单入口），如果没有开通容器镜像服务，需要单独再开通该服务，目前容器镜像服务针对个人开发者可免费试用，记得需是需要开启个人版，目前个人版支持10个命名空间和500个镜像仓库数，足够个人使用了。</p>
+<p>需要记住访问域名ccr.ccs.tencentyun.com，这是后面拉取容器镜像必须使用的参数之一。</p>
+<p>第一步：点击【镜像仓库】-【新建】，可以新建容器镜像。然后输入需要新建的镜像仓库名称，以及设置为私有或者公有。这里注意，如果设置为公有镜像，则是他人都可以拉取该容器镜像，设置为私有容器镜像则只能当前账号登录后可以拉取容器镜像。具体如何设置可以根据实际情况考虑。</p>
+<p>第二步：新建完成后就可以在镜像列表中查看到镜像名称了，点击镜像名称后进入镜像详情页面。然后点击【镜像构建】页签，再点击【新建镜像构建规则】，进入到镜像构建规则设置的页面。这里会有多个代码源，可以根据实际情况选择，因为我们构建的镜像是基于从github上fork到本人账号下的镜像，所以需要先在github上fork源项目的内容后再构建。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2024-12-26-test/" data-id="cm54rhfyw000hsgpyfjdvdyh6" data-title="test" class="article-share-link"><span class="fa fa-share">Teilen</span></a>
+      
+      
+      
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018-03-23-%E5%A6%82%E6%9E%9C%E4%B8%8D%E8%83%BD%E5%BF%98%E8%AE%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">如果不能忘记</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
 
 
 </section>
