@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+    <link rel="alternate icon" type="image/png" href="/img/favicon.png">
+    <title>Egg&#39;s Blog | 一个傻子</title>
+    
+<link rel="stylesheet" href="/css/reset.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<link rel="stylesheet" href="/css/markdown.css">
+
+    
+<link rel="stylesheet" href="/css/fonts.css">
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+    <body>
+        <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="paper">
+            <div class="paper-main">
+                
+                    <div class="post-header">
+    <a class="logo" href="/">Egg&#39;s Blog</a>
+    <a class="go-home" href="/">
+        <svg width="8" height="14" viewBox="0 0 8 14">
+            <path d="M7 1L1 7l6 6" stroke="#000" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </a>
+</div>
+                
+                <div class="post-main">
+
+    
+    
+        <div class="post-main-title">
+            test
+        </div>
+        <div class="post-meta">
+            2024-12-26
+        </div>
+        <div class="post-md">
+            <h1 id="前序"><a href="#前序" class="headerlink" title="前序"></a>前序</h1><p>很久没更新公众号，今日简单地撰写一篇如何快速部署yesplaymusic和navidrome的指南。</p>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>yesplaymusic是一款非常好用且颜值超高的第三方网易云音乐播放软件，除了支持本地安装外还支持通过docker部署成web服务。但因为目前docker hub不可抗力导致访问受限制，我们今天介绍一个方法利用腾讯云的容器镜像服务，来构建自己的私有docker镜像，并完成部署。</p>
+<h2 id="腾讯云容器镜像服务"><a href="#腾讯云容器镜像服务" class="headerlink" title="腾讯云容器镜像服务"></a>腾讯云容器镜像服务</h2><p>首先登录腾讯云管理后台，若无账号可以注册账号。找到【容器镜像服务】菜单后点击进入（可以通过搜索方式快速找到菜单入口），如果没有开通容器镜像服务，需要单独再开通该服务，目前容器镜像服务针对个人开发者可免费试用，记得需是需要开启个人版，目前个人版支持10个命名空间和500个镜像仓库数，足够个人使用了。</p>
+<p>需要记住访问域名ccr.ccs.tencentyun.com，这是后面拉取容器镜像必须使用的参数之一。</p>
+<p>第一步：点击【镜像仓库】-【新建】，可以新建容器镜像。然后输入需要新建的镜像仓库名称，以及设置为私有或者公有。这里注意，如果设置为公有镜像，则是他人都可以拉取该容器镜像，设置为私有容器镜像则只能当前账号登录后可以拉取容器镜像。具体如何设置可以根据实际情况考虑。</p>
+<p>第二步：新建完成后就可以在镜像列表中查看到镜像名称了，点击镜像名称后进入镜像详情页面。然后点击【镜像构建】页签，再点击【新建镜像构建规则】，进入到镜像构建规则设置的页面。这里会有多个代码源，可以根据实际情况选择，因为我们构建的镜像是基于从github上fork到本人账号下的镜像，所以需要先在github上fork源项目的内容后再构建。</p>
+
+        </div>
+
+    
+
+</div>
+                <div class="footer">
+    <span>Copyright © 2022 Egg&#39;s Blog</span>
+    <span>Theme Designed By <a target="_blank" href="https://zheli.design/one-paper">這李設計</a></span>
+</div>
+
+
+<link rel="stylesheet" href="/css/a11y-dark.min.css">
+
+
+<script src="/js/highlight.min.js"></script>
+
+
+<script src="/js/highlightjs-line-numbers.js"></script>
+
+
+<script>
+    hljs.initHighlightingOnLoad();
+    hljs.initLineNumbersOnLoad();
+</script>
+
+            </div>
+        </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    </body>
+</html>
