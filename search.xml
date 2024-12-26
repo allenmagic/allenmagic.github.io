@@ -1,6 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>使用hexo+github搭建静态blog</title>
+    <url>/2017-05-25-%E4%BD%BF%E7%94%A8hexo+github%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81blog/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>过去几年，我曾经用多种方式写作。自从大学毕业，基本不再使用人人网（过去的时候叫校内网），后来新浪云发布，在网上找到了一个基于python的博客系统，随便改了改就发到新浪云上了，还给专门搞了一个一级域名(<a href="http://www.zyx1986.pw,现在已经不能用了)./">www.zyx1986.pw，现在已经不能用了）。</a></p>
+<span id="more"></span>
+
+<p>再后来，微信公众号开始流行，我也赶了个时髦开了公众号。微信公众号对文本、图片支持的还可以，但对于代码、公式的支持几乎没有，所以在微信公众号的文章大部分是随笔或者鸡汤，没什么营养。</p>
+<p>最近开始整理之前的学习笔记，刚开始在简书上发文，刚写了两篇还可以，毕竟简书支持Markdown格式的文章，对代码高亮的支持也不错，但我想写的文章如果有数学公式就尴尬了，很繁琐而且效果不好，所以就想自己搭建一个blog。</p>
+<p>搜索了下，hexo+github成了我的选择。</p>
+<h3 id="Hexo是什么"><a href="#Hexo是什么" class="headerlink" title="Hexo是什么"></a>Hexo是什么</h3><p><a href="https://hexo.io/zh-cn/">Hexo</a>是基于node.js的轻量化的博客框架，安装和使用都非常简单，很快就可以上手。并且Hexo支持自定义主题和Markdown格式的文件，极速渲染页面，非常适合经常写文档的朋友。</p>
+<p>Hexo有很多插件支持更多更丰富的功能，因此能够支持丰富的文档特性，比如代码高亮、公式等，因此也很适合撰写科技和技术文章。</p>
+<h3 id="为什么是Hexo"><a href="#为什么是Hexo" class="headerlink" title="为什么是Hexo"></a>为什么是Hexo</h3><p>Hexo最大的优点就是遵循了KISS[^1]原则，其具有以下特点</p>
+<ol>
+<li>基于node.js安装简单</li>
+<li>支持Markdown格式为源文件</li>
+<li>支持MathJax渲染LaTeX的公式（大爱这一点）</li>
+<li>支持代码高亮</li>
+<li>配置简单可以定制主题</li>
+<li>生成的是静态页面可以利用	GitHub的Pages功能</li>
+</ol>
+<p>	</p>
+<p>以上就足够了。</p>
+<h3 id="声明及准备"><a href="#声明及准备" class="headerlink" title="声明及准备"></a>声明及准备</h3><blockquote>
+<p>本文的安装是基于MacOS</p>
+</blockquote>
+<p>安装准备：</p>
+<blockquote>
+<ol>
+<li>github账号</li>
+<li>homebrew</li>
+<li>node.js</li>
+<li>npm</li>
+<li>hexo</li>
+</ol>
+</blockquote>
+<p>由于node.js自带npm，所以只需要安装node.js即可。</p>
+<h3 id="搭建流程"><a href="#搭建流程" class="headerlink" title="搭建流程"></a>搭建流程</h3><h4 id="获取github"><a href="#获取github" class="headerlink" title="获取github"></a>获取github</h4><p>因为是基于GitHub搭建静态blog站点，所以需要先获取GitHub的账号和建立相应的repository。如果你没有GitHub的账号，点击<a href="https://github.com/join?source=header-home">这里</a>注册。</p>
+<p>注册完获取到账号后，你可以创建一个repository：<br><img src="http://7viihf.com1.z0.glb.clouddn.com/github_new_repo.png" alt="创建新的repository"></p>
+<p>创建的repo的名称为：<code>yourid.github.io</code></p>
+<h4 id="安装node-js"><a href="#安装node-js" class="headerlink" title="安装node.js"></a>安装node.js</h4><p>因为Hexo是基于node.js，所以要先安装node.js。在这里提供两种方式安装：</p>
+<h5 id="通过Homebrew安装"><a href="#通过Homebrew安装" class="headerlink" title="通过Homebrew安装"></a>通过Homebrew安装</h5><p>强烈建议Mac用户安装<a href="https://brew.sh/index_zh-cn.html">Homebrew</a>，通过Homebrew来管理Mac的软件，Homebrew在安装和删除软件上特别方便。</p>
+<ol>
+<li>首先安装Homebrew，在终端输入:<figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/usr/</span>bin<span class="hljs-regexp">/ruby -e &quot;$(curl -fsSL https:/</span><span class="hljs-regexp">/raw.githubusercontent.com/</span>Homebrew<span class="hljs-regexp">/install/m</span>aster/install)<span class="hljs-string">&quot;</span><br></code></pre></td></tr></table></figure></li>
+<li>安装完Homebrew，可以安装node.js：<figure class="highlight mipsasm"><table><tr><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">brew </span><span class="hljs-keyword">install </span>node.<span class="hljs-keyword">js</span><br></code></pre></td></tr></table></figure></li>
+<li>安装完成后查看：<figure class="highlight crmsh"><table><tr><td class="code"><pre><code class="hljs crmsh"><span class="hljs-keyword">node</span> <span class="hljs-title">-v</span><br>npm -v<br></code></pre></td></tr></table></figure></li>
+</ol>
+<p>以上就完成了node.js和npm的安装。</p>
+<h5 id="离线方式安装"><a href="#离线方式安装" class="headerlink" title="离线方式安装"></a>离线方式安装</h5><p>除Homebrew安装外，可以离线下载安装包安装，点击<a href="https://nodejs.org/en/">这里</a>在官网下载pkg安装包后，一路点击安装。</p>
+<h4 id="休息下听首歌"><a href="#休息下听首歌" class="headerlink" title="休息下听首歌"></a>休息下听首歌</h4><p>听听我录得歌，不自动播放了，各位请欣赏，哈哈！</p>
+
+        <div id="aplayer-MfntERQc" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+            <pre class="aplayer-lrc-content"></pre>
+        </div>
+        <script>
+          var ap = new APlayer({
+            element: document.getElementById("aplayer-MfntERQc"),
+            narrow: false,
+            autoplay: false,
+            showlrc: false,
+            music: {
+              title: "一生爱你千百回",
+              author: "allenmagic",
+              url: "http://op0byyd4a.bkt.clouddn.com/%E4%B8%80%E7%94%9F%E7%88%B1%E4%BD%A0%E5%8D%83%E7%99%BE%E5%9B%9E.mp3",
+              pic: "http://7viihf.com1.z0.glb.clouddn.com/face.jpg",
+              lrc: ""
+            }
+          });
+          window.aplayers || (window.aplayers = []);
+          window.aplayers.push(ap);
+        </script>
+
+
+<h4 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h4><p>安装hexo的命令很简单，在终端输入:</p>
+<figure class="highlight avrasm"><table><tr><td class="code"><pre><code class="hljs avrasm">npm install -g hexo-<span class="hljs-keyword">cli</span><br></code></pre></td></tr></table></figure>
+<p>安装完成后可以输入命令查看：</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">hexo -v</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="建立本地站点"><a href="#建立本地站点" class="headerlink" title="建立本地站点"></a>建立本地站点</h4><p>安装完hexo后，需要在本地建立站点并初始化站点:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">mkdir</span> blog<br><span class="hljs-built_in">cd</span> blog<br>hexo init<br></code></pre></td></tr></table></figure>
+<p>这样一个本地站点就完全建立了，你也可以用一个命令完成以上操作:</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><code class="hljs csharp">hexo <span class="hljs-keyword">init</span> blog<br></code></pre></td></tr></table></figure>
+<p>安装完成后的目录结构为：</p>
+<figure class="highlight mipsasm"><table><tr><td class="code"><pre><code class="hljs mipsasm">├── _<span class="hljs-built_in">config</span>.yml<br>├── node_modules<br>├── package.<span class="hljs-keyword">json</span><br><span class="hljs-keyword"></span>├── <span class="hljs-keyword">scaffolds</span><br><span class="hljs-keyword"></span>├── source<br>└── themes<br><br><span class="hljs-number">4</span> <span class="hljs-keyword">directories, </span><span class="hljs-number">2</span> files<br></code></pre></td></tr></table></figure>
+
+<h4 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h4><p>在blog目录内依次运行以下命令:</p>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">hexo clean</span><br><span class="hljs-attribute">hexo g</span><br><span class="hljs-attribute">hexo s</span><br></code></pre></td></tr></table></figure>
+<p>如果正常则会显示：</p>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">INFO</span>  <span class="hljs-keyword">Start</span> processing<br><span class="hljs-keyword">INFO</span>  Hexo <span class="hljs-keyword">is</span> running at http://localhost:<span class="hljs-number">4000</span>/. Press Ctrl+C <span class="hljs-keyword">to</span> stop.<br></code></pre></td></tr></table></figure>
+<p>按住CMD键同时点击<code>http://localhost:4000/</code>就可以在浏览器访问本地站点啦.</p>
+<p><em>完结</em></p>
+<p>[^1]: Keep it simple, stupid!</p>
+]]></content>
+      <categories>
+        <category>生活</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
+        <tag>博客</tag>
+        <tag>写作</tag>
+        <tag>GitHub</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用Python画股票的K线图</title>
     <url>/2017-04-17-%E4%BD%BF%E7%94%A8Python%E7%94%BB%E8%82%A1%E7%A5%A8%E7%9A%84K%E7%BA%BF%E5%9B%BE/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="导言"><a href="#导言" class="headerlink" title="导言"></a>导言</h2><blockquote>
@@ -76,108 +178,6 @@
         <tag>金融</tag>
         <tag>Python</tag>
         <tag>爬虫</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用hexo+github搭建静态blog</title>
-    <url>/2017-05-25-%E4%BD%BF%E7%94%A8hexo+github%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81blog/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>过去几年，我曾经用多种方式写作。自从大学毕业，基本不再使用人人网（过去的时候叫校内网），后来新浪云发布，在网上找到了一个基于python的博客系统，随便改了改就发到新浪云上了，还给专门搞了一个一级域名(<a href="http://www.zyx1986.pw,现在已经不能用了)./">www.zyx1986.pw，现在已经不能用了）。</a></p>
-<span id="more"></span>
-
-<p>再后来，微信公众号开始流行，我也赶了个时髦开了公众号。微信公众号对文本、图片支持的还可以，但对于代码、公式的支持几乎没有，所以在微信公众号的文章大部分是随笔或者鸡汤，没什么营养。</p>
-<p>最近开始整理之前的学习笔记，刚开始在简书上发文，刚写了两篇还可以，毕竟简书支持Markdown格式的文章，对代码高亮的支持也不错，但我想写的文章如果有数学公式就尴尬了，很繁琐而且效果不好，所以就想自己搭建一个blog。</p>
-<p>搜索了下，hexo+github成了我的选择。</p>
-<h3 id="Hexo是什么"><a href="#Hexo是什么" class="headerlink" title="Hexo是什么"></a>Hexo是什么</h3><p><a href="https://hexo.io/zh-cn/">Hexo</a>是基于node.js的轻量化的博客框架，安装和使用都非常简单，很快就可以上手。并且Hexo支持自定义主题和Markdown格式的文件，极速渲染页面，非常适合经常写文档的朋友。</p>
-<p>Hexo有很多插件支持更多更丰富的功能，因此能够支持丰富的文档特性，比如代码高亮、公式等，因此也很适合撰写科技和技术文章。</p>
-<h3 id="为什么是Hexo"><a href="#为什么是Hexo" class="headerlink" title="为什么是Hexo"></a>为什么是Hexo</h3><p>Hexo最大的优点就是遵循了KISS[^1]原则，其具有以下特点</p>
-<ol>
-<li>基于node.js安装简单</li>
-<li>支持Markdown格式为源文件</li>
-<li>支持MathJax渲染LaTeX的公式（大爱这一点）</li>
-<li>支持代码高亮</li>
-<li>配置简单可以定制主题</li>
-<li>生成的是静态页面可以利用	GitHub的Pages功能</li>
-</ol>
-<p>	</p>
-<p>以上就足够了。</p>
-<h3 id="声明及准备"><a href="#声明及准备" class="headerlink" title="声明及准备"></a>声明及准备</h3><blockquote>
-<p>本文的安装是基于MacOS</p>
-</blockquote>
-<p>安装准备：</p>
-<blockquote>
-<ol>
-<li>github账号</li>
-<li>homebrew</li>
-<li>node.js</li>
-<li>npm</li>
-<li>hexo</li>
-</ol>
-</blockquote>
-<p>由于node.js自带npm，所以只需要安装node.js即可。</p>
-<h3 id="搭建流程"><a href="#搭建流程" class="headerlink" title="搭建流程"></a>搭建流程</h3><h4 id="获取github"><a href="#获取github" class="headerlink" title="获取github"></a>获取github</h4><p>因为是基于GitHub搭建静态blog站点，所以需要先获取GitHub的账号和建立相应的repository。如果你没有GitHub的账号，点击<a href="https://github.com/join?source=header-home">这里</a>注册。</p>
-<p>注册完获取到账号后，你可以创建一个repository：<br><img src="http://7viihf.com1.z0.glb.clouddn.com/github_new_repo.png" alt="创建新的repository"></p>
-<p>创建的repo的名称为：<code>yourid.github.io</code></p>
-<h4 id="安装node-js"><a href="#安装node-js" class="headerlink" title="安装node.js"></a>安装node.js</h4><p>因为Hexo是基于node.js，所以要先安装node.js。在这里提供两种方式安装：</p>
-<h5 id="通过Homebrew安装"><a href="#通过Homebrew安装" class="headerlink" title="通过Homebrew安装"></a>通过Homebrew安装</h5><p>强烈建议Mac用户安装<a href="https://brew.sh/index_zh-cn.html">Homebrew</a>，通过Homebrew来管理Mac的软件，Homebrew在安装和删除软件上特别方便。</p>
-<ol>
-<li>首先安装Homebrew，在终端输入:<figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/usr/</span>bin<span class="hljs-regexp">/ruby -e &quot;$(curl -fsSL https:/</span><span class="hljs-regexp">/raw.githubusercontent.com/</span>Homebrew<span class="hljs-regexp">/install/m</span>aster/install)<span class="hljs-string">&quot;</span><br></code></pre></td></tr></table></figure></li>
-<li>安装完Homebrew，可以安装node.js：<figure class="highlight mipsasm"><table><tr><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">brew </span><span class="hljs-keyword">install </span>node.<span class="hljs-keyword">js</span><br></code></pre></td></tr></table></figure></li>
-<li>安装完成后查看：<figure class="highlight crmsh"><table><tr><td class="code"><pre><code class="hljs crmsh"><span class="hljs-keyword">node</span> <span class="hljs-title">-v</span><br>npm -v<br></code></pre></td></tr></table></figure></li>
-</ol>
-<p>以上就完成了node.js和npm的安装。</p>
-<h5 id="离线方式安装"><a href="#离线方式安装" class="headerlink" title="离线方式安装"></a>离线方式安装</h5><p>除Homebrew安装外，可以离线下载安装包安装，点击<a href="https://nodejs.org/en/">这里</a>在官网下载pkg安装包后，一路点击安装。</p>
-<h4 id="休息下听首歌"><a href="#休息下听首歌" class="headerlink" title="休息下听首歌"></a>休息下听首歌</h4><p>听听我录得歌，不自动播放了，各位请欣赏，哈哈！</p>
-
-        <div id="aplayer-jdVTYXgw" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
-            <pre class="aplayer-lrc-content"></pre>
-        </div>
-        <script>
-          var ap = new APlayer({
-            element: document.getElementById("aplayer-jdVTYXgw"),
-            narrow: false,
-            autoplay: false,
-            showlrc: false,
-            music: {
-              title: "一生爱你千百回",
-              author: "allenmagic",
-              url: "http://op0byyd4a.bkt.clouddn.com/%E4%B8%80%E7%94%9F%E7%88%B1%E4%BD%A0%E5%8D%83%E7%99%BE%E5%9B%9E.mp3",
-              pic: "http://7viihf.com1.z0.glb.clouddn.com/face.jpg",
-              lrc: ""
-            }
-          });
-          window.aplayers || (window.aplayers = []);
-          window.aplayers.push(ap);
-        </script>
-
-
-<h4 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h4><p>安装hexo的命令很简单，在终端输入:</p>
-<figure class="highlight avrasm"><table><tr><td class="code"><pre><code class="hljs avrasm">npm install -g hexo-<span class="hljs-keyword">cli</span><br></code></pre></td></tr></table></figure>
-<p>安装完成后可以输入命令查看：</p>
-<figure class="highlight ebnf"><table><tr><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">hexo -v</span><br></code></pre></td></tr></table></figure>
-
-<h4 id="建立本地站点"><a href="#建立本地站点" class="headerlink" title="建立本地站点"></a>建立本地站点</h4><p>安装完hexo后，需要在本地建立站点并初始化站点:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">mkdir</span> blog<br><span class="hljs-built_in">cd</span> blog<br>hexo init<br></code></pre></td></tr></table></figure>
-<p>这样一个本地站点就完全建立了，你也可以用一个命令完成以上操作:</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><code class="hljs csharp">hexo <span class="hljs-keyword">init</span> blog<br></code></pre></td></tr></table></figure>
-<p>安装完成后的目录结构为：</p>
-<figure class="highlight mipsasm"><table><tr><td class="code"><pre><code class="hljs mipsasm">├── _<span class="hljs-built_in">config</span>.yml<br>├── node_modules<br>├── package.<span class="hljs-keyword">json</span><br><span class="hljs-keyword"></span>├── <span class="hljs-keyword">scaffolds</span><br><span class="hljs-keyword"></span>├── source<br>└── themes<br><br><span class="hljs-number">4</span> <span class="hljs-keyword">directories, </span><span class="hljs-number">2</span> files<br></code></pre></td></tr></table></figure>
-
-<h4 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h4><p>在blog目录内依次运行以下命令:</p>
-<figure class="highlight ebnf"><table><tr><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">hexo clean</span><br><span class="hljs-attribute">hexo g</span><br><span class="hljs-attribute">hexo s</span><br></code></pre></td></tr></table></figure>
-<p>如果正常则会显示：</p>
-<figure class="highlight pgsql"><table><tr><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">INFO</span>  <span class="hljs-keyword">Start</span> processing<br><span class="hljs-keyword">INFO</span>  Hexo <span class="hljs-keyword">is</span> running at http://localhost:<span class="hljs-number">4000</span>/. Press Ctrl+C <span class="hljs-keyword">to</span> stop.<br></code></pre></td></tr></table></figure>
-<p>按住CMD键同时点击<code>http://localhost:4000/</code>就可以在浏览器访问本地站点啦.</p>
-<p><em>完结</em></p>
-<p>[^1]: Keep it simple, stupid!</p>
-]]></content>
-      <categories>
-        <category>生活</category>
-      </categories>
-      <tags>
-        <tag>技术</tag>
-        <tag>博客</tag>
-        <tag>写作</tag>
-        <tag>GitHub</tag>
       </tags>
   </entry>
   <entry>
@@ -312,8 +312,8 @@
         <category>数据分析</category>
       </categories>
       <tags>
-        <tag>Python</tag>
         <tag>技术</tag>
+        <tag>Python</tag>
         <tag>数据分析</tag>
         <tag>R</tag>
       </tags>
@@ -532,7 +532,7 @@ categories: [优雅吐槽]
 哦，关于我评论他朋友圈？我没那闲工夫&#x2026;
 </p>
 
-<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-12-26 Thu 07:33.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.3 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</div>
+<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-12-26 Thu 07:42.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.4 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</div>
 ]]></content>
       <categories>
         <category>优雅吐槽</category>
@@ -568,11 +568,11 @@ categories: [优雅吐槽]
 <figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript">option = &#123;<br>    title : &#123;<br>        <span class="hljs-attr">text</span>: <span class="hljs-string">&#x27;各金融资产比重&#x27;</span>,<br>        <span class="hljs-attr">subtext</span>: <span class="hljs-string">&#x27;纯属虚构&#x27;</span>,<br>        <span class="hljs-attr">x</span>:<span class="hljs-string">&#x27;center&#x27;</span><br>    &#125;,<br>    tooltip : &#123;<br>        <span class="hljs-attr">trigger</span>: <span class="hljs-string">&#x27;item&#x27;</span>,<br>        <span class="hljs-attr">formatter</span>: <span class="hljs-string">&quot;&#123;a&#125; &lt;br/&gt;&#123;b&#125; : &#123;c&#125; (&#123;d&#125;%)&quot;</span><br>    &#125;,<br>    <span class="hljs-attr">legend</span>: &#123;<br>        <span class="hljs-attr">orient</span>: <span class="hljs-string">&#x27;vertical&#x27;</span>,<br>        <span class="hljs-attr">left</span>: <span class="hljs-string">&#x27;left&#x27;</span>,<br>        <span class="hljs-attr">data</span>: [<span class="hljs-string">&#x27;股票&#x27;</span>,<span class="hljs-string">&#x27;债券&#x27;</span>,<span class="hljs-string">&#x27;基金&#x27;</span>,<span class="hljs-string">&#x27;金融衍生品&#x27;</span>,<span class="hljs-string">&#x27;现金及等价物&#x27;</span>]<br>    &#125;,<br>    series : [<br>        &#123;<br>            <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;金融资产&#x27;</span>,<br>            <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;pie&#x27;</span>,<br>            radius : <span class="hljs-string">&#x27;55%&#x27;</span>,<br>            <span class="hljs-attr">center</span>: [<span class="hljs-string">&#x27;50%&#x27;</span>, <span class="hljs-string">&#x27;60%&#x27;</span>],<br>            <span class="hljs-attr">data</span>:[<br>                &#123;<span class="hljs-attr">value</span>:<span class="hljs-number">335</span>, <span class="hljs-attr">name</span>:<span class="hljs-string">&#x27;债券&#x27;</span>&#125;,<br>                &#123;<span class="hljs-attr">value</span>:<span class="hljs-number">310</span>, <span class="hljs-attr">name</span>:<span class="hljs-string">&#x27;基金&#x27;</span>&#125;,<br>                &#123;<span class="hljs-attr">value</span>:<span class="hljs-number">234</span>, <span class="hljs-attr">name</span>:<span class="hljs-string">&#x27;现金及等价物&#x27;</span>&#125;,<br>                &#123;<span class="hljs-attr">value</span>:<span class="hljs-number">135</span>, <span class="hljs-attr">name</span>:<span class="hljs-string">&#x27;金融衍生品&#x27;</span>&#125;,<br>                &#123;<span class="hljs-attr">value</span>:<span class="hljs-number">1548</span>, <span class="hljs-attr">name</span>:<span class="hljs-string">&#x27;股票&#x27;</span>&#125;<br>            ],<br>            <span class="hljs-attr">itemStyle</span>: &#123;<br>                <span class="hljs-attr">emphasis</span>: &#123;<br>                    <span class="hljs-attr">shadowBlur</span>: <span class="hljs-number">10</span>,<br>                    <span class="hljs-attr">shadowOffsetX</span>: <span class="hljs-number">0</span>,<br>                    <span class="hljs-attr">shadowColor</span>: <span class="hljs-string">&#x27;rgba(0, 0, 0, 0.5)&#x27;</span><br>                &#125;<br>            &#125;<br>        &#125;<br>    ]<br>&#125;;<br><br></code></pre></td></tr></table></figure>
 
 <p>对应的图形就如下所示，并且图形可以交互显示:</p>
-<div id="echarts8829" style="width: 110%;height: 420px;margin: 0 auto"></div>
+<div id="echarts8443" style="width: 110%;height: 420px;margin: 0 auto"></div>
 <script src="https://cdn.bootcss.com/echarts/3.8.0/echarts.common.min.js"></script>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts8829'));
+        var myChart = echarts.init(document.getElementById('echarts8443'));
         // 指定图表的配置项和数据
         var option = option = {
     title : {
@@ -678,9 +678,9 @@ categories: [优雅吐槽]
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>
 
 
-<div id="outline-container-org93a605a" class="outline-2">
-<h2 id="org93a605a">又是一年了</h2>
-<div class="outline-text-2" id="text-org93a605a">
+<div id="outline-container-org9ce84d6" class="outline-2">
+<h2 id="org9ce84d6">又是一年了</h2>
+<div class="outline-text-2" id="text-org9ce84d6">
 <p>
 一转眼，2017年又快过去了。按照往年的习惯，一般都会在元旦假期写一篇年终总结，过去有时会发在微信公众号，有时会发在博客，有时写在笔记软件里只给自己看。
 </p>
@@ -693,9 +693,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-orgf5e487d" class="outline-2">
-<h2 id="orgf5e487d">健康</h2>
-<div class="outline-text-2" id="text-orgf5e487d">
+<div id="outline-container-org5e6371b" class="outline-2">
+<h2 id="org5e6371b">健康</h2>
+<div class="outline-text-2" id="text-org5e6371b">
 <p>
 今年家里最重要的事情就是父亲的病，也算是不小的一个变故，大半年的主要精力都在这件事情上了。
 </p>
@@ -730,9 +730,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-org9743ced" class="outline-2">
-<h2 id="org9743ced">工作</h2>
-<div class="outline-text-2" id="text-org9743ced">
+<div id="outline-container-org5cdb759" class="outline-2">
+<h2 id="org5cdb759">工作</h2>
+<div class="outline-text-2" id="text-org5cdb759">
 <p>
 工作其实没什么，简而言之就是不怎么开心。
 </p>
@@ -755,9 +755,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-org72b70cd" class="outline-2">
-<h2 id="org72b70cd">情绪</h2>
-<div class="outline-text-2" id="text-org72b70cd">
+<div id="outline-container-org2f5f021" class="outline-2">
+<h2 id="org2f5f021">情绪</h2>
+<div class="outline-text-2" id="text-org2f5f021">
 <p>
 今年的压力很大，家庭和工作是两大需要解决的问题。很难得是在这个情况下，我坚持了把抑郁症用药基本停下来了。
 </p>
@@ -780,9 +780,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-org7e2cfd1" class="outline-2">
-<h2 id="org7e2cfd1">体重</h2>
-<div class="outline-text-2" id="text-org7e2cfd1">
+<div id="outline-container-orga0e96e3" class="outline-2">
+<h2 id="orga0e96e3">体重</h2>
+<div class="outline-text-2" id="text-orga0e96e3">
 <p>
 这是一个值得说的问题，今年我的一个重要任务就是减肥。因为体重的增加带来的身体问题就是脂肪肝，幸好血脂并不高也没有典型的高血压问题。但肥胖一定会带来健康的问题，而且肥胖实在是对个人形象的影响太大。
 </p>
@@ -805,9 +805,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-org00e20a1" class="outline-2">
-<h2 id="org00e20a1">学习</h2>
-<div class="outline-text-2" id="text-org00e20a1">
+<div id="outline-container-org47a6d79" class="outline-2">
+<h2 id="org47a6d79">学习</h2>
+<div class="outline-text-2" id="text-org47a6d79">
 <p>
 今年在知识上的进步比较小，主要是时间的问题。因为频繁出差和加班，所以剩余的空闲时间比较少，有时候抽空读点书也是和技能没什么关系。今年读的哲学和历史书籍倒是多了一点。
 </p>
@@ -834,9 +834,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-org994dffe" class="outline-2">
-<h2 id="org994dffe">新年目标</h2>
-<div class="outline-text-2" id="text-org994dffe">
+<div id="outline-container-orgf0c6866" class="outline-2">
+<h2 id="orgf0c6866">新年目标</h2>
+<div class="outline-text-2" id="text-orgf0c6866">
 <p>
 2018年的目标很简单：
 </p>
@@ -855,7 +855,7 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-12-26 Thu 07:33.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.3 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</div>
+<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-12-26 Thu 07:42.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.4 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</div>
 ]]></content>
       <categories>
         <category>生活</category>
@@ -884,9 +884,9 @@ categories: [优雅吐槽]
 
 
 
-<div id="outline-container-org1970bb0" class="outline-2">
-<h2 id="org1970bb0">前言</h2>
-<div class="outline-text-2" id="text-org1970bb0">
+<div id="outline-container-org95bd81b" class="outline-2">
+<h2 id="org95bd81b">前言</h2>
+<div class="outline-text-2" id="text-org95bd81b">
 <p>
 这篇笔记大概是写在2016年的7月份，那时候买了哈耶克的三本书，分别是《通往奴役之路》、《自由宪章》、《致命的自负》。刚开始因为看到《通往奴役之路》（就是《The Road to Serfdom》这本书）内容比较少，所以就先读了。
 </p>
@@ -899,9 +899,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-orgb2de17b" class="outline-2">
-<h2 id="orgb2de17b">关于这本书</h2>
-<div class="outline-text-2" id="text-orgb2de17b">
+<div id="outline-container-org1c89919" class="outline-2">
+<h2 id="org1c89919">关于这本书</h2>
+<div class="outline-text-2" id="text-org1c89919">
 <p>
 大学在学习西方经济学的时候，接触到了凯恩斯，就这样我了解了当年凯恩斯和哈耶克的关于政府是否应该干预经济的争论，从而知道了解了哈耶克这个人。进而了解到哈耶克本人参与的两场大论战，其中一场是哈耶克和米塞斯为一方的，和兰格与勒纳为一方的，就社会主义经济计算可行性的论战。另一场就是和凯恩斯的论战了，而《The Road to Serfdom》正是第一场论战的结果。
 </p>
@@ -968,7 +968,7 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-12-26 Thu 07:33.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.3 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</div>
+<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-12-26 Thu 07:42.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.4 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</div>
 ]]></content>
       <categories>
         <category>经济学</category>
@@ -985,9 +985,9 @@ categories: [优雅吐槽]
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>
 
 
-<div id="outline-container-orgda7dee1" class="outline-2">
-<h2 id="orgda7dee1">漫无目的的思想</h2>
-<div class="outline-text-2" id="text-orgda7dee1">
+<div id="outline-container-orge1ad821" class="outline-2">
+<h2 id="orge1ad821">漫无目的的思想</h2>
+<div class="outline-text-2" id="text-orge1ad821">
 <p>
 这是一个我都不知道主旨思想是什么的文章，题目是后加上的，估计与文无关。
 </p>
@@ -996,18 +996,18 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-orgbf06870" class="outline-2">
-<h2 id="orgbf06870">起子</h2>
-<div class="outline-text-2" id="text-orgbf06870">
+<div id="outline-container-org1cc0316" class="outline-2">
+<h2 id="org1cc0316">起子</h2>
+<div class="outline-text-2" id="text-org1cc0316">
 <p>
 上一篇文章差不多是一个月前写的了，最近一个月工作和生活都比较繁忙，有时候夹杂着一点疲倦感。不过，持续写blog也是我要养成的习惯，所以趁今天的时间稍微比较充裕，随便写点东西。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org1143a6b" class="outline-2">
-<h2 id="org1143a6b">写啥哩</h2>
-<div class="outline-text-2" id="text-org1143a6b">
+<div id="outline-container-orgc438c95" class="outline-2">
+<h2 id="orgc438c95">写啥哩</h2>
+<div class="outline-text-2" id="text-orgc438c95">
 <p>
 我过去有写日记的习惯，从高中开始一直到工作后三年，大概是2002年到2012年，断断续续的坚持了十年时间。前七年还算比较认真，不一定是每天会写，但每周至少能写到三篇。后来毕业工作了，基本上一周一篇，所以逐渐成了周记。
 </p>
@@ -1022,9 +1022,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-orge1ae29f" class="outline-2">
-<h2 id="orge1ae29f">最近</h2>
-<div class="outline-text-2" id="text-orge1ae29f">
+<div id="outline-container-org597c0dd" class="outline-2">
+<h2 id="org597c0dd">最近</h2>
+<div class="outline-text-2" id="text-org597c0dd">
 <p>
 最近的工作确实忙，其实忙应该是一种比较好的状态。
 </p>
@@ -1051,9 +1051,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-orgb060a6d" class="outline-2">
-<h2 id="orgb060a6d">情绪</h2>
-<div class="outline-text-2" id="text-orgb060a6d">
+<div id="outline-container-orgd2a3fd2" class="outline-2">
+<h2 id="orgd2a3fd2">情绪</h2>
+<div class="outline-text-2" id="text-orgd2a3fd2">
 <p>
 最近的情绪也不是很高，有时候甚至比较烦躁。好在现在自我调节能力变强了，过些许时间就调整好了。
 </p>
@@ -1069,7 +1069,7 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-12-26 Thu 07:33.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.3 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</div>
+<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-12-26 Thu 07:42.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.4 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</div>
 ]]></content>
       <categories>
         <category>我的人生</category>
@@ -1086,9 +1086,9 @@ categories: [优雅吐槽]
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>
 
 
-<div id="outline-container-orge5bf195" class="outline-2">
-<h2 id="orge5bf195">生命无常</h2>
-<div class="outline-text-2" id="text-orge5bf195">
+<div id="outline-container-orgc6175e6" class="outline-2">
+<h2 id="orgc6175e6">生命无常</h2>
+<div class="outline-text-2" id="text-orgc6175e6">
 <p>
 父亲去世快百天了，从我上次回去照顾他最后一段时间到这次清明回去给他扫墓，时间过得真快。过去的三个多月，我有时候用着我不曾使用的方法和手段让我尽量淡化悲伤，但仍然不免怀念他。
 </p>
@@ -1101,9 +1101,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-orge16d715" class="outline-2">
-<h2 id="orge16d715">过去已经回不去了</h2>
-<div class="outline-text-2" id="text-orge16d715">
+<div id="outline-container-org78433ed" class="outline-2">
+<h2 id="org78433ed">过去已经回不去了</h2>
+<div class="outline-text-2" id="text-org78433ed">
 <p>
 我的记忆力在抑郁症之后退化了很多，大部分时候并不记得很多东西。平时工作和生活也会靠一些工具来增强我的记忆力。所以，我很伤心已经记不得小时候大部分和父亲的互动，哪怕是一些糗事能够知道也是其他人诉说的。
 </p>
@@ -1118,9 +1118,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-orgda5b62e" class="outline-2">
-<h2 id="orgda5b62e">回忆他的过去</h2>
-<div class="outline-text-2" id="text-orgda5b62e">
+<div id="outline-container-org12303a6" class="outline-2">
+<h2 id="org12303a6">回忆他的过去</h2>
+<div class="outline-text-2" id="text-org12303a6">
 <p>
 我们家是农民出身，父亲就是农民教师。好在爷爷奶奶在过去艰苦的时候供养他们读书，所以他最终能够在文化大革命的那些年完成至高中学业，在当地也算是知识分子，正因为如此也能从事了教育工作。
 </p>
@@ -1139,9 +1139,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-orgc4df2de" class="outline-2">
-<h2 id="orgc4df2de">反面和正面</h2>
-<div class="outline-text-2" id="text-orgc4df2de">
+<div id="outline-container-org26d040c" class="outline-2">
+<h2 id="org26d040c">反面和正面</h2>
+<div class="outline-text-2" id="text-org26d040c">
 <p>
 正因为他的性格和习惯，我很小的时候就发现了。所以，我这一辈子用他做反面了。不吸烟，不随意发脾气，学会聆听等等。
 </p>
@@ -1156,9 +1156,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-orgb52a6e9" class="outline-2">
-<h2 id="orgb52a6e9">改变是好的现象</h2>
-<div class="outline-text-2" id="text-orgb52a6e9">
+<div id="outline-container-org0973a7c" class="outline-2">
+<h2 id="org0973a7c">改变是好的现象</h2>
+<div class="outline-text-2" id="text-org0973a7c">
 <p>
 清明的时候，我在他的墓前想了很多，说了很多。
 </p>
@@ -1197,9 +1197,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-orgfe29e0c" class="outline-2">
-<h2 id="orgfe29e0c">父亲的财产</h2>
-<div class="outline-text-2" id="text-orgfe29e0c">
+<div id="outline-container-org2a3f333" class="outline-2">
+<h2 id="org2a3f333">父亲的财产</h2>
+<div class="outline-text-2" id="text-org2a3f333">
 <p>
 他的意志和精神算是留给我最大的财富，因为那是我的父亲，世间的独一无二。
 </p>
@@ -1218,9 +1218,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-org4ac7173" class="outline-2">
-<h2 id="org4ac7173">永在</h2>
-<div class="outline-text-2" id="text-org4ac7173">
+<div id="outline-container-orgd856a24" class="outline-2">
+<h2 id="orgd856a24">永在</h2>
+<div class="outline-text-2" id="text-orgd856a24">
 <p>
 不能忘记，也不要忘记，也不该忘记。
 </p>
@@ -1231,7 +1231,7 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-12-26 Thu 07:33.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.3 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</div>
+<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-12-26 Thu 07:42.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.4 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</div>
 ]]></content>
       <categories>
         <category>生活</category>
@@ -1248,9 +1248,9 @@ categories: [优雅吐槽]
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>
 
 
-<div id="outline-container-orge205988" class="outline-2">
-<h2 id="orge205988">目的</h2>
-<div class="outline-text-2" id="text-orge205988">
+<div id="outline-container-org6106a00" class="outline-2">
+<h2 id="org6106a00">目的</h2>
+<div class="outline-text-2" id="text-org6106a00">
 <p>
 我已经不记得我的第一本书是什么时候买的了，但我还记得是什么书，在哪买的。从我开始读书起，已经快三十年了，社会的进步和我的成长，无论是买书还是读书，均有了很大的变化，以此文纪念这些年读书的经历。
 </p>
@@ -1259,9 +1259,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-orgb96cdec" class="outline-2">
-<h2 id="orgb96cdec">读书算是爱好吗？</h2>
-<div class="outline-text-2" id="text-orgb96cdec">
+<div id="outline-container-org2991f47" class="outline-2">
+<h2 id="org2991f47">读书算是爱好吗？</h2>
+<div class="outline-text-2" id="text-org2991f47">
 <p>
 我一直怀疑读书是否算是一个爱好，在当今如果不多读点书，似乎是很难的。无论是工作、交际还是生活，书籍是人们快速和系统获取知识的最有效的方式。
 </p>
@@ -1288,9 +1288,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-orgfafa734" class="outline-2">
-<h2 id="orgfafa734">读书的变迁</h2>
-<div class="outline-text-2" id="text-orgfafa734">
+<div id="outline-container-org07d7113" class="outline-2">
+<h2 id="org07d7113">读书的变迁</h2>
+<div class="outline-text-2" id="text-org07d7113">
 <p>
 我周岁的时候，在老家的习俗下，有个抓周的习俗活动。据我妈说，我先抓了吃的（难道证明我是个吃货？可是我并不是啊），然后抓了书本。
 </p>
@@ -1325,9 +1325,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-orgb3750af" class="outline-2">
-<h2 id="orgb3750af">买书的变迁</h2>
-<div class="outline-text-2" id="text-orgb3750af">
+<div id="outline-container-org05eb538" class="outline-2">
+<h2 id="org05eb538">买书的变迁</h2>
+<div class="outline-text-2" id="text-org05eb538">
 <p>
 最早的时候是在新华书店买书。
 </p>
@@ -1362,9 +1362,9 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div id="outline-container-orge71774d" class="outline-2">
-<h2 id="orge71774d">工作以后</h2>
-<div class="outline-text-2" id="text-orge71774d">
+<div id="outline-container-org828b3be" class="outline-2">
+<h2 id="org828b3be">工作以后</h2>
+<div class="outline-text-2" id="text-org828b3be">
 <p>
 刚工作，那时候在Morningstar工作，公司允许每年报销1000元的书籍费用，特别高兴。所以那时候买书很积极，但也因为如此，买书就不仔细，买了很多垃圾的书。
 </p>
@@ -1387,7 +1387,7 @@ categories: [优雅吐槽]
 </div>
 </div>
 
-<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-12-26 Thu 07:33.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.3 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</div>
+<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-12-26 Thu 07:42.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.4 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</div>
 ]]></content>
       <categories>
         <category>生活</category>
