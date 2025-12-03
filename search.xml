@@ -128,12 +128,12 @@
 <h5 id="离线方式安装"><a href="#离线方式安装" class="headerlink" title="离线方式安装"></a>离线方式安装</h5><p>除Homebrew安装外，可以离线下载安装包安装，点击<a href="https://nodejs.org/en/">这里</a>在官网下载pkg安装包后，一路点击安装。</p>
 <h4 id="休息下听首歌"><a href="#休息下听首歌" class="headerlink" title="休息下听首歌"></a>休息下听首歌</h4><p>听听我录得歌，不自动播放了，各位请欣赏，哈哈！</p>
 
-        <div id="aplayer-tXJZfSAA" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+        <div id="aplayer-BDWEwFqO" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content"></pre>
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-tXJZfSAA"),
+            element: document.getElementById("aplayer-BDWEwFqO"),
             narrow: false,
             autoplay: false,
             showlrc: false,
@@ -182,7 +182,7 @@
   </entry>
   <entry>
     <title>一个关于风险评测计算的问题</title>
-    <url>/2017-05-23-%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E9%A3%8E%E9%99%A9%E8%AF%84%E6%B5%8B%E8%AE%A1%E7%AE%97%E7%9A%84%E9%97%AE%E9%A2%98%EE%95%BD/</url>
+    <url>/2017-05-23-%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E9%A3%8E%E9%99%A9%E8%AF%84%E6%B5%8B%E8%AE%A1%E7%AE%97%E7%9A%84%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>近几天，在做一个工作相关的内容，就是对企业投资者进行风险评测。我设计了若干个问题，并根据投资者的选项用于评分，但需要提前计算多少种选项的可能性，并计算分数的分布。并根据分数确定相应的分数区间对应的风险等级。</p>
 <span id="more"></span>
 
@@ -410,140 +410,6 @@
       </tags>
   </entry>
   <entry>
-    <title>今日扯淡</title>
-    <url>/2017-06-09-%E4%BB%8A%E6%97%A5%E6%89%AF%E6%B7%A1/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>
-<p>
-&#x2014;
-title: 今日扯淡
-date: 2017-06-09 21:12:27
-tags: [生活, 琐碎, 哼哼唧唧]
-categories: [优雅吐槽]
-&#x2014;
-</p>
-
-<p>
-## 前传
-> 最近一直在写曹操的一篇文章，想写的诙谐幽默点所以在使吃奶的劲，奈何技能已经多年不用，所以进度较慢，大家需要静静等待一段时间。想想好久没吐槽了，昨天怼了一个大学同学，也正好吐吐槽。
-</p>
-
-<p>
-<!&#x2013; more &#x2013;>
-</p>
-
-<p>
-## 关于怼人
-</p>
-
-<p>
-其实我是一个好人，我已经快二十年没骂过人了，也没说过除了`靠、艹、擦、我去`之外的脏话了，当然我不否认前面几个字确实有点脏。
-</p>
-
-<p>
-包括今天，我骂人了但我仍然克制住了不说脏话。鲁迅先生说：不在沉默中爆发，就在沉默中灭亡。
-</p>
-
-<p>
-确实，我忍他挺久了。
-</p>
-
-<p>
-我发的朋友圈，他的评论永远是矫情或者装逼，可能是调侃吧，但我过去就算了。
-</p>
-
-<p>
-如果一次两次，我可以视为一种调侃，但一直如此，那就是他嘴贱了。
-</p>
-
-<p>
-而我平生最讨厌的人中就有嘴贱的人。
-</p>
-
-<p>
-而且，我和他的关系并没有好到我可以视他的嘴贱为好基友般的调戏，哦不，调侃。
-</p>
-
-<p>
-不光如此，我也一直对他的为人并不感冒。
-</p>
-
-<p>
-我觉得我骂得还算轻的了，要是拿我当年写作文的风范，我可以用通篇不带脏话的骂得他怀疑人生。
-</p>
-
-<p>
-更搞笑的是他居然还认为他这种嘴贱是理所应当。
-</p>
-
-<p>
-我就不用说当年我用知识帮他忙，然后他反过来在我秀的书架时候评论我装逼了。
-</p>
-
-<p>
-嘿嘿，我就秀了怎么样，咬我？
-</p>
-
-<p>
-反正现在狂犬病疫苗也不贵。
-</p>
-
-<p>
-我这个人其实挺记仇的&#x2026;
-</p>
-
-<p>
-还有个同学，读硕士的时候写论文然后要我帮忙找数据、建模型、写代码，然后这个同学也在他的评论下跟了句：`装的可以`。
-</p>
-
-<p>
-嗯，我是个本科生，而且那时毕业快5年了吧&#x2026;
-</p>
-
-<p>
-所以啊，人的心态啊，奇怪！
-</p>
-
-<p>
-你看，我的好基友和我说话都没正常过，我都觉得挺好，嗯我就是看人下菜的&#x2026;
-</p>
-
-
-<p>
-## 后记
-</p>
-
-<p>
-以前吧，我还是个好孩子，看见不顺眼的人我还可以放过，哪怕对我也是那样，我也忍着。
-</p>
-
-<p>
-幸亏抑郁症啊（我特么感谢的居然是一个病），让我明白了，忍那么多干嘛，我又不喜欢你，你也带不来给我生理上和心理上的欢愉，才懒得管你。
-</p>
-
-<p>
-不怼你我怼谁，正好我最近烦着呢。
-</p>
-
-<p>
-我还必须怼了你再拉黑你。
-</p>
-
-<p>
-哦，关于我评论他朋友圈？我没那闲工夫&#x2026;
-</p>
-
-<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-12-26 Thu 11:42.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.3 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</div>
-]]></content>
-      <categories>
-        <category>优雅吐槽</category>
-      </categories>
-      <tags>
-        <tag>生活</tag>
-        <tag>琐碎</tag>
-        <tag>哼哼唧唧</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>基于TuShare和ECharts的金融数据可视化</title>
     <url>/2017-10-19-%E5%9F%BA%E4%BA%8ETuShare%E5%92%8CECharts%E7%9A%84%E9%87%91%E8%9E%8D%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="导言"><a href="#导言" class="headerlink" title="导言"></a>导言</h2><blockquote>
@@ -568,11 +434,11 @@ categories: [优雅吐槽]
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">option = &#123;</span><br><span class="line">    title : &#123;</span><br><span class="line">        <span class="attr">text</span>: <span class="string">&#x27;各金融资产比重&#x27;</span>,</span><br><span class="line">        <span class="attr">subtext</span>: <span class="string">&#x27;纯属虚构&#x27;</span>,</span><br><span class="line">        <span class="attr">x</span>:<span class="string">&#x27;center&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    tooltip : &#123;</span><br><span class="line">        <span class="attr">trigger</span>: <span class="string">&#x27;item&#x27;</span>,</span><br><span class="line">        <span class="attr">formatter</span>: <span class="string">&quot;&#123;a&#125; &lt;br/&gt;&#123;b&#125; : &#123;c&#125; (&#123;d&#125;%)&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">legend</span>: &#123;</span><br><span class="line">        <span class="attr">orient</span>: <span class="string">&#x27;vertical&#x27;</span>,</span><br><span class="line">        <span class="attr">left</span>: <span class="string">&#x27;left&#x27;</span>,</span><br><span class="line">        <span class="attr">data</span>: [<span class="string">&#x27;股票&#x27;</span>,<span class="string">&#x27;债券&#x27;</span>,<span class="string">&#x27;基金&#x27;</span>,<span class="string">&#x27;金融衍生品&#x27;</span>,<span class="string">&#x27;现金及等价物&#x27;</span>]</span><br><span class="line">    &#125;,</span><br><span class="line">    series : [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">name</span>: <span class="string">&#x27;金融资产&#x27;</span>,</span><br><span class="line">            <span class="attr">type</span>: <span class="string">&#x27;pie&#x27;</span>,</span><br><span class="line">            radius : <span class="string">&#x27;55%&#x27;</span>,</span><br><span class="line">            <span class="attr">center</span>: [<span class="string">&#x27;50%&#x27;</span>, <span class="string">&#x27;60%&#x27;</span>],</span><br><span class="line">            <span class="attr">data</span>:[</span><br><span class="line">                &#123;<span class="attr">value</span>:<span class="number">335</span>, <span class="attr">name</span>:<span class="string">&#x27;债券&#x27;</span>&#125;,</span><br><span class="line">                &#123;<span class="attr">value</span>:<span class="number">310</span>, <span class="attr">name</span>:<span class="string">&#x27;基金&#x27;</span>&#125;,</span><br><span class="line">                &#123;<span class="attr">value</span>:<span class="number">234</span>, <span class="attr">name</span>:<span class="string">&#x27;现金及等价物&#x27;</span>&#125;,</span><br><span class="line">                &#123;<span class="attr">value</span>:<span class="number">135</span>, <span class="attr">name</span>:<span class="string">&#x27;金融衍生品&#x27;</span>&#125;,</span><br><span class="line">                &#123;<span class="attr">value</span>:<span class="number">1548</span>, <span class="attr">name</span>:<span class="string">&#x27;股票&#x27;</span>&#125;</span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">itemStyle</span>: &#123;</span><br><span class="line">                <span class="attr">emphasis</span>: &#123;</span><br><span class="line">                    <span class="attr">shadowBlur</span>: <span class="number">10</span>,</span><br><span class="line">                    <span class="attr">shadowOffsetX</span>: <span class="number">0</span>,</span><br><span class="line">                    <span class="attr">shadowColor</span>: <span class="string">&#x27;rgba(0, 0, 0, 0.5)&#x27;</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>对应的图形就如下所示，并且图形可以交互显示:</p>
-<div id="echarts9272" style="width: 110%;height: 420px;margin: 0 auto"></div>
+<div id="echarts7966" style="width: 110%;height: 420px;margin: 0 auto"></div>
 <script src="https://cdn.bootcss.com/echarts/3.8.0/echarts.common.min.js"></script>
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts9272'));
+        var myChart = echarts.init(document.getElementById('echarts7966'));
         // 指定图表的配置项和数据
         var option = option = {
     title : {
@@ -667,735 +533,125 @@ categories: [优雅吐槽]
         <category>生活</category>
       </categories>
       <tags>
-        <tag>生活</tag>
         <tag>情绪</tag>
         <tag>人生</tag>
+        <tag>生活</tag>
       </tags>
   </entry>
   <entry>
-    <title>2017年终大总结</title>
-    <url>/2017-12-17-2017%E5%B9%B4%E7%BB%88%E5%A4%A7%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>
-
-
-<div id="outline-container-orgcad56b3" class="outline-2">
-<h2 id="orgcad56b3">又是一年了</h2>
-<div class="outline-text-2" id="text-orgcad56b3">
-<p>
-一转眼，2017年又快过去了。按照往年的习惯，一般都会在元旦假期写一篇年终总结，过去有时会发在微信公众号，有时会发在博客，有时写在笔记软件里只给自己看。
-</p>
-
+    <title></title>
+    <url>/2025-12-03-2017%E5%B9%B4%E7%BB%88%E5%A4%A7%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="又是一年了"><a href="#又是一年了" class="headerlink" title="又是一年了"></a>又是一年了</h2><p>一转眼，2017年又快过去了。按照往年的习惯，一般都会在元旦假期写一篇年终总结，过去有时会发在微信公众号，有时会发在博客，有时写在笔记软件里只给自己看。</p>
 <span id="more"></span>
 
-<p>
-今年打算提前一点时间写完，也是不希望最后半个月有什么不好的事情吧。回忆一下过去一年的种种，也给自己定一些目标，虽然这些目标一般都不能全部完成。
-</p>
-</div>
-</div>
-
-<div id="outline-container-org5bf1c23" class="outline-2">
-<h2 id="org5bf1c23">健康</h2>
-<div class="outline-text-2" id="text-org5bf1c23">
-<p>
-今年家里最重要的事情就是父亲的病，也算是不小的一个变故，大半年的主要精力都在这件事情上了。
-</p>
-
-<p>
-父亲是个老烟民，所以也算肺癌的高风险人群。过去几年，作为儿女也会提醒他去体检，可能也是我们长期不在父母身边只是提醒而没有足够的重视，所以在过去几年他就只体检过一次，那时候还没什么问题，可是多年后我们疏于预防，终究还是碰到了。
-</p>
-
-<p>
-父亲最初只是发烧，而且抗生素无明显效果，那时候他却去了山东跟随堂叔打工，后来我们安排人把他从山东送回来了家里，那段时间我甚至准备去山东带他回家了。回到家后检查，医生说可疑肺癌。我们又赶紧安排他去上级医院检查，得知确切结果当晚就定了第二天的机票回家了。
-</p>
-
-<p>
-其实，为了他治疗的事情也一度曲折。因为考虑他的性格，在初期我决定了隐瞒他真实情况，所以在刚开始他是在不知情的情况下进行的化疗。但后来考虑更好的治疗环境和方式，我还是决定告诉他然后去了成都治疗。
-</p>
-
-<p>
-值得高兴的事是，他的治疗还是有效果，医生反馈的结果都是偏好的。尽管我已经无法知道他的后续生存会如何，对于我们做儿女的尽一切能力保证他的生命延续和生活的更高质量。
-</p>
-
-<p>
-这件事对我的影响很大，在我得知父亲的病情后特别内疚，因为我们对父母的关心没有做到最好，这也给我一个警醒对亲近的人的关注最重要的就是身体健康，这也将会成为我的一个准则。
-</p>
-
-<p>
-这里我感谢我妈妈的工作，她立即停止了她的工作去照顾父亲。而且生病的父亲脾气并不好（尽管没生病父亲的脾气也很古怪），所以很多时候她都是很淡定的和父亲相处并支持他。我并不能长时间在家照顾父亲，在刚开始的几个月安排住院治疗时频繁回家，但后来稳定了我就没怎么回家了。有时候母亲也很焦躁，毕竟父亲是个难相处的人，大部分时候我只能作为润滑剂从中调节。
-</p>
-
-<p>
-我很庆幸我们家能在困难面前团结一致，为了共同的目标而努力，每个人或许有累或者焦虑的时候，但我们的心和精神在一起，这对我们解决问题给了很大的帮助。
-</p>
-</div>
-</div>
-
-<div id="outline-container-org9528fce" class="outline-2">
-<h2 id="org9528fce">工作</h2>
-<div class="outline-text-2" id="text-org9528fce">
-<p>
-工作其实没什么，简而言之就是不怎么开心。
-</p>
-
-<p>
-过去一年的团队变化给我带来的影响其实挺大，只是我一直以沉默应对，所以是用自己的能力做好自己的工作。后来加入到上海的项目中，发现整个工作的情况发生了一些我自己都觉得很无奈的事情。
-</p>
-
-<p>
-虽然我不敢说自己的产品经理经验足够丰富，但过去多年的实际工作早已经形成了自己的产品观和方法论。这次却被冲击的支离破碎，我不能理解一个人的工作方法和逻辑如此混乱却试图用这种方法影响整个团队。
-</p>
-
-<p>
-后来又有一些事情颠覆了我的观念，突然觉得原来这个团队早就变得很无法描述，过去的佛系工作方法居然能够让我舒适地工作了不短的时间，逃离了这种无奈的尴尬。
-</p>
-
-<p>
-至于以后的打算，目前正在规划中也就不便多说。
-</p>
-</div>
-</div>
-
-<div id="outline-container-org70f8a1f" class="outline-2">
-<h2 id="org70f8a1f">情绪</h2>
-<div class="outline-text-2" id="text-org70f8a1f">
-<p>
-今年的压力很大，家庭和工作是两大需要解决的问题。很难得是在这个情况下，我坚持了把抑郁症用药基本停下来了。
-</p>
-
-<p>
-年初我咨询了医生，医生并没有建议立即停药，但从去年下半年开始我已经开始逐渐减少日常的用药了。所以从今年初，我开始着手准备大幅度减少用药甚至阶段性停药。从一开始的用药量调成三分之一，到后来一周一次甚至一个月两次，并没有带来什么影响。
-</p>
-
-<p>
-并不是我情绪会始终保持一个平稳的状态，在11月份的一段时间我的焦虑不安和低沉给我的身体和情绪带了不好的情况，我一度甚至开始恢复了药物的支持。所幸我更多的采用了不一样的方法来调节自己的情绪，很快就能恢复过来了。
-</p>
-
-<p>
-从2012年开始被抑郁症困扰，不算严重的情绪问题逐渐发展成了无法控制的心理问题，最终靠药物治疗来解决问题。而带来的身体问题更加难以解决，2013年从康宁医院出院时体重达到了190斤，而作为对比我2012年末的时候体重才140多斤。
-</p>
-
-<p>
-所以，其实我一度很缺乏自信，因为无法面对这样的自己。
-</p>
-</div>
-</div>
-
-<div id="outline-container-org11aff19" class="outline-2">
-<h2 id="org11aff19">体重</h2>
-<div class="outline-text-2" id="text-org11aff19">
-<p>
-这是一个值得说的问题，今年我的一个重要任务就是减肥。因为体重的增加带来的身体问题就是脂肪肝，幸好血脂并不高也没有典型的高血压问题。但肥胖一定会带来健康的问题，而且肥胖实在是对个人形象的影响太大。
-</p>
-
-<p>
-去年做完阑尾手术，也发现困扰自己的肠胃问题得到一定的解决，而且体重有了一定的下降，所以这给了我一些信心，于是把减肥作为2018年的重点目标之一。
-</p>
-
-<p>
-其实减肥的方式对我来说很简单，一是将过去的日均饮水量增加了一倍，几乎平均每天2000cc；二是仍然坚持素食，并逐渐增多了青菜的摄入量，减少米饭摄入量；三是适当的运动，保证能量的消耗超过能量的摄入量。
-</p>
-
-<p>
-值得高兴的是体重终于从接近190斤减到了167斤，大肚腩已经明显没了，整个人的体型也恢复到了一定程度。
-</p>
-
-<p>
-这也算完成了一个大的目标了。
-</p>
-</div>
-</div>
-
-<div id="outline-container-org980684a" class="outline-2">
-<h2 id="org980684a">学习</h2>
-<div class="outline-text-2" id="text-org980684a">
-<p>
-今年在知识上的进步比较小，主要是时间的问题。因为频繁出差和加班，所以剩余的空闲时间比较少，有时候抽空读点书也是和技能没什么关系。今年读的哲学和历史书籍倒是多了一点。
-</p>
-
-<p>
-这一年学习得到的越发零散，无法构成一个系统的知识结构，或许只能等以后慢慢的补充了。
-</p>
-
-<p>
-其实，达克效应在我身上体现的愈发明显了，随着知道的越多越发现自己知道的越少，因为这个世界的未知真的太多，以前无知所以觉得世界很单薄，现在来看真是值得怜悯自己。
-</p>
-
-<p>
-我也深信自己其实没有更多的权利甚至知识去判断事情的真伪性，所以尽管或许我能证伪但我没有动力去做了，保持他人自我判断的权利吧。
-</p>
-
-<p>
-哦，有个值得高兴的事情就是自从我加入R邮件组已经四年了，今年终于开始可以在邮件讨论里回答其他人的问题了，也开始将过去几年学习的Python应用到工作实践中。
-</p>
-
-<p>
-更值得我高兴的事情是，我总结了过去几年的产品经理工作经验，明确了我的产品观和产品方法论，终于有了工作使用的思想武器了。
-</p>
-</div>
-</div>
-
-<div id="outline-container-org20be9a2" class="outline-2">
-<h2 id="org20be9a2">新年目标</h2>
-<div class="outline-text-2" id="text-org20be9a2">
-<p>
-2018年的目标很简单：
-</p>
-
-<ol class="org-ol">
+<p>今年打算提前一点时间写完，也是不希望最后半个月有什么不好的事情吧。回忆一下过去一年的种种，也给自己定一些目标，虽然这些目标一般都不能全部完成。</p>
+<h2 id="健康"><a href="#健康" class="headerlink" title="健康"></a>健康</h2><p>今年家里最重要的事情就是父亲的病，也算是不小的一个变故，大半年的主要精力都在这件事情上了。</p>
+<p>父亲是个老烟民，所以也算肺癌的高风险人群。过去几年，作为儿女也会提醒他去体检，可能也是我们长期不在父母身边只是提醒而没有足够的重视，所以在过去几年他就只体检过一次，那时候还没什么问题，可是多年后我们疏于预防，终究还是碰到了。</p>
+<p>父亲最初只是发烧，而且抗生素无明显效果，那时候他却去了山东跟随堂叔打工，后来我们安排人把他从山东送回来了家里，那段时间我甚至准备去山东带他回家了。回到家后检查，医生说可疑肺癌。我们又赶紧安排他去上级医院检查，得知确切结果当晚就定了第二天的机票回家了。</p>
+<p>其实，为了他治疗的事情也一度曲折。因为考虑他的性格，在初期我决定了隐瞒他真实情况，所以在刚开始他是在不知情的情况下进行的化疗。但后来考虑更好的治疗环境和方式，我还是决定告诉他然后去了成都治疗。</p>
+<p>值得高兴的事是，他的治疗还是有效果，医生反馈的结果都是偏好的。尽管我已经无法知道他的后续生存会如何，对于我们做儿女的尽一切能力保证他的生命延续和生活的更高质量。</p>
+<p>这件事对我的影响很大，在我得知父亲的病情后特别内疚，因为我们对父母的关心没有做到最好，这也给我一个警醒对亲近的人的关注最重要的就是身体健康，这也将会成为我的一个准则。</p>
+<p>这里我感谢我妈妈的工作，她立即停止了她的工作去照顾父亲。而且生病的父亲脾气并不好（尽管没生病父亲的脾气也很古怪），所以很多时候她都是很淡定的和父亲相处并支持他。我并不能长时间在家照顾父亲，在刚开始的几个月安排住院治疗时频繁回家，但后来稳定了我就没怎么回家了。有时候母亲也很焦躁，毕竟父亲是个难相处的人，大部分时候我只能作为润滑剂从中调节。</p>
+<p>我很庆幸我们家能在困难面前团结一致，为了共同的目标而努力，每个人或许有累或者焦虑的时候，但我们的心和精神在一起，这对我们解决问题给了很大的帮助。</p>
+<h2 id="工作"><a href="#工作" class="headerlink" title="工作"></a>工作</h2><p>工作其实没什么，简而言之就是不怎么开心。</p>
+<p>过去一年的团队变化给我带来的影响其实挺大，只是我一直以沉默应对，所以是用自己的能力做好自己的工作。后来加入到上海的项目中，发现整个工作的情况发生了一些我自己都觉得很无奈的事情。</p>
+<p>虽然我不敢说自己的产品经理经验足够丰富，但过去多年的实际工作早已经形成了自己的产品观和方法论。这次却被冲击的支离破碎，我不能理解一个人的工作方法和逻辑如此混乱却试图用这种方法影响整个团队。</p>
+<p>后来又有一些事情颠覆了我的观念，突然觉得原来这个团队早就变得很无法描述，过去的佛系工作方法居然能够让我舒适地工作了不短的时间，逃离了这种无奈的尴尬。</p>
+<p>至于以后的打算，目前正在规划中也就不便多说。</p>
+<h2 id="情绪"><a href="#情绪" class="headerlink" title="情绪"></a>情绪</h2><p>今年的压力很大，家庭和工作是两大需要解决的问题。很难得是在这个情况下，我坚持了把抑郁症用药基本停下来了。</p>
+<p>年初我咨询了医生，医生并没有建议立即停药，但从去年下半年开始我已经开始逐渐减少日常的用药了。所以从今年初，我开始着手准备大幅度减少用药甚至阶段性停药。从一开始的用药量调成三分之一，到后来一周一次甚至一个月两次，并没有带来什么影响。</p>
+<p>并不是我情绪会始终保持一个平稳的状态，在11月份的一段时间我的焦虑不安和低沉给我的身体和情绪带了不好的情况，我一度甚至开始恢复了药物的支持。所幸我更多的采用了不一样的方法来调节自己的情绪，很快就能恢复过来了。</p>
+<p>从2012年开始被抑郁症困扰，不算严重的情绪问题逐渐发展成了无法控制的心理问题，最终靠药物治疗来解决问题。而带来的身体问题更加难以解决，2013年从康宁医院出院时体重达到了190斤，而作为对比我2012年末的时候体重才140多斤。</p>
+<p>所以，其实我一度很缺乏自信，因为无法面对这样的自己。</p>
+<h2 id="体重"><a href="#体重" class="headerlink" title="体重"></a>体重</h2><p>这是一个值得说的问题，今年我的一个重要任务就是减肥。因为体重的增加带来的身体问题就是脂肪肝，幸好血脂并不高也没有典型的高血压问题。但肥胖一定会带来健康的问题，而且肥胖实在是对个人形象的影响太大。</p>
+<p>去年做完阑尾手术，也发现困扰自己的肠胃问题得到一定的解决，而且体重有了一定的下降，所以这给了我一些信心，于是把减肥作为2018年的重点目标之一。</p>
+<p>其实减肥的方式对我来说很简单，一是将过去的日均饮水量增加了一倍，几乎平均每天2000cc；二是仍然坚持素食，并逐渐增多了青菜的摄入量，减少米饭摄入量；三是适当的运动，保证能量的消耗超过能量的摄入量。</p>
+<p>值得高兴的是体重终于从接近190斤减到了167斤，大肚腩已经明显没了，整个人的体型也恢复到了一定程度。</p>
+<p>这也算完成了一个大的目标了。</p>
+<h2 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h2><p>今年在知识上的进步比较小，主要是时间的问题。因为频繁出差和加班，所以剩余的空闲时间比较少，有时候抽空读点书也是和技能没什么关系。今年读的哲学和历史书籍倒是多了一点。</p>
+<p>这一年学习得到的越发零散，无法构成一个系统的知识结构，或许只能等以后慢慢的补充了。</p>
+<p>其实，达克效应在我身上体现的愈发明显了，随着知道的越多越发现自己知道的越少，因为这个世界的未知真的太多，以前无知所以觉得世界很单薄，现在来看真是值得怜悯自己。</p>
+<p>我也深信自己其实没有更多的权利甚至知识去判断事情的真伪性，所以尽管或许我能证伪但我没有动力去做了，保持他人自我判断的权利吧。</p>
+<p>哦，有个值得高兴的事情就是自从我加入R邮件组已经四年了，今年终于开始可以在邮件讨论里回答其他人的问题了，也开始将过去几年学习的Python应用到工作实践中。</p>
+<p>更值得我高兴的事情是，我总结了过去几年的产品经理工作经验，明确了我的产品观和产品方法论，终于有了工作使用的思想武器了。</p>
+<h2 id="新年目标"><a href="#新年目标" class="headerlink" title="新年目标"></a>新年目标</h2><p>2018年的目标很简单：</p>
+<ol>
 <li>持续的对父亲的病情关注并努力的保证他的生存质量</li>
 <li>在工作上有大的突破，进入产品管理的方向</li>
 <li>继续减轻体重，争取完全消除脂肪肝</li>
 <li>继续不断地学习，努力构建完整知识体系</li>
 <li>其余的重要的事情</li>
 </ol>
-
-<p>
-嗯，努力加油！
-</p>
-</div>
-</div>
-
-<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-12-26 Thu 11:42.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.3 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</div>
-]]></content>
-      <categories>
-        <category>生活</category>
-      </categories>
-      <tags>
-        <tag>生活</tag>
-        <tag>人生</tag>
-        <tag>生命</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>test</title>
-    <url>/2024-12-26-test/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="前序"><a href="#前序" class="headerlink" title="前序"></a>前序</h1><p>很久没更新公众号，今日简单地撰写一篇如何快速部署yesplaymusic和navidrome的指南。</p>
-<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>yesplaymusic是一款非常好用且颜值超高的第三方网易云音乐播放软件，除了支持本地安装外还支持通过docker部署成web服务。但因为目前docker hub不可抗力导致访问受限制，我们今天介绍一个方法利用腾讯云的容器镜像服务，来构建自己的私有docker镜像，并完成部署。</p>
-<h2 id="腾讯云容器镜像服务"><a href="#腾讯云容器镜像服务" class="headerlink" title="腾讯云容器镜像服务"></a>腾讯云容器镜像服务</h2><p>首先登录腾讯云管理后台，若无账号可以注册账号。找到【容器镜像服务】菜单后点击进入（可以通过搜索方式快速找到菜单入口），如果没有开通容器镜像服务，需要单独再开通该服务，目前容器镜像服务针对个人开发者可免费试用，记得需是需要开启个人版，目前个人版支持10个命名空间和500个镜像仓库数，足够个人使用了。</p>
-<p>需要记住访问域名ccr.ccs.tencentyun.com，这是后面拉取容器镜像必须使用的参数之一。</p>
-<p>第一步：点击【镜像仓库】-【新建】，可以新建容器镜像。然后输入需要新建的镜像仓库名称，以及设置为私有或者公有。这里注意，如果设置为公有镜像，则是他人都可以拉取该容器镜像，设置为私有容器镜像则只能当前账号登录后可以拉取容器镜像。具体如何设置可以根据实际情况考虑。</p>
-<p>第二步：新建完成后就可以在镜像列表中查看到镜像名称了，点击镜像名称后进入镜像详情页面。然后点击【镜像构建】页签，再点击【新建镜像构建规则】，进入到镜像构建规则设置的页面。这里会有多个代码源，可以根据实际情况选择，因为我们构建的镜像是基于从github上fork到本人账号下的镜像，所以需要先在github上fork源项目的内容后再构建。</p>
+<p>嗯，努力加油！</p>
 ]]></content>
   </entry>
   <entry>
-    <title>The Road to Serfdom</title>
-    <url>/2017-10-27-The-Road-to-Serfdom/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>
-
-
-
-<div id="outline-container-orgcfea763" class="outline-2">
-<h2 id="orgcfea763">前言</h2>
-<div class="outline-text-2" id="text-orgcfea763">
-<p>
-这篇笔记大概是写在2016年的7月份，那时候买了哈耶克的三本书，分别是《通往奴役之路》、《自由宪章》、《致命的自负》。刚开始因为看到《通往奴役之路》（就是《The Road to Serfdom》这本书）内容比较少，所以就先读了。
-</p>
-
+    <title></title>
+    <url>/2025-12-03-%E5%A6%82%E6%9E%9C%E4%B8%8D%E8%83%BD%E5%BF%98%E8%AE%B0/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="生命无常"><a href="#生命无常" class="headerlink" title="生命无常"></a>生命无常</h2><p>父亲去世快百天了，从我上次回去照顾他最后一段时间到这次清明回去给他扫墓，时间过得真快。过去的三个多月，我有时候用着我不曾使用的方法和手段让我尽量淡化悲伤，但仍然不免怀念他。</p>
 <span id="more"></span>
 
-<p>
-读的也挺快，大概一个月时间就读完了，也写了一些笔记（就是本文的雏形），当时想到得读完其它两本书还可以把这个笔记修改下，谁知道这一年过去了，连《致命的自负》这本书我都只是刚刚看完，而最厚的一本书《自由宪章》压根还没开始看，据我所知自由宪章和通往奴役之路关联还挺紧密，很多在《通往奴役之路》之中未能合理解释和回答的问题，在《自由宪章》里有了比较深刻和全面的说明，但不能就这样拖着，先整理下发在blog上，以后慢慢修改，此次的修改主要是删除了涉及政治的部分，毕竟现在的舆论还是少谈政治的好。
-</p>
-</div>
-</div>
-
-<div id="outline-container-orge550de6" class="outline-2">
-<h2 id="orge550de6">关于这本书</h2>
-<div class="outline-text-2" id="text-orge550de6">
-<p>
-大学在学习西方经济学的时候，接触到了凯恩斯，就这样我了解了当年凯恩斯和哈耶克的关于政府是否应该干预经济的争论，从而知道了解了哈耶克这个人。进而了解到哈耶克本人参与的两场大论战，其中一场是哈耶克和米塞斯为一方的，和兰格与勒纳为一方的，就社会主义经济计算可行性的论战。另一场就是和凯恩斯的论战了，而《The Road to Serfdom》正是第一场论战的结果。
-</p>
-
-<p>
-当时知道这回事，但没有读过这本书，去年才买了这本书准备拜读。不过在之前，就知道了这本书的核心内容，而且这本书很早就被翻译成中文，所以我特别不解的就是，在当时的政治环境下怎么会允许这本书翻译出版，甚至被讨论。而且，这本书后来被称为我国社会主义市场经济制度改革的指南，在二十世纪的最后二十年，被中国的经济学家和政治学家拿出来深入的研究和学习。
-</p>
-
-<p>
-后来了解才发现，这本书第一次翻译出版是在1962年，由当时的南开大学校长，著名经济学家腾维藻翻译，并作为“内部读物”在一定阶层的干部群体中发行，所以学生和一般的人是无法获取中文版本的（这本书与1944年出版）。而且是作为批判资本主义经济制度的反面教材的，据说当时的译者序是这么写的：把这本充满毒素的书翻译出来，目的也是想供学术届了解和批判现代资产阶级反动经济理论时作为参考。可是20年后，这本书却被视为改革开放和建设中国特色的社会主义市场经济的圣经。
-</p>
-
-<p>
-而且，这本书的原版在1944年出版后，就成了畅销书。但是被西方的专业经济学家、社会主义者以及左翼人士所批判。美国的民主派《新共和》（是的美国也有社会主义）写了一篇《Poor Hayek》文章斥责为“最重要的反动思想家”。连哈耶克自己都说写完这本书之后，大多数的同行经济学家都不再信任他，他的理论影响下降，许多大学的经济学系也不欢迎他，甚至经济学家认为他是经济学的行外人（结果哈耶克在1974年获得诺贝尔经济学奖）。
-</p>
-
-<p>
-一个测试的表格
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col class="org-left">
-
-<col class="org-left">
-
-<col class="org-right">
-
-<col class="org-left">
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">书名</th>
-<th scope="col" class="org-left">出版社</th>
-<th scope="col" class="org-right">价格</th>
-<th scope="col" class="org-left">作者</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left">Python金融大数据分析</td>
-<td class="org-left">人民邮电出版社</td>
-<td class="org-right">99.00</td>
-<td class="org-left">Yves Hilpisch</td>
-</tr>
-
-<tr>
-<td class="org-left">金融数据分析</td>
-<td class="org-left">上海财经大学出版社</td>
-<td class="org-right">72.00</td>
-<td class="org-left">Steven Shreve</td>
-</tr>
-
-<tr>
-<td class="org-left">移动设计指南</td>
-<td class="org-left">电子工业出版社</td>
-<td class="org-right">48.00</td>
-<td class="org-left">无线工坊</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-
-<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-12-26 Thu 11:42.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.3 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</div>
+<p>从安葬他到我这次回去扫墓前，一直算是匆忙。都不曾在他的面前说说话，沟通下感情。这次回去正好有时间，一个人能够好好的在他的墓前说说话，也是忏悔也是勉励自己。</p>
+<h2 id="过去已经回不去了"><a href="#过去已经回不去了" class="headerlink" title="过去已经回不去了"></a>过去已经回不去了</h2><p>我的记忆力在抑郁症之后退化了很多，大部分时候并不记得很多东西。平时工作和生活也会靠一些工具来增强我的记忆力。所以，我很伤心已经记不得小时候大部分和父亲的互动，哪怕是一些糗事能够知道也是其他人诉说的。</p>
+<p>小时候我挺笨的，父亲教我学拼音，我半天学不会。他的耐心并不好，所以看我学不会就体罚我，但似乎我不记恨他。大概是我从小就没这种记仇的思维方式。他曾经做过我的班主任，但也不是很耐心，在班里不过个把月我就转到别的班级了。</p>
+<p>其它的记忆其实挺少，我小时候还和他发生过冲突，在饭桌上怒目相向，现在想起来还是有趣。他绝大部分时间都不管我，放任我自由的成长，却没想到我一直把他作为反面的例子去成长自己。</p>
+<h2 id="回忆他的过去"><a href="#回忆他的过去" class="headerlink" title="回忆他的过去"></a>回忆他的过去</h2><p>我们家是农民出身，父亲就是农民教师。好在爷爷奶奶在过去艰苦的时候供养他们读书，所以他最终能够在文化大革命的那些年完成至高中学业，在当地也算是知识分子，正因为如此也能从事了教育工作。</p>
+<p>但父亲本身的缺陷也很明显，就是性格。后来我反思也正因为是这种性格，才导致了后来他的结局。他一生固执且偏执，而且不够开阔，很多时候都希望能够自己左右大局。最后在成都陪他的那段时间，因为他不配合治疗我发了脾气。只是没想到，他没能挺过去，我当时抱着最大的乐观，希望能够有最好的结果，但终究无力。</p>
+<p>为此，我还是有点后悔，当时那么对他，或许我能够更耐心点，会觉得好受点。</p>
+<p>其实，过去也没有什么好回忆，因为在我看来他这一生肯定是有争议的一生。</p>
+<h2 id="反面和正面"><a href="#反面和正面" class="headerlink" title="反面和正面"></a>反面和正面</h2><p>正因为他的性格和习惯，我很小的时候就发现了。所以，我这一辈子用他做反面了。不吸烟，不随意发脾气，学会聆听等等。</p>
+<p>但正如我写的悼词，他的基本素质真的很光辉。他善良、有爱心、孝顺、正直，而这所有的东西也被我看到了。他用他的言行为我树立了绝佳的榜样。</p>
+<p>有好有坏，有血有肉有灵魂，这就是他，也值得我怀念一生了。</p>
+<h2 id="改变是好的现象"><a href="#改变是好的现象" class="headerlink" title="改变是好的现象"></a>改变是好的现象</h2><p>清明的时候，我在他的墓前想了很多，说了很多。</p>
+<p>过去，他很少干涉我，大部分时候关心的是我的身体，或者家里有大事需要做决策，征求我的意见。对于我的工作、生活、感情等问题他几乎不问。</p>
+<p>不问并不代表他不关心啊。</p>
+<p>他的追悼会，他的好朋友，也是在他重病期间帮助他找医生医院的发小吧。告诉我，父亲和他聊天一直担心我的家庭问题，其实内心期望我能尽快成家，他对我的工作觉得挺不错，而且他知道我的品性，也很放心。但父亲说，他看到他同龄的同学朋友都当爷爷了，自己却看不到儿女成家，子孙满堂还是内心失望的。</p>
+<p>特别是他也大概知道自己时日无多，更是内心伤感了。尽管如此，他却不当面和我说，估计我也是让他失望了。</p>
+<p>过去的我，其实挺自我。自己的事情自己知，其实也较少考虑他们的感受，现在也是有点不安。</p>
+<p>在父亲墓前，我无法承诺什么。因为，我一直觉得这些事情是个人的事情，无论如何也是我自己的宿命，我一直不希望被人左右，也不希望被人干涉，对于我来说我知道自己的目的。我能承诺的是，就是一定会过得很好，有自己满意的结果。</p>
+<p>无论什么样，倘若有一天我成家有儿女了，当他们能明白的时候，带着他们到父亲的墓前拜祭，把我写的碑文解释给他们听，告诉他们爷爷的人品和一生。</p>
+<p>当初立碑，亲朋好友说碑文是文言文看不懂，他们懂不懂没关系，我们的子孙后代懂就行了。</p>
+<h2 id="父亲的财产"><a href="#父亲的财产" class="headerlink" title="父亲的财产"></a>父亲的财产</h2><p>他的意志和精神算是留给我最大的财富，因为那是我的父亲，世间的独一无二。</p>
+<p>过去我和他的沟通不算多，但现在想起来，他也时刻影响着我。</p>
+<p>在最初的时候，他怕他的病拖累我们家的经济，告诉我看病花15万就行了，不能再多。</p>
+<p>但父亲你可曾知道，你的健康和生命无价，怎么可以用钱来衡量！</p>
+<h2 id="永在"><a href="#永在" class="headerlink" title="永在"></a>永在</h2><p>不能忘记，也不要忘记，也不该忘记。</p>
+<p>所以，我想念你。</p>
 ]]></content>
-      <categories>
-        <category>经济学</category>
-      </categories>
-      <tags>
-        <tag>哈耶克</tag>
-        <tag>自由主义</tag>
-        <tag>经济学</tag>
-      </tags>
   </entry>
   <entry>
-    <title>冲突和妥协</title>
-    <url>/2017-12-02-%E5%86%B2%E7%AA%81%E5%92%8C%E5%A6%A5%E5%8D%8F/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>
-
-
-<div id="outline-container-orge6c072e" class="outline-2">
-<h2 id="orge6c072e">漫无目的的思想</h2>
-<div class="outline-text-2" id="text-orge6c072e">
-<p>
-这是一个我都不知道主旨思想是什么的文章，题目是后加上的，估计与文无关。
-</p>
-
-<span id="more"></span>
-</div>
-</div>
-
-<div id="outline-container-org35e8d1d" class="outline-2">
-<h2 id="org35e8d1d">起子</h2>
-<div class="outline-text-2" id="text-org35e8d1d">
-<p>
-上一篇文章差不多是一个月前写的了，最近一个月工作和生活都比较繁忙，有时候夹杂着一点疲倦感。不过，持续写blog也是我要养成的习惯，所以趁今天的时间稍微比较充裕，随便写点东西。
-</p>
-</div>
-</div>
-
-<div id="outline-container-org66a91b2" class="outline-2">
-<h2 id="org66a91b2">写啥哩</h2>
-<div class="outline-text-2" id="text-org66a91b2">
-<p>
-我过去有写日记的习惯，从高中开始一直到工作后三年，大概是2002年到2012年，断断续续的坚持了十年时间。前七年还算比较认真，不一定是每天会写，但每周至少能写到三篇。后来毕业工作了，基本上一周一篇，所以逐渐成了周记。
-</p>
-
-<p>
-2013年抑郁症后，我把所有的日记都撕毁扔掉了，大概有六个日记本那么多，我还记得是五本日记和一本随笔札记。
-</p>
-
-<p>
-现在，偶尔想起来还有那么一丢丢遗憾，要知道我的记性不怎么好，很多事情我都记在了日记里，所以很多事情随着日记本已经从我的记忆中抹去了。
-</p>
-</div>
-</div>
-
-<div id="outline-container-org469336b" class="outline-2">
-<h2 id="org469336b">最近</h2>
-<div class="outline-text-2" id="text-org469336b">
-<p>
-最近的工作确实忙，其实忙应该是一种比较好的状态。
-</p>
-
-<p>
-然而可怕的是，我觉得最近确实很乱，所以是毫无头绪的忙。
-</p>
-
-<p>
-连续去上海出差，几乎每天都加班到12点，两个晚上甚至工作到快凌晨两点。然而，如果过去这样有很好的成果我会很欣慰。现在确实在无谓的无关痛痒的事情上纠结。
-</p>
-
-<p>
-也就是说这样的产出很低，无论是量还是质，所以感觉特别的疲倦。
-</p>
-
-<p>
-可怕的是，这种状态已经持续很长一段时间了。
-</p>
-
-<p>
-有段时间，我特别怀疑自己，仿佛过去我所积累的无论是经验、技能还是思维都成了废物。
-</p>
-</div>
-</div>
-
-<div id="outline-container-org9a04c15" class="outline-2">
-<h2 id="org9a04c15">情绪</h2>
-<div class="outline-text-2" id="text-org9a04c15">
-<p>
-最近的情绪也不是很高，有时候甚至比较烦躁。好在现在自我调节能力变强了，过些许时间就调整好了。
-</p>
-
-<p>
-每个人都有自己的生活方式，我对我的亲人、朋友没什么要求，唯一的要求就是希望他们能够尊重我。尊重我的生活态度，生活方式和思想。而我也是，与人相交往放在第一位的就是尊重对方&#x2026;
-</p>
-
-
-<p>
-算了，不写了，就这样吧。
-</p>
-</div>
-</div>
-
-<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-12-26 Thu 11:42.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.3 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</div>
-]]></content>
-      <categories>
-        <category>我的人生</category>
-      </categories>
-      <tags>
-        <tag>思想</tag>
-        <tag>观念</tag>
-        <tag>观自己</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如果不能忘记</title>
-    <url>/2018-03-23-%E5%A6%82%E6%9E%9C%E4%B8%8D%E8%83%BD%E5%BF%98%E8%AE%B0/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>
-
-
-<div id="outline-container-orgb9618fb" class="outline-2">
-<h2 id="orgb9618fb">生命无常</h2>
-<div class="outline-text-2" id="text-orgb9618fb">
-<p>
-父亲去世快百天了，从我上次回去照顾他最后一段时间到这次清明回去给他扫墓，时间过得真快。过去的三个多月，我有时候用着我不曾使用的方法和手段让我尽量淡化悲伤，但仍然不免怀念他。
-</p>
-
+    <title></title>
+    <url>/2025-12-03-%E8%AF%BB%E4%B9%A6%E5%92%8C%E4%B9%B0%E4%B9%A6%E7%9A%84%E5%8F%98%E8%BF%81/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h1><p>我已经不记得我的第一本书是什么时候买的了，但我还记得是什么书，在哪买的。从我开始读书起，已经快三十年了，社会的进步和我的成长，无论是买书还是读书，均有了很大的变化，以此文纪念这些年读书的经历。</p>
 <span id="more"></span>
 
-<p>
-从安葬他到我这次回去扫墓前，一直算是匆忙。都不曾在他的面前说说话，沟通下感情。这次回去正好有时间，一个人能够好好的在他的墓前说说话，也是忏悔也是勉励自己。
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgbdc956f" class="outline-2">
-<h2 id="orgbdc956f">过去已经回不去了</h2>
-<div class="outline-text-2" id="text-orgbdc956f">
-<p>
-我的记忆力在抑郁症之后退化了很多，大部分时候并不记得很多东西。平时工作和生活也会靠一些工具来增强我的记忆力。所以，我很伤心已经记不得小时候大部分和父亲的互动，哪怕是一些糗事能够知道也是其他人诉说的。
-</p>
-
-<p>
-小时候我挺笨的，父亲教我学拼音，我半天学不会。他的耐心并不好，所以看我学不会就体罚我，但似乎我不记恨他。大概是我从小就没这种记仇的思维方式。他曾经做过我的班主任，但也不是很耐心，在班里不过个把月我就转到别的班级了。
-</p>
-
-<p>
-其它的记忆其实挺少，我小时候还和他发生过冲突，在饭桌上怒目相向，现在想起来还是有趣。他绝大部分时间都不管我，放任我自由的成长，却没想到我一直把他作为反面的例子去成长自己。
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgd63b848" class="outline-2">
-<h2 id="orgd63b848">回忆他的过去</h2>
-<div class="outline-text-2" id="text-orgd63b848">
-<p>
-我们家是农民出身，父亲就是农民教师。好在爷爷奶奶在过去艰苦的时候供养他们读书，所以他最终能够在文化大革命的那些年完成至高中学业，在当地也算是知识分子，正因为如此也能从事了教育工作。
-</p>
-
-<p>
-但父亲本身的缺陷也很明显，就是性格。后来我反思也正因为是这种性格，才导致了后来他的结局。他一生固执且偏执，而且不够开阔，很多时候都希望能够自己左右大局。最后在成都陪他的那段时间，因为他不配合治疗我发了脾气。只是没想到，他没能挺过去，我当时抱着最大的乐观，希望能够有最好的结果，但终究无力。
-</p>
-
-<p>
-为此，我还是有点后悔，当时那么对他，或许我能够更耐心点，会觉得好受点。
-</p>
-
-<p>
-其实，过去也没有什么好回忆，因为在我看来他这一生肯定是有争议的一生。
-</p>
-</div>
-</div>
-
-<div id="outline-container-org07ed890" class="outline-2">
-<h2 id="org07ed890">反面和正面</h2>
-<div class="outline-text-2" id="text-org07ed890">
-<p>
-正因为他的性格和习惯，我很小的时候就发现了。所以，我这一辈子用他做反面了。不吸烟，不随意发脾气，学会聆听等等。
-</p>
-
-<p>
-但正如我写的悼词，他的基本素质真的很光辉。他善良、有爱心、孝顺、正直，而这所有的东西也被我看到了。他用他的言行为我树立了绝佳的榜样。
-</p>
-
-<p>
-有好有坏，有血有肉有灵魂，这就是他，也值得我怀念一生了。
-</p>
-</div>
-</div>
-
-<div id="outline-container-org3851c35" class="outline-2">
-<h2 id="org3851c35">改变是好的现象</h2>
-<div class="outline-text-2" id="text-org3851c35">
-<p>
-清明的时候，我在他的墓前想了很多，说了很多。
-</p>
-
-<p>
-过去，他很少干涉我，大部分时候关心的是我的身体，或者家里有大事需要做决策，征求我的意见。对于我的工作、生活、感情等问题他几乎不问。
-</p>
-
-<p>
-不问并不代表他不关心啊。
-</p>
-
-<p>
-他的追悼会，他的好朋友，也是在他重病期间帮助他找医生医院的发小吧。告诉我，父亲和他聊天一直担心我的家庭问题，其实内心期望我能尽快成家，他对我的工作觉得挺不错，而且他知道我的品性，也很放心。但父亲说，他看到他同龄的同学朋友都当爷爷了，自己却看不到儿女成家，子孙满堂还是内心失望的。
-</p>
-
-<p>
-特别是他也大概知道自己时日无多，更是内心伤感了。尽管如此，他却不当面和我说，估计我也是让他失望了。
-</p>
-
-<p>
-过去的我，其实挺自我。自己的事情自己知，其实也较少考虑他们的感受，现在也是有点不安。
-</p>
-
-<p>
-在父亲墓前，我无法承诺什么。因为，我一直觉得这些事情是个人的事情，无论如何也是我自己的宿命，我一直不希望被人左右，也不希望被人干涉，对于我来说我知道自己的目的。我能承诺的是，就是一定会过得很好，有自己满意的结果。
-</p>
-
-<p>
-无论什么样，倘若有一天我成家有儿女了，当他们能明白的时候，带着他们到父亲的墓前拜祭，把我写的碑文解释给他们听，告诉他们爷爷的人品和一生。
-</p>
-
-<p>
-当初立碑，亲朋好友说碑文是文言文看不懂，他们懂不懂没关系，我们的子孙后代懂就行了。
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgf117bde" class="outline-2">
-<h2 id="orgf117bde">父亲的财产</h2>
-<div class="outline-text-2" id="text-orgf117bde">
-<p>
-他的意志和精神算是留给我最大的财富，因为那是我的父亲，世间的独一无二。
-</p>
-
-<p>
-过去我和他的沟通不算多，但现在想起来，他也时刻影响着我。
-</p>
-
-<p>
-在最初的时候，他怕他的病拖累我们家的经济，告诉我看病花15万就行了，不能再多。
-</p>
-
-<p>
-但父亲你可曾知道，你的健康和生命无价，怎么可以用钱来衡量！
-</p>
-</div>
-</div>
-
-<div id="outline-container-orge5520b6" class="outline-2">
-<h2 id="orge5520b6">永在</h2>
-<div class="outline-text-2" id="text-orge5520b6">
-<p>
-不能忘记，也不要忘记，也不该忘记。
-</p>
-
-<p>
-所以，我想念你。
-</p>
-</div>
-</div>
-
-<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-12-26 Thu 11:42.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.3 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</div>
+<h1 id="读书算是爱好吗？"><a href="#读书算是爱好吗？" class="headerlink" title="读书算是爱好吗？"></a>读书算是爱好吗？</h1><p>我一直怀疑读书是否算是一个爱好，在当今如果不多读点书，似乎是很难的。无论是工作、交际还是生活，书籍是人们快速和系统获取知识的最有效的方式。</p>
+<p>现在自媒体的泛滥，让人们获取资讯的方式变得更简单，但我一直不承认这些传递的东西是一种知识，很多东西需要系统的知识体系来不断的渗透。</p>
+<p>我一直喜欢读书，并且坚持了数十年，而且随着年龄的增长，读书的范围也日渐拓宽，很多做人做事的态、方法和理念都是从书本中学习到，并不断总结形成了自己的的观点。</p>
+<p>其实，很多人在离开学校后，就不再读书，或者单纯的只是为了工作才会去学习，这还是被逼迫的。</p>
+<p>书籍不断的塑造我们的知识结构，不断的让我们的精神净化，如果我们不更新我们的知识和思想，我们就会被遗弃。</p>
+<p>我认为，读书在现在情况下，还真成了爱好，而不是大家的共识。</p>
+<h1 id="读书的变迁"><a href="#读书的变迁" class="headerlink" title="读书的变迁"></a>读书的变迁</h1><p>我周岁的时候，在老家的习俗下，有个抓周的习俗活动。据我妈说，我先抓了吃的（难道证明我是个吃货？可是我并不是啊），然后抓了书本。</p>
+<p>我妈说：这孩子以后就是个读书的料，实际上他们并不认为这种抓周靠谱，所以早早在老家修房子，以为我会在农村扎根，成为一个农民，娶妻生子…，好了，扯远了。</p>
+<p>我觉得真的能预测一个人的行为，自从我学会认字读书，基本上空余的时间差不多都是捧着书本读书。</p>
+<p>幸好我父亲是个老师，家里的藏书在农村家庭里算是顶尖的存在了，而且后来他继续大学的专修，很多厚部头的历史书籍，我小学到初中，基本上读了很多历史的书。</p>
+<p>除了历史，很多哲学的书也会读，不过年少的时候思想并不成熟，所以当时很多都读不懂，现在回过头来再读，倒是所获良多。</p>
+<p>四大名著、金庸也是那时候读的，很搞笑的是，读初中的时候每次考试，我早早做完试卷，就在桌肚子底下垫本金庸小说，读的不亦乐乎。</p>
+<p>后来高中学习倒是很紧张，也没时间看些闲书，大概只有在寒暑假的时候读些稀奇古怪的书。</p>
+<p>我高中有个室友，读钢铁是怎样炼成的，读了一个学年。</p>
+<h1 id="买书的变迁"><a href="#买书的变迁" class="headerlink" title="买书的变迁"></a>买书的变迁</h1><p>最早的时候是在新华书店买书。</p>
+<p>我第一本自己的书，实在镇上的新华书店买的一本怎么学习写作文的书。</p>
+<p>然后在初中毕业之前，就没有再买过书了，一般都是换着书读，或者借书读。</p>
+<p>高中的时候，有段时间流行贝塔斯曼的邮寄活页，上面介绍了很多书籍，然后我们很多人就会选自己喜欢的，然后凑钱去邮局用汇款单寄款，然后贝塔斯曼书友会把书寄过来，这个我们用的倒是很多。</p>
+<p>再后来，卓越网（现在的亚马逊的前身）也开始学习贝塔斯曼寄活页，采用了同样的方式，搞个书友会。</p>
+<p>嗯，新华书店也是非常重要的买书渠道，但是那时候穷学生没什么钱，新华书店又不打折，我大部分时候就是过去读书，买书是件奢侈的事。</p>
+<p>那时候，县城差不多半年会搞一次展销会，很多盗版书在展销会上出售，那个时候我们会去淘书，很多各种奇怪的书都有。当然书籍的质量很差，不过大家乐此不疲。还是我有个室友，为了买书，连续吃了大半个月的泡面，让我十分钦佩。</p>
+<p>大学的时候买书的行为基本上就没有了，因为存放是个不容易的事，不过图书馆真的很不错。我后来都不知道自己借过多少次的书了，就凭借这些书，我学会了很多专业之外的东西。</p>
+<h1 id="工作以后"><a href="#工作以后" class="headerlink" title="工作以后"></a>工作以后</h1><p>刚工作，那时候在Morningstar工作，公司允许每年报销1000元的书籍费用，特别高兴。所以那时候买书很积极，但也因为如此，买书就不仔细，买了很多垃圾的书。</p>
+<p>现在那些书还在我的书架里吃灰。</p>
+<p>尽管后来离开了MS，我也每年基本上保持买一定量的书来阅读，慢慢的书越来越多，很难简单的收藏。就开始买书架，越来越多，也开始把对自己没有什么作用的书开始送出去，分享给需要的人。</p>
+<p>就在今天，买了一千多的书，打完折差不多就四百，算起来比较划算了。</p>
+<p>可惜的是，花了好多时间挑选书，而且好几本收藏了很久的书，居然在这个打折的季节缺货，哎，太可惜…</p>
 ]]></content>
-      <categories>
-        <category>生活</category>
-      </categories>
-      <tags>
-        <tag>生活</tag>
-        <tag>人生</tag>
-        <tag>生命</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>读书和买书的变迁</title>
-    <url>/2017-10-30-%E8%AF%BB%E4%B9%A6%E5%92%8C%E4%B9%B0%E4%B9%A6%E7%9A%84%E5%8F%98%E8%BF%81/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script>
-
-
-<div id="outline-container-orge9f2d16" class="outline-2">
-<h2 id="orge9f2d16">目的</h2>
-<div class="outline-text-2" id="text-orge9f2d16">
-<p>
-我已经不记得我的第一本书是什么时候买的了，但我还记得是什么书，在哪买的。从我开始读书起，已经快三十年了，社会的进步和我的成长，无论是买书还是读书，均有了很大的变化，以此文纪念这些年读书的经历。
-</p>
-
-<span id="more"></span>
-</div>
-</div>
-
-<div id="outline-container-org0ecf639" class="outline-2">
-<h2 id="org0ecf639">读书算是爱好吗？</h2>
-<div class="outline-text-2" id="text-org0ecf639">
-<p>
-我一直怀疑读书是否算是一个爱好，在当今如果不多读点书，似乎是很难的。无论是工作、交际还是生活，书籍是人们快速和系统获取知识的最有效的方式。
-</p>
-
-<p>
-现在自媒体的泛滥，让人们获取资讯的方式变得更简单，但我一直不承认这些传递的东西是一种知识，很多东西需要系统的知识体系来不断的渗透。
-</p>
-
-<p>
-我一直喜欢读书，并且坚持了数十年，而且随着年龄的增长，读书的范围也日渐拓宽，很多做人做事的态、方法和理念都是从书本中学习到，并不断总结形成了自己的的观点。
-</p>
-
-<p>
-其实，很多人在离开学校后，就不再读书，或者单纯的只是为了工作才会去学习，这还是被逼迫的。
-</p>
-
-<p>
-书籍不断的塑造我们的知识结构，不断的让我们的精神净化，如果我们不更新我们的知识和思想，我们就会被遗弃。
-</p>
-
-<p>
-我认为，读书在现在情况下，还真成了爱好，而不是大家的共识。
-</p>
-</div>
-</div>
-
-<div id="outline-container-orge3acf47" class="outline-2">
-<h2 id="orge3acf47">读书的变迁</h2>
-<div class="outline-text-2" id="text-orge3acf47">
-<p>
-我周岁的时候，在老家的习俗下，有个抓周的习俗活动。据我妈说，我先抓了吃的（难道证明我是个吃货？可是我并不是啊），然后抓了书本。
-</p>
-
-<p>
-我妈说：这孩子以后就是个读书的料，实际上他们并不认为这种抓周靠谱，所以早早在老家修房子，以为我会在农村扎根，成为一个农民，娶妻生子&#x2026;，好了，扯远了。
-</p>
-
-<p>
-我觉得真的能预测一个人的行为，自从我学会认字读书，基本上空余的时间差不多都是捧着书本读书。
-</p>
-
-<p>
-幸好我父亲是个老师，家里的藏书在农村家庭里算是顶尖的存在了，而且后来他继续大学的专修，很多厚部头的历史书籍，我小学到初中，基本上读了很多历史的书。
-</p>
-
-<p>
-除了历史，很多哲学的书也会读，不过年少的时候思想并不成熟，所以当时很多都读不懂，现在回过头来再读，倒是所获良多。
-</p>
-
-<p>
-四大名著、金庸也是那时候读的，很搞笑的是，读初中的时候每次考试，我早早做完试卷，就在桌肚子底下垫本金庸小说，读的不亦乐乎。
-</p>
-
-<p>
-后来高中学习倒是很紧张，也没时间看些闲书，大概只有在寒暑假的时候读些稀奇古怪的书。
-</p>
-
-<p>
-我高中有个室友，读钢铁是怎样炼成的，读了一个学年。
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgcef2361" class="outline-2">
-<h2 id="orgcef2361">买书的变迁</h2>
-<div class="outline-text-2" id="text-orgcef2361">
-<p>
-最早的时候是在新华书店买书。
-</p>
-
-<p>
-我第一本自己的书，实在镇上的新华书店买的一本怎么学习写作文的书。
-</p>
-
-<p>
-然后在初中毕业之前，就没有再买过书了，一般都是换着书读，或者借书读。
-</p>
-
-<p>
-高中的时候，有段时间流行贝塔斯曼的邮寄活页，上面介绍了很多书籍，然后我们很多人就会选自己喜欢的，然后凑钱去邮局用汇款单寄款，然后贝塔斯曼书友会把书寄过来，这个我们用的倒是很多。
-</p>
-
-<p>
-再后来，卓越网（现在的亚马逊的前身）也开始学习贝塔斯曼寄活页，采用了同样的方式，搞个书友会。
-</p>
-
-<p>
-嗯，新华书店也是非常重要的买书渠道，但是那时候穷学生没什么钱，新华书店又不打折，我大部分时候就是过去读书，买书是件奢侈的事。
-</p>
-
-<p>
-那时候，县城差不多半年会搞一次展销会，很多盗版书在展销会上出售，那个时候我们会去淘书，很多各种奇怪的书都有。当然书籍的质量很差，不过大家乐此不疲。还是我有个室友，为了买书，连续吃了大半个月的泡面，让我十分钦佩。
-</p>
-
-<p>
-大学的时候买书的行为基本上就没有了，因为存放是个不容易的事，不过图书馆真的很不错。我后来都不知道自己借过多少次的书了，就凭借这些书，我学会了很多专业之外的东西。
-</p>
-</div>
-</div>
-
-<div id="outline-container-orge915b25" class="outline-2">
-<h2 id="orge915b25">工作以后</h2>
-<div class="outline-text-2" id="text-orge915b25">
-<p>
-刚工作，那时候在Morningstar工作，公司允许每年报销1000元的书籍费用，特别高兴。所以那时候买书很积极，但也因为如此，买书就不仔细，买了很多垃圾的书。
-</p>
-
-<p>
-现在那些书还在我的书架里吃灰。
-</p>
-
-<p>
-尽管后来离开了MS，我也每年基本上保持买一定量的书来阅读，慢慢的书越来越多，很难简单的收藏。就开始买书架，越来越多，也开始把对自己没有什么作用的书开始送出去，分享给需要的人。
-</p>
-
-<p>
-就在今天，买了一千多的书，打完折差不多就四百，算起来比较划算了。
-</p>
-
-<p>
-可惜的是，花了好多时间挑选书，而且好几本收藏了很久的书，居然在这个打折的季节缺货，哎，太可惜&#x2026;
-</p>
-</div>
-</div>
-
-<div style="font-size: 13px;padding: 5px;line-height: 20px;border: 1px solid;border-radius:2px"><a href="https://github.com/allenmagic">Edit Me at Github</a> - <a href="https://allenmagic.github.io/">Org Source</a> - Last Updated 2024-12-26 Thu 11:42.<br>Render by <a href="https://github.com/CodeFalling/hexo-renderer-org">hexo-renderer-org</a> with <a href="https://www.gnu.org/software/emacs/">Emacs</a> 29.3 (<a href="https://orgmode.org">Org</a> mode 9.6.15)</div>
-]]></content>
-      <categories>
-        <category>生活</category>
-      </categories>
-      <tags>
-        <tag>生活</tag>
-        <tag>琐碎</tag>
-        <tag>兴趣</tag>
-      </tags>
   </entry>
 </search>
