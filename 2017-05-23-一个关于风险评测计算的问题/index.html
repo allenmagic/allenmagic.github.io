@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="前言近几天，在做一个工作相关的内容，就是对企业投资者进行风险评测。我设计了若干个问题，并根据投资者的选项用于评分，但需要提前计算多少种选项的可能性，并计算分数的分布。并根据分数确定相应的分数区间对应的风险等级。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一个关于风险评测计算的问题">
+<meta property="og:url" content="http://yoursite.com/2017-05-23-%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E9%A3%8E%E9%99%A9%E8%AF%84%E6%B5%8B%E8%AE%A1%E7%AE%97%E7%9A%84%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="Egg&#39;s Blog">
+<meta property="og:description" content="前言近几天，在做一个工作相关的内容，就是对企业投资者进行风险评测。我设计了若干个问题，并根据投资者的选项用于评分，但需要提前计算多少种选项的可能性，并计算分数的分布。并根据分数确定相应的分数区间对应的风险等级。">
+<meta property="og:locale">
+<meta property="og:image" content="http://7viihf.com1.z0.glb.clouddn.com/cdfofscore.png">
+<meta property="og:image" content="http://7viihf.com1.z0.glb.clouddn.com/uscore.png">
+<meta property="og:image" content="http://7viihf.com1.z0.glb.clouddn.com/density.png">
+<meta property="article:published_time" content="2017-05-23T01:14:33.000Z">
+<meta property="article:modified_time" content="2025-12-03T08:15:54.504Z">
+<meta property="article:author" content="allenmagic">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="数据分析">
+<meta property="article:tag" content="R">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://7viihf.com1.z0.glb.clouddn.com/cdfofscore.png">
+
+
+<link rel="canonical" href="http://yoursite.com/2017-05-23-%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E9%A3%8E%E9%99%A9%E8%AF%84%E6%B5%8B%E8%AE%A1%E7%AE%97%E7%9A%84%E9%97%AE%E9%A2%98/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"http://yoursite.com/2017-05-23-%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E9%A3%8E%E9%99%A9%E8%AF%84%E6%B5%8B%E8%AE%A1%E7%AE%97%E7%9A%84%E9%97%AE%E9%A2%98/","path":"2017-05-23-一个关于风险评测计算的问题/","title":"一个关于风险评测计算的问题"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>一个关于风险评测计算的问题 | Egg's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Egg's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个傻子</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%89%80%E6%9C%89%E7%BB%84%E5%90%88"><span class="nav-number">3.</span> <span class="nav-text">获取所有组合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">如何计算？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E4%B9%A0%E4%B8%8B%E7%9F%A9%E9%98%B5%E8%AE%A1%E7%AE%97"><span class="nav-number">5.</span> <span class="nav-text">复习下矩阵计算</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#begin-equation-begin-bmatrix-1-2-3-4-end-bmatrix-times-begin-bmatrix-1-2-end-bmatrix"><span class="nav-number"></span> <span class="nav-text">$$\begin{equation}\begin{bmatrix}   1 &amp; 2 \   3 &amp; 4\end{bmatrix}\times\begin{bmatrix}   1 \   2\end{bmatrix}</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#begin-equation-begin-bmatrix-a-11-a-12-a-13-cdots-a-16-a-21-a-22-a-23-cdots-a-26-vdots-vdots-vdots-ddots-vdots-a-i1-a-i2-a-i3-cdots-a-ij-end-bmatrix-times-begin-bmatrix-b-11-b-21-vdots-b-61-end-bmatrix"><span class="nav-number"></span> <span class="nav-text">$$\begin{equation}\begin{bmatrix}   a_{11} &amp; a_{12} &amp; a_{13} &amp; \cdots &amp; a_{16} \   a_{21} &amp; a_{22} &amp; a_{23} &amp; \cdots &amp; a_{26} \   \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \   a_{i1} &amp; a_{i2} &amp; a_{i3} &amp; \cdots &amp; a_{ij}\end{bmatrix}\times\begin{bmatrix}b_{11} \b_{21} \\vdots \b_{61}\end{bmatrix}</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Python%E8%AE%A1%E7%AE%97%E9%80%BB%E8%BE%91%E5%92%8C%E4%BB%A3%E7%A0%81"><span class="nav-number">1.</span> <span class="nav-text">Python计算逻辑和代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python%E8%B0%83%E7%94%A8R%E5%88%86%E6%9E%90%E6%95%B0%E6%8D%AE"><span class="nav-number">2.</span> <span class="nav-text">Python调用R分析数据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%9A%84%E9%A2%84%E5%A4%84%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">数据的预处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%8E%E6%A0%B7%E5%88%86%E6%9E%90%E6%95%B0%E6%8D%AE%EF%BC%9F"><span class="nav-number">2.2.</span> <span class="nav-text">怎样分析数据？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%BB%E7%B4%AF%E7%A7%AF%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0%E5%9B%BE"><span class="nav-number">2.3.</span> <span class="nav-text">画累积分布函数图</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="nav-number">3.</span> <span class="nav-text">结束语</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">allenmagic</p>
+  <div class="site-description" itemprop="description">久在樊笼里，复得返自然。</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017-05-23-%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E9%A3%8E%E9%99%A9%E8%AF%84%E6%B5%8B%E8%AE%A1%E7%AE%97%E7%9A%84%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="allenmagic">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Egg's Blog">
+      <meta itemprop="description" content="久在樊笼里，复得返自然。">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="一个关于风险评测计算的问题 | Egg's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一个关于风险评测计算的问题
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-05-23 09:14:33" itemprop="dateCreated datePublished" datetime="2017-05-23T09:14:33+08:00">2017-05-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-12-03 16:15:54" itemprop="dateModified" datetime="2025-12-03T16:15:54+08:00">2025-12-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">数据分析</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>近几天，在做一个工作相关的内容，就是对企业投资者进行风险评测。我设计了若干个问题，并根据投资者的选项用于评分，但需要提前计算多少种选项的可能性，并计算分数的分布。并根据分数确定相应的分数区间对应的风险等级。</p>
+<span id="more"></span>
+
+<p>这听上去是个简单的问题，但实际上计算起来颇为复杂，想了不少办法才实现。这里也记录下来，并写成分享的文章可以让大家看一下，说不定可以借鉴。</p>
+<p>本次计算主要是使用Python和R。</p>
+<p>由于代码比较简单，就不用同步到Github，所有代码在文章里都能获取到。</p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>其实这次的问题很简单:</p>
+<ol>
+<li>有6个风险评测的问题</li>
+<li>每个问题有A、B、C三个选项</li>
+<li>每个问题的分值比重不一样</li>
+<li>每个选项的分数不一样</li>
+<li>需要根据投资者的选择答案计算其最终得分</li>
+<li>根据其得分给出风险等级</li>
+</ol>
+<p>但我们要根据所有可能的选择结果确定分数范围，并根据分数范围确定其对应的风险等级。所以问题的计算逻辑就如下了：</p>
+<ol>
+<li>获取所有的选择答案的组合结果</li>
+<li>根据组合计算每一个结果的分数</li>
+<li>根据所有分数确定分数区间和风险等级的对应关系</li>
+<li>计算投资者的分数</li>
+<li>确定投资者的风险等级</li>
+</ol>
+<h3 id="获取所有组合"><a href="#获取所有组合" class="headerlink" title="获取所有组合"></a>获取所有组合</h3><p>我们假设有A、B、C三个选项，对应的分数分别为[25,50,75]:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[A, B, C] = [25, 50, 75]</span><br></pre></td></tr></table></figure>
+<p>总共有6道题，每道题有三个选项，所以答案的组合总共有$3^6&#x3D;729$个，那么分数的可能性就有729个（实际上应该小于729，因为有不同答案但相同分数）。</p>
+<p>我们不需要获取ABC的答案组合，只需要获得分数[25, 50, 75]的组合即可，所以我思考了不超过10s，就放弃了使用Excel，因为这么多年早忘了当初那丁点的VBA知识了，而这个要用Excel计算的话必须使用VBA，所以果断放弃。</p>
+<p>那么再思考下要怎么计算，我们知道有6个答案，每个答案的分数是[25, 50, 75]中的一个，然后组成一个组合。所以其答案可能是:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[A, A, B, B, C, A] = [25, 25, 50, 50, 75, 25]</span><br></pre></td></tr></table></figure>
+<p>这样的组合总共有729个，所以要获取所有可能的结果，那么可以使用Python的itertools包中的product就是笛卡尔积来计算所有的可能组合：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"></span><br><span class="line">s = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> itertools.product([<span class="number">25</span>,<span class="number">50</span>,<span class="number">75</span>], repeat =<span class="number">6</span> ):</span><br><span class="line">	s.extend([i])</span><br></pre></td></tr></table></figure>
+<p>s就是所有的答案分数的组合可能，我们查看下组合的数量：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(s))</span><br><span class="line"><span class="number">729</span></span><br><span class="line">[Finished <span class="keyword">in</span> <span class="number">0.1</span>s]</span><br></pre></td></tr></table></figure>
+
+<h3 id="如何计算？"><a href="#如何计算？" class="headerlink" title="如何计算？"></a>如何计算？</h3><p>我们已经知道了，每个答案组合有对应的分数，以上面的组合为例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[A, A, B, B, C, A] = [25, 25, 50, 50, 75, 25]</span><br></pre></td></tr></table></figure>
+<p>计算其分值为：250(随机的分数都能是这个值我服了)。</p>
+<p>但我们不能这样简单的计算分值，因为每个问题的分值权重是不一样的，每个问题的重要程度是不一样的，我们预先定义每个问题权重为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, 3, 4, 5, 6] = [20%, 20%, 20%, 20%, 10%, 10%]</span><br></pre></td></tr></table></figure>
+
+<p>所以每个投资者的分数计算公式为：</p>
+<p>$$Score &#x3D; \sum_{i}^{n&#x3D;6}score_i \times W_i$$</p>
+<p>$score_{i}$即是答案的分值组合，$W_i$为每个答案分值的权重,重新计算的分数结果就是40分。</p>
+<p>如果答案组合只有一两个，那么这样计算也就罢了，但我们有729个组合，不可能每个计算出来，至少我们的组合的获取就是要通过工具得出来。怎么计算所有729个组合分数呢，而且当选项扩展至4个甚至5个，问题扩展至数十个，那么答案组合就更多了，怎么办呢？</p>
+<h3 id="复习下矩阵计算"><a href="#复习下矩阵计算" class="headerlink" title="复习下矩阵计算"></a>复习下矩阵计算</h3><p>在6个问题3个答案的情况有729个组合，每个组合是有6个分数组成，每个分数有对应的权重，我们想到这样一个公式，$A_{m \times n}$ $\times$ $B_{n \times k}$ &#x3D; $C_{m \times k}$:</p>
+<h1 id="begin-equation-begin-bmatrix-1-2-3-4-end-bmatrix-times-begin-bmatrix-1-2-end-bmatrix"><a href="#begin-equation-begin-bmatrix-1-2-3-4-end-bmatrix-times-begin-bmatrix-1-2-end-bmatrix" class="headerlink" title="$$\begin{equation}\begin{bmatrix}   1 &amp; 2 \   3 &amp; 4\end{bmatrix}\times\begin{bmatrix}   1 \   2\end{bmatrix}"></a>$$<br>\begin{equation}<br>\begin{bmatrix}<br>   1 &amp; 2 \<br>   3 &amp; 4<br>\end{bmatrix}<br>\times<br>\begin{bmatrix}<br>   1 \<br>   2<br>\end{bmatrix}</h1><p>\begin{bmatrix}<br>   5 \<br>   11<br>\end{bmatrix}<br>\end{equation}<br>$$</p>
+<p>这是线性代数中所学习的矩阵乘法，那么我们就可以认为，729个组合每个组合为6个分数，所以可以看成一个$729 \times 6$的矩阵$A_{729 \times 6}$，那么权重则是一个$6 \times 1$的矩阵$B_{6 \times 1}$，所有两个矩阵相乘则生成一个矩阵$C_{729 \times 1}$。</p>
+<p>那么计算的整个公式就是：</p>
+<h1 id="begin-equation-begin-bmatrix-a-11-a-12-a-13-cdots-a-16-a-21-a-22-a-23-cdots-a-26-vdots-vdots-vdots-ddots-vdots-a-i1-a-i2-a-i3-cdots-a-ij-end-bmatrix-times-begin-bmatrix-b-11-b-21-vdots-b-61-end-bmatrix"><a href="#begin-equation-begin-bmatrix-a-11-a-12-a-13-cdots-a-16-a-21-a-22-a-23-cdots-a-26-vdots-vdots-vdots-ddots-vdots-a-i1-a-i2-a-i3-cdots-a-ij-end-bmatrix-times-begin-bmatrix-b-11-b-21-vdots-b-61-end-bmatrix" class="headerlink" title="$$\begin{equation}\begin{bmatrix}   a_{11} &amp; a_{12} &amp; a_{13} &amp; \cdots &amp; a_{16} \   a_{21} &amp; a_{22} &amp; a_{23} &amp; \cdots &amp; a_{26} \   \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \   a_{i1} &amp; a_{i2} &amp; a_{i3} &amp; \cdots &amp; a_{ij}\end{bmatrix}\times\begin{bmatrix}b_{11} \b_{21} \\vdots \b_{61}\end{bmatrix}"></a>$$<br>\begin{equation}<br>\begin{bmatrix}<br>   a_{11} &amp; a_{12} &amp; a_{13} &amp; \cdots &amp; a_{16} \<br>   a_{21} &amp; a_{22} &amp; a_{23} &amp; \cdots &amp; a_{26} \<br>   \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \<br>   a_{i1} &amp; a_{i2} &amp; a_{i3} &amp; \cdots &amp; a_{ij}<br>\end{bmatrix}<br>\times<br>\begin{bmatrix}<br>b_{11} \<br>b_{21} \<br>\vdots \<br>b_{61}<br>\end{bmatrix}</h1><p>\begin{bmatrix}<br>c_{11} \<br>c_{21} \<br>\vdots \<br>c_{i1}<br>\end{bmatrix}<br>\end{equation}<br>$$<br>特别的，$(i, j) &#x3D; (729, 6)$。</p>
+<h3 id="Python计算逻辑和代码"><a href="#Python计算逻辑和代码" class="headerlink" title="Python计算逻辑和代码"></a>Python计算逻辑和代码</h3><p>我们考虑整个计算的顺序和逻辑如下：</p>
+<ol>
+<li>获取所有分数组合</li>
+<li>将分数组合生成为矩阵</li>
+<li>构建权重的矩阵</li>
+<li>分别两个矩阵相乘</li>
+<li>得到所有分数</li>
+<li>用R做分数的图形分布</li>
+<li>根据分布确定不同风险等级的分位数</li>
+</ol>
+<p>我们考虑每一个步骤的代码：</p>
+<ol>
+<li>获取所有分数组合</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"></span><br><span class="line">s = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> itertools.product([<span class="number">25</span>,<span class="number">50</span>,<span class="number">75</span>], repeat =<span class="number">6</span> ):</span><br><span class="line">	s.extend([i])</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>将分数组合生成矩阵</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">sm = np.mat(s)</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>构建权重的矩阵</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">w = np.mat([<span class="number">0.2</span>,<span class="number">0.2</span>,<span class="number">0.2</span>,<span class="number">0.2</span>,<span class="number">0.1</span>,<span class="number">0.1</span>])</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>矩阵相乘</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">score = np.matrix.tolist(sm*w.T)  % w.T指将矩阵转置为列矩阵</span><br></pre></td></tr></table></figure>
+<p>这段代码使用了np.matrix.tolist将计算后得到的矩阵直接转换为list列表，后面的第6步和第7步考虑在Python中调用R来实现。</p>
+<h3 id="Python调用R分析数据"><a href="#Python调用R分析数据" class="headerlink" title="Python调用R分析数据"></a>Python调用R分析数据</h3><h4 id="数据的预处理"><a href="#数据的预处理" class="headerlink" title="数据的预处理"></a>数据的预处理</h4><p>首先，需要使用python生成csv文件以供R使用，当然也可以在R中使用rpy2包调用R来分析。</p>
+<ol>
+<li>使用python生成csv文件：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">writer = csv.writer(file(<span class="string">&quot;score.csv&quot;</span>,<span class="string">&#x27;wb&#x27;</span>))</span><br><span class="line">writer.writerow([<span class="string">&#x27;Value&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> s <span class="keyword">in</span> score:</span><br><span class="line">	writer.writerow(s)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在R中导入数据：</li>
+</ol>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rm<span class="punctuation">(</span><span class="built_in">list</span> <span class="operator">=</span> ls<span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">setwd<span class="punctuation">(</span><span class="string">&quot;/Users/eggs/Library/Mobile Documents/com~apple~CloudDocs/文档/document&quot;</span><span class="punctuation">)</span></span><br><span class="line">score <span class="operator">&lt;-</span> read.csv<span class="punctuation">(</span><span class="string">&quot;score.csv&quot;</span><span class="punctuation">,</span>header <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="怎样分析数据？"><a href="#怎样分析数据？" class="headerlink" title="怎样分析数据？"></a>怎样分析数据？</h4><p>其实分析的思路挺简单，总共有729个总体值，但实际上计算出来的Score值只有21个，所以我们要考虑每个Score值占总体组合的概率。一般我们考虑CDF（cumulative distribution function）就是累积分布函数：</p>
+<p>$$<br>F(X) &#x3D; F(x \leq X) &#x3D;<br>\begin{cases}<br>\sum_{i&#x3D;1}^{x \leq X}P_{x&#x3D;i}， &amp; \text{x是离散的}  \[3ex]<br>\int_{-\infty}^{X} f(x),dx， &amp; \text{x是连续的}<br>\end{cases}<br>$$</p>
+<p>所以我们可以在R中画出Score的累积分布函数图。</p>
+<h4 id="画累积分布函数图"><a href="#画累积分布函数图" class="headerlink" title="画累积分布函数图"></a>画累积分布函数图</h4><ol>
+<li>画出累积分布图</li>
+</ol>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">par<span class="punctuation">(</span>family<span class="operator">=</span><span class="string">&#x27;MicrosoftYaHei&#x27;</span><span class="punctuation">)</span></span><br><span class="line">plot<span class="punctuation">(</span>ecdf<span class="punctuation">(</span>score<span class="operator">$</span>Value<span class="punctuation">)</span><span class="punctuation">,</span> do.points<span class="operator">=</span><span class="literal">FALSE</span><span class="punctuation">,</span> verticals<span class="operator">=</span><span class="literal">TRUE</span><span class="punctuation">,</span> main <span class="operator">=</span> <span class="string">&#x27;CDF of score&#x27;</span><span class="punctuation">,</span> xlab <span class="operator">=</span> <span class="string">&#x27;score&#x27;</span><span class="punctuation">,</span> ylab <span class="operator">=</span> <span class="string">&#x27;CDF&#x27;</span> <span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>画出来的图如下：<br><img src="http://7viihf.com1.z0.glb.clouddn.com/cdfofscore.png" alt="测试分数的累计分布图"></p>
+<ol start="2">
+<li>用分位数工具取数</li>
+</ol>
+<p>我们假设取[20%, 80%]分位数的值：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">y <span class="operator">&lt;-</span> quantile<span class="punctuation">(</span>score<span class="operator">$</span>Value<span class="punctuation">,</span><span class="built_in">c</span><span class="punctuation">(</span><span class="number">0.2</span><span class="punctuation">,</span><span class="number">0.8</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"> <span class="number">20</span><span class="operator">%  80%</span> </span><br><span class="line"><span class="number">42.5</span> <span class="number">57.5</span> </span><br></pre></td></tr></table></figure>
+<p>那么，我们可以认为：</p>
+<blockquote>
+<p>分数在[0,25)之间的为谨慎型，当然这一类别是理论值，不会通过问卷计算出来<br>分数在[25,42.5]之间的为保守型，占20%比例<br>分数在(42.5,57.5]之间的为谨慎型，占60%比例<br>分数在(57.5,75]之间的为积极型，占20%比例</p>
+</blockquote>
+<h3 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h3><p>在这里简单的做了一个关于风险评测的计算介绍，由于最近比较忙，所以内容写的也不怎么严谨。简单说就是思路清奇，排版华丽（你知道我说的是反话）。而且最近也没写什么，所以只是恰好碰到问题就随便写了篇，姑且看着吧。</p>
+<p>python代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">__author__ = <span class="string">&quot;Eggs&quot;</span></span><br><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"></span><br><span class="line">s = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> itertools.product([<span class="number">25</span>,<span class="number">50</span>,<span class="number">75</span>], repeat = <span class="number">6</span> ):</span><br><span class="line">  s.extend([i])</span><br><span class="line"></span><br><span class="line">sm = np.mat(s)</span><br><span class="line">w = np.mat([<span class="number">0.2</span>,<span class="number">0.2</span>,<span class="number">0.2</span>,<span class="number">0.2</span>,<span class="number">0.1</span>,<span class="number">0.1</span>])</span><br><span class="line"></span><br><span class="line">score = np.matrix.tolist(sm*w.T)</span><br><span class="line"></span><br><span class="line">writer = csv.writer(file(<span class="string">&quot;score.csv&quot;</span>,<span class="string">&#x27;wb&#x27;</span>))</span><br><span class="line">writer.writerow([<span class="string">&#x27;Value&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> s <span class="keyword">in</span> score:</span><br><span class="line">  writer.writerow(s)</span><br></pre></td></tr></table></figure>
+<p>R的代码如下：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">rm<span class="punctuation">(</span><span class="built_in">list</span> <span class="operator">=</span> ls<span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">setwd<span class="punctuation">(</span><span class="string">&quot;/Users/eggs/Library/Mobile Documents/com~apple~CloudDocs/文档/document&quot;</span><span class="punctuation">)</span></span><br><span class="line">score <span class="operator">&lt;-</span> read.csv<span class="punctuation">(</span><span class="string">&quot;score.csv&quot;</span><span class="punctuation">,</span>header <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">)</span></span><br><span class="line">a <span class="operator">&lt;-</span> unique<span class="punctuation">(</span>score<span class="operator">$</span>Value<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">par<span class="punctuation">(</span>family<span class="operator">=</span><span class="string">&#x27;MicrosoftYaHei&#x27;</span><span class="punctuation">)</span></span><br><span class="line">plot<span class="punctuation">(</span>ecdf<span class="punctuation">(</span>score<span class="operator">$</span>Value<span class="punctuation">)</span><span class="punctuation">,</span> do.points<span class="operator">=</span><span class="literal">FALSE</span><span class="punctuation">,</span> verticals<span class="operator">=</span><span class="literal">TRUE</span><span class="punctuation">,</span> main <span class="operator">=</span> <span class="string">&#x27;CDF of score&#x27;</span><span class="punctuation">,</span> xlab <span class="operator">=</span> <span class="string">&#x27;score&#x27;</span><span class="punctuation">,</span> ylab <span class="operator">=</span> <span class="string">&#x27;CDF&#x27;</span> <span class="punctuation">)</span></span><br><span class="line">y <span class="operator">&lt;-</span> quantile<span class="punctuation">(</span>score<span class="operator">$</span>Value<span class="punctuation">,</span><span class="built_in">c</span><span class="punctuation">(</span><span class="number">0.2</span><span class="punctuation">,</span><span class="number">0.8</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">length</span><span class="punctuation">(</span>score<span class="operator">$</span>Value<span class="punctuation">)</span></span><br><span class="line"><span class="built_in">length</span><span class="punctuation">(</span>a<span class="punctuation">)</span></span><br><span class="line">y</span><br></pre></td></tr></table></figure>
+
+<p>运行的结果如下：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> <span class="built_in">length</span><span class="punctuation">(</span>score<span class="operator">$</span>Value<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="number">729</span></span><br><span class="line"><span class="operator">&gt;</span> <span class="built_in">length</span><span class="punctuation">(</span>a<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="number">21</span></span><br><span class="line"><span class="operator">&gt;</span> y</span><br><span class="line"> <span class="number">20</span><span class="operator">%  80%</span> </span><br><span class="line"><span class="number">42.5</span> <span class="number">57.5</span> </span><br></pre></td></tr></table></figure>
+
+<p>一个测试：如果我们把题目答案扩展到4个，题目增加为10个，计算的结果如下：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> <span class="built_in">length</span><span class="punctuation">(</span>score<span class="operator">$</span>Value<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="number">1048576</span></span><br><span class="line"><span class="operator">&gt;</span> <span class="built_in">length</span><span class="punctuation">(</span>a<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="number">119</span></span><br><span class="line"><span class="operator">&gt;</span> y</span><br><span class="line"> <span class="number">20</span><span class="operator">%  80%</span> </span><br><span class="line"><span class="number">43.5</span> <span class="number">56.5</span> </span><br></pre></td></tr></table></figure>
+
+<p>可见总共的样本超过了100万，我们可以用图形观察如下：</p>
+<p>CDF图形：<br><img src="http://7viihf.com1.z0.glb.clouddn.com/uscore.png" alt="CDF"></p>
+<p>概率密度图形：<br><img src="http://7viihf.com1.z0.glb.clouddn.com/density.png" alt="Denstiy"></p>
+<p>可见样本越多，图形越平滑，而且其分布越接近正态分布（极限中心定理）</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag"># 技术</a>
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/" rel="tag"># 数据分析</a>
+              <a href="/tags/R/" rel="tag"># R</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017-04-17-%E4%BD%BF%E7%94%A8Python%E7%94%BB%E8%82%A1%E7%A5%A8%E7%9A%84K%E7%BA%BF%E5%9B%BE/" rel="prev" title="使用Python画股票的K线图">
+                  <i class="fa fa-angle-left"></i> 使用Python画股票的K线图
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017-05-25-%E4%BD%BF%E7%94%A8hexo+github%E6%90%AD%E5%BB%BA%E9%9D%99%E6%80%81blog/" rel="next" title="使用hexo+github搭建静态blog">
+                  使用hexo+github搭建静态blog <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">allenmagic</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
